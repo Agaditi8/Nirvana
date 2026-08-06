@@ -9,14 +9,14 @@ import JoinCommunity from "@/components/homepage/JoinCommunity";
 export default function Home() {
   return (
     <>
-      <Navbar />
 
       <HeroPage />
       <MarqueeText/>
       
       <FeatureOfTheMonth/>
-      <Events/>
+      
       <Game/>
+      <Events/>
       <JoinCommunity/>
       
 

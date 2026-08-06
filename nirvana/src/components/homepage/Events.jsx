@@ -1,907 +1,886 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
 import {
-  ArrowUpRight,
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import {
   ArrowLeft,
   ArrowRight,
+  ArrowUpRight,
 } from "lucide-react";
 
 /* ============================================================
-   EVENTS
+   EVENTS DATA
 ============================================================ */
 
 const events = [
   {
     number: "01",
-    title: "VISION BOARD",
+    title: "Vision Board",
+    subtitle: "Designing the year before living it.",
     year: "2026",
-    image: "https://picsum.photos/seed/event1/700/900",
+    category: "Creative Workshop",
+    date: "January 18, 2026",
+    image: "https://picsum.photos/seed/nirvana-event-01/1200/1500",
+    description:
+      "An immersive vision board experience where ideas, aspirations, typography, imagery and personal stories came together to create a visual map for the year ahead.",
   },
   {
     number: "02",
-    title: "DESIGN JAM",
+    title: "Design Jam",
+    subtitle: "Ideas moving faster than perfection.",
     year: "2026",
-    image: "https://picsum.photos/seed/event2/700/900",
+    category: "Design Sprint",
+    date: "February 12, 2026",
+    image: "https://picsum.photos/seed/nirvana-event-02/1200/1500",
+    description:
+      "A fast-paced collaborative design session built around experimentation. Teams explored unconventional ideas, challenged familiar patterns and transformed rough concepts into visual experiences.",
   },
   {
     number: "03",
-    title: "CREATIVE CHAOS",
+    title: "Creative Chaos",
+    subtitle: "Where unfinished ideas find direction.",
     year: "2025",
-    image: "https://picsum.photos/seed/event3/700/900",
+    category: "Creative Session",
+    date: "October 24, 2025",
+    image: "https://picsum.photos/seed/nirvana-event-03/1200/1500",
+    description:
+      "A celebration of imperfect ideas, strange experiments and unexpected outcomes. Creative Chaos gave designers the freedom to explore without worrying about getting everything right.",
   },
   {
     number: "04",
-    title: "POSTER MAKING",
+    title: "Poster Making",
+    subtitle: "One canvas. Infinite interpretations.",
     year: "2025",
-    image: "https://picsum.photos/seed/event4/700/900",
+    category: "Competition",
+    date: "September 09, 2025",
+    image: "https://picsum.photos/seed/nirvana-event-04/1200/1500",
+    description:
+      "A visual storytelling competition exploring how typography, composition, illustration and colour can communicate powerful ideas within a single frame.",
   },
   {
     number: "05",
-    title: "DESIGN WEEK",
+    title: "Design Week",
+    subtitle: "Seven days dedicated to making.",
     year: "2025",
-    image: "https://picsum.photos/seed/event5/700/900",
-  },
-  {
-    number: "06",
-    title: "ART NIGHT",
-    year: "2025",
-    image: "https://picsum.photos/seed/event6/700/900",
+    category: "Design Festival",
+    date: "August 14, 2025",
+    image: "https://picsum.photos/seed/nirvana-event-05/1200/1500",
+    description:
+      "A week-long celebration of visual culture, experimentation and collaborative design featuring challenges, workshops, conversations and creative showcases.",
   },
 ];
 
 /* ============================================================
-   FOURTH SECTION
+   ANIMATION
+============================================================ */
+
+const ease = [0.16, 1, 0.3, 1];
+
+const textVariants = {
+  initial: {
+    opacity: 0,
+    y: 45,
+    filter: "blur(8px)",
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+  },
+  exit: {
+    opacity: 0,
+    y: -35,
+    filter: "blur(8px)",
+  },
+};
+
+/* ============================================================
+   EVENTS
 ============================================================ */
 
 export default function Events() {
-  const sliderRef = useRef(null);
+  const sectionRef = useRef(null);
   const [activeEvent, setActiveEvent] = useState(0);
+  const [direction, setDirection] = useState(1);
 
-  const previousEvent = () => {
-    setActiveEvent((prev) =>
-      prev === 0 ? events.length - 1 : prev - 1
-    );
-  };
+  const event = events[activeEvent];
+
+  /* ----------------------------------------------------------
+     SCROLL PARALLAX
+  ---------------------------------------------------------- */
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [80, 0, -80]
+  );
+
+  const contentY = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [35, 0, -35]
+  );
+
+  const headingX = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [-40, 0, 30]
+  );
+
+  /* ----------------------------------------------------------
+     NAVIGATION
+  ---------------------------------------------------------- */
 
   const nextEvent = () => {
+    setDirection(1);
+
     setActiveEvent((prev) =>
       prev === events.length - 1 ? 0 : prev + 1
     );
   };
 
+  const previousEvent = () => {
+    setDirection(-1);
+
+    setActiveEvent((prev) =>
+      prev === 0 ? events.length - 1 : prev - 1
+    );
+  };
+
   return (
     <section
+      ref={sectionRef}
       className="
         relative
         min-h-screen
         w-full
         overflow-hidden
-        bg-black
-        p-6
+        bg-[#050505]
         text-white
       "
     >
-      {/* ==================================================
-          MAIN FRAME
-      ================================================== */}
+      {/* ======================================================
+          SUBTLE BACKGROUND
+      ====================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          opacity-40
+          [background-image:radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)]
+          [background-size:32px_32px]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[-15%]
+          top-[10%]
+          h-[600px]
+          w-[600px]
+          rounded-full
+          bg-violet-800/10
+          blur-[160px]
+        "
+      />
+
+      {/* ======================================================
+          HEADER
+      ====================================================== */}
 
       <motion.div
         initial={{
           opacity: 0,
-          scale: 0.96,
-          y: 80,
+          y: 30,
         }}
         whileInView={{
           opacity: 1,
-          scale: 1,
           y: 0,
         }}
         viewport={{
           once: true,
-          amount: 0.15,
         }}
         transition={{
-          duration: 1.2,
-          ease: [0.16, 1, 0.3, 1],
+          duration: 0.8,
+          ease,
         }}
         className="
           relative
+          z-20
           flex
-          h-[calc(100vh-48px)]
-          w-full
-          flex-col
-          overflow-hidden
-          border
-          border-violet-200/[0.12]
-          bg-[#050407]
+          items-center
+          justify-between
+          border-b
+          border-white/10
+          px-6
+          py-5
+          md:px-10
+          lg:px-14
+        "
+      >
+        <div className="flex items-center gap-4">
+          <span
+            className="
+              h-2
+              w-2
+              rounded-full
+              bg-violet-300
+              shadow-[0_0_15px_rgba(196,181,253,0.8)]
+            "
+          />
+
+          <p
+            className="
+              text-[10px]
+              uppercase
+              tracking-[0.3em]
+              text-white/50
+            "
+          >
+            Nirvana / Past Events
+          </p>
+        </div>
+
+        <p
+          className="
+            text-[10px]
+            uppercase
+            tracking-[0.25em]
+            text-white/30
+          "
+        >
+          {String(activeEvent + 1).padStart(2, "0")} /{" "}
+          {String(events.length).padStart(2, "0")}
+        </p>
+      </motion.div>
+
+      {/* ======================================================
+          MAIN GRID
+      ====================================================== */}
+
+      <div
+        className="
+          relative
+          z-10
+          grid
+          min-h-[calc(100vh-65px)]
+          grid-cols-1
+          lg:grid-cols-[52%_48%]
         "
       >
         {/* ==================================================
-            SPACE BACKGROUND
+            LEFT — IMAGE
         ================================================== */}
 
         <div
           className="
-            pointer-events-none
-            absolute
-            inset-0
-            z-0
-
-            bg-[radial-gradient(circle_at_15%_20%,rgba(104,71,170,0.17),transparent_30%),radial-gradient(circle_at_82%_65%,rgba(38,51,120,0.16),transparent_35%),radial-gradient(circle_at_50%_100%,rgba(82,46,120,0.11),transparent_40%),linear-gradient(135deg,#050407_0%,#090711_48%,#05060b_100%)]
+            relative
+            min-h-[60vh]
+            overflow-hidden
+            border-b
+            border-white/10
+            lg:min-h-0
+            lg:border-b-0
+            lg:border-r
           "
-        />
-
-        {/* ==================================================
-            GALAXY DOTS
-        ================================================== */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-            z-0
-            opacity-[0.14]
-
-            [background-image:radial-gradient(rgba(205,190,255,0.7)_0.6px,transparent_0.6px)]
-            [background-size:25px_25px]
-          "
-        />
-
-        {/* SECOND DOT LAYER */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-            z-0
-            opacity-[0.07]
-
-            [background-image:radial-gradient(rgba(120,145,255,0.9)_0.5px,transparent_0.5px)]
-            [background-position:12px_8px]
-            [background-size:39px_39px]
-          "
-        />
-
-        {/* ==================================================
-            PURPLE TOP GLOW
-        ================================================== */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            left-[30%]
-            top-[-160px]
-            z-0
-
-            h-[350px]
-            w-[550px]
-
-            rounded-full
-            bg-violet-700/[0.11]
-            blur-[120px]
-          "
-        />
-
-        {/* ==================================================
-            BLUE BOTTOM GLOW
-        ================================================== */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            bottom-[-170px]
-            right-[5%]
-            z-0
-
-            h-[400px]
-            w-[500px]
-
-            rounded-full
-            bg-blue-900/[0.12]
-            blur-[130px]
-          "
-        />
-
-        {/* ==================================================
-            ACTUAL CONTENT
-        ================================================== */}
-
-        <div className="relative z-10 flex h-full min-h-0 flex-col">
-
-          {/* ==================================================
-              TOP BAR
-          ================================================== */}
-
-          <div
-            className="
-              relative
-              flex
-              h-[12vh]
-              min-h-[95px]
-              shrink-0
-              items-center
-              justify-between
-              overflow-hidden
-              border-b
-              border-violet-200/[0.12]
-              px-6
-            "
-          >
-            {/* LEFT */}
-
-            <div className="relative z-10 flex items-center gap-5">
-
-              <span
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={event.image}
+              initial={{
+                opacity: 0,
+                scale: 1.08,
+                x: direction > 0 ? 70 : -70,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                x: 0,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.96,
+                x: direction > 0 ? -60 : 60,
+              }}
+              transition={{
+                duration: 0.85,
+                ease,
+              }}
+              className="absolute inset-0"
+            >
+              <motion.img
+                style={{
+                  y: imageY,
+                }}
+                src={event.image}
+                alt={event.title}
                 className="
-                  text-[10px]
-                  tracking-[0.25em]
-                  text-violet-200/35
-                "
-              >
-                04
-              </span>
-
-              <div
-                className="
-                  h-7
-                  w-px
-                  bg-violet-200/[0.15]
+                  absolute
+                  -top-[8%]
+                  left-0
+                  h-[116%]
+                  w-full
+                  object-cover
                 "
               />
+            </motion.div>
+          </AnimatePresence>
 
-              <p
-                className="
-                  text-[11px]
-                  uppercase
-                  tracking-[0.28em]
-                  text-white/55
-                "
-              >
-                Past Events / Archive
-              </p>
-            </div>
-
-            {/* CENTER LINE */}
-
-            <div
-              className="
-                absolute
-                left-1/2
-                top-1/2
-
-                hidden
-                h-px
-                w-[26%]
-
-                -translate-x-1/2
-                -translate-y-1/2
-
-                bg-gradient-to-r
-                from-transparent
-                via-violet-200/[0.16]
-                to-transparent
-
-                lg:block
-              "
-            />
-
-            {/* RIGHT */}
-
-            <div
-              className="
-                relative
-                z-10
-                flex
-                items-center
-                gap-3
-              "
-            >
-              
-            </div>
-
-            {/* BAR PURPLE TINT */}
-
-            <div
-              className="
-                pointer-events-none
-                absolute
-                inset-0
-
-                bg-gradient-to-r
-                from-violet-950/[0.18]
-                via-transparent
-                to-blue-950/[0.12]
-              "
-            />
-
-            {/* TOP GLOW */}
-
-            <div
-              className="
-                pointer-events-none
-                absolute
-                left-[20%]
-                top-[-100px]
-
-                h-[160px]
-                w-[350px]
-
-                rounded-full
-                bg-violet-600/[0.10]
-                blur-[70px]
-              "
-            />
-          </div>
-
-          {/* ==================================================
-              GALLERY
-          ================================================== */}
+          {/* IMAGE OVERLAY */}
 
           <div
             className="
-              relative
+              pointer-events-none
+              absolute
+              inset-0
+              bg-gradient-to-t
+              from-black/70
+              via-black/5
+              to-black/20
+            "
+          />
+
+          <div
+            className="
+              pointer-events-none
+              absolute
+              inset-0
+              bg-gradient-to-r
+              from-transparent
+              via-transparent
+              to-black/20
+            "
+          />
+
+          {/* IMAGE TOP LABEL */}
+
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              duration: 0.8,
+              delay: 0.2,
+            }}
+            className="
+              absolute
+              left-6
+              top-6
+              z-10
               flex
-              min-h-0
-              flex-1
               items-center
-              overflow-hidden
+              gap-3
+              md:left-10
+              md:top-10
             "
           >
-            {/* LEFT FADE */}
+            <div className="h-px w-8 bg-white/50" />
 
-            <div
+            <p
               className="
-                pointer-events-none
-                absolute
-                bottom-0
-                left-0
-                top-0
-                z-20
-                w-16
-                bg-gradient-to-r
-                from-[#07050b]
-                to-transparent
-              "
-            />
-
-            {/* RIGHT FADE */}
-
-            <div
-              className="
-                pointer-events-none
-                absolute
-                bottom-0
-                right-0
-                top-0
-                z-20
-                w-16
-                bg-gradient-to-l
-                from-[#06060b]
-                to-transparent
-              "
-            />
-
-            <motion.div
-              ref={sliderRef}
-              drag="x"
-              dragConstraints={{
-                left: -700,
-                right: 0,
-              }}
-              dragElastic={0.08}
-              className="
-                flex
-                cursor-grab
-                items-start
-                gap-3
-                px-5
-                active:cursor-grabbing
+                text-[10px]
+                uppercase
+                tracking-[0.28em]
+                text-white/70
               "
             >
-              {events.map((event, index) => (
-                <EventCard
-                  key={event.number}
-                  event={event}
-                  index={index}
-                  active={activeEvent === index}
-                  onHover={() => setActiveEvent(index)}
-                />
-              ))}
-            </motion.div>
+              Event Archive
+            </p>
+          </motion.div>
+
+          {/* HUGE EVENT NUMBER */}
+
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={event.number}
+              initial={{
+                opacity: 0,
+                y: 60,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: -50,
+              }}
+              transition={{
+                duration: 0.7,
+                ease,
+              }}
+              className="
+                absolute
+                bottom-4
+                left-5
+                z-10
+                text-[clamp(7rem,17vw,16rem)]
+                font-light
+                leading-[0.7]
+                tracking-[-0.07em]
+                text-white/90
+                md:left-8
+              "
+              style={{
+                fontFamily: '"Instrument Serif", serif',
+              }}
+            >
+              {event.number}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+
+        {/* ==================================================
+            RIGHT — CONTENT
+        ================================================== */}
+
+        <motion.div
+          style={{
+            y: contentY,
+          }}
+          className="
+            relative
+            flex
+            min-h-[650px]
+            flex-col
+            justify-between
+            overflow-hidden
+          "
+        >
+          {/* TOP META */}
+
+          <div
+            className="
+              flex
+              items-center
+              justify-between
+              border-b
+              border-white/10
+              px-6
+              py-5
+              md:px-10
+              lg:px-12
+            "
+          >
+            <p
+              className="
+                text-[10px]
+                uppercase
+                tracking-[0.28em]
+                text-white/35
+              "
+            >
+              {event.category}
+            </p>
+
+            <p
+              className="
+                text-[10px]
+                uppercase
+                tracking-[0.28em]
+                text-white/35
+              "
+            >
+              {event.year}
+            </p>
+          </div>
+
+          {/* CONTENT */}
+
+          <div
+            className="
+              flex
+              flex-1
+              flex-col
+              justify-center
+              px-6
+              py-16
+              md:px-10
+              lg:px-12
+              xl:px-16
+            "
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={event.number}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                {/* SMALL NUMBER */}
+
+                <motion.div
+                  variants={textVariants}
+                  transition={{
+                    duration: 0.65,
+                    ease,
+                  }}
+                  className="
+                    mb-8
+                    flex
+                    items-center
+                    gap-4
+                  "
+                >
+                  <span
+                    className="
+                      text-xs
+                      tracking-[0.2em]
+                      text-violet-300
+                    "
+                  >
+                    {event.number}
+                  </span>
+
+                  <div
+                    className="
+                      h-px
+                      w-16
+                      bg-gradient-to-r
+                      from-violet-300/70
+                      to-transparent
+                    "
+                  />
+                </motion.div>
+
+                {/* TITLE */}
+
+                <motion.h2
+                  variants={textVariants}
+                  transition={{
+                    duration: 0.7,
+                    delay: 0.05,
+                    ease,
+                  }}
+                  className="
+                    max-w-[700px]
+                    text-[clamp(4rem,8vw,9rem)]
+                    leading-[0.76]
+                    tracking-[-0.055em]
+                  "
+                  style={{
+                    fontFamily: '"Instrument Serif", serif',
+                  }}
+                >
+                  {event.title}
+                </motion.h2>
+
+                {/* SUBTITLE */}
+
+                <motion.p
+                  variants={textVariants}
+                  transition={{
+                    duration: 0.7,
+                    delay: 0.1,
+                    ease,
+                  }}
+                  className="
+                    mt-7
+                    max-w-md
+                    text-lg
+                    font-light
+                    leading-relaxed
+                    text-white/65
+                    md:text-xl
+                  "
+                >
+                  {event.subtitle}
+                </motion.p>
+
+                {/* DESCRIPTION */}
+
+                <motion.div
+                  variants={textVariants}
+                  transition={{
+                    duration: 0.7,
+                    delay: 0.15,
+                    ease,
+                  }}
+                  className="
+                    mt-10
+                    grid
+                    max-w-xl
+                    grid-cols-1
+                    gap-8
+                    border-t
+                    border-white/10
+                    pt-8
+                    md:grid-cols-[120px_1fr]
+                  "
+                >
+                  <div>
+                    <p
+                      className="
+                        text-[9px]
+                        uppercase
+                        tracking-[0.25em]
+                        text-white/30
+                      "
+                    >
+                      Date
+                    </p>
+
+                    <p
+                      className="
+                        mt-2
+                        text-xs
+                        text-white/60
+                      "
+                    >
+                      {event.date}
+                    </p>
+                  </div>
+
+                  <p
+                    className="
+                      max-w-md
+                      text-sm
+                      font-light
+                      leading-7
+                      text-white/45
+                    "
+                  >
+                    {event.description}
+                  </p>
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           {/* ==================================================
-              BOTTOM
+              BOTTOM NAVIGATION
           ================================================== */}
 
           <div
             className="
               grid
-              shrink-0
-              grid-cols-[1fr_auto]
-              items-stretch
+              grid-cols-[1fr_auto_auto]
               border-t
-              border-violet-200/[0.12]
-              bg-black/[0.08]
-              backdrop-blur-sm
+              border-white/10
             "
           >
-            {/* ==================================================
-                BOTTOM LEFT
-            ================================================== */}
+            {/* PROGRESS */}
 
             <div
               className="
                 flex
-                items-end
-                justify-between
-                px-5
-                py-5
+                items-center
+                gap-5
+                px-6
+                md:px-10
+                lg:px-12
               "
             >
-              {/* NUMBER */}
-
-              <motion.div
-                key={events[activeEvent].number}
-                initial={{
-                  opacity: 0,
-                  y: 40,
-                  filter: "blur(10px)",
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  filter: "blur(0px)",
-                }}
-                transition={{
-                  duration: 0.45,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                <p
-                  className="
-                    text-[clamp(4rem,7vw,8rem)]
-                    leading-[0.7]
-                    text-violet-100/90
-                  "
-                  style={{
-                    fontFamily: '"Instrument Serif", serif',
-                  }}
-                >
-                  {events[activeEvent].number}
-                </p>
-              </motion.div>
-
-              {/* TITLE */}
-
-              <div className="mr-10 text-right">
-                <motion.h2
-                  key={events[activeEvent].title}
-                  initial={{
-                    opacity: 0,
-                    y: 35,
-                    filter: "blur(8px)",
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    filter: "blur(0px)",
-                  }}
-                  transition={{
-                    duration: 0.45,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="
-                    text-[clamp(4rem,7vw,8rem)]
-                    leading-[0.75]
-                    tracking-[-0.04em]
-                  "
-                  style={{
-                    fontFamily: '"Instrument Serif", serif',
-                  }}
-                >
-                  PAST EVENTS
-                </motion.h2>
-
-                <motion.p
-                  key={`${events[activeEvent].title}-meta`}
-                  initial={{
-                    opacity: 0,
-                    y: 10,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 0.05,
-                  }}
-                  className="
-                    mt-4
-                    text-xs
-                    uppercase
-                    tracking-[0.25em]
-                    text-violet-100/35
-                  "
-                >
-                  {events[activeEvent].title} /{" "}
-                  {events[activeEvent].year}
-                </motion.p>
-              </div>
-            </div>
-
-            {/* ==================================================
-                SIDE CONTROLS
-            ================================================== */}
-
-            <div
-              className="
-                flex
-                h-full
-                flex-col
-                border-l
-                border-violet-200/[0.12]
-              "
-            >
-              {/* EXPLORE */}
-
-              <button
-                aria-label="Explore event"
+              <span
                 className="
-                  group
-                  relative
-                  flex
-                  min-h-[70px]
-                  flex-1
-                  items-center
-                  justify-center
-                  overflow-hidden
-                  px-7
-                  transition-all
-                  duration-500
-                  hover:bg-violet-100
-                  hover:text-black
+                  text-[10px]
+                  tracking-[0.2em]
+                  text-white/30
                 "
               >
-                <div
-                  className="
-                    pointer-events-none
-                    absolute
-                    inset-0
-                    bg-gradient-to-br
-                    from-violet-800/[0.12]
-                    via-transparent
-                    to-blue-900/[0.08]
-                    transition-opacity
-                    duration-500
-                    group-hover:opacity-0
-                  "
-                />
-
-                <ArrowUpRight
-                  size={34}
-                  strokeWidth={1.3}
-                  className="
-                    relative
-                    z-10
-                    transition-transform
-                    duration-500
-                    group-hover:rotate-45
-                  "
-                />
-              </button>
-
-              {/* ================================================
-                  ARROWS
-              ================================================ */}
+                {String(activeEvent + 1).padStart(2, "0")}
+              </span>
 
               <div
                 className="
-                  flex
-                  border-t
-                  border-violet-200/[0.12]
+                  relative
+                  h-px
+                  max-w-[180px]
+                  flex-1
+                  overflow-hidden
+                  bg-white/10
                 "
               >
-                <button
-                  onClick={previousEvent}
-                  aria-label="Previous event"
+                <motion.div
+                  animate={{
+                    width: `${
+                      ((activeEvent + 1) / events.length) * 100
+                    }%`,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                    ease,
+                  }}
                   className="
-                    group
-                    flex
-                    h-16
-                    w-16
-                    items-center
-                    justify-center
-                    transition-all
-                    duration-300
-                    hover:bg-violet-100
-                    hover:text-black
+                    absolute
+                    left-0
+                    top-0
+                    h-full
+                    bg-violet-300
                   "
-                >
-                  <ArrowLeft
-                    size={20}
-                    strokeWidth={1.3}
-                    className="
-                      transition-transform
-                      duration-300
-                      group-hover:-translate-x-1
-                    "
-                  />
-                </button>
-
-                <button
-                  onClick={nextEvent}
-                  aria-label="Next event"
-                  className="
-                    group
-                    flex
-                    h-16
-                    w-16
-                    items-center
-                    justify-center
-                    border-l
-                    border-violet-200/[0.12]
-                    transition-all
-                    duration-300
-                    hover:bg-violet-100
-                    hover:text-black
-                  "
-                >
-                  <ArrowRight
-                    size={20}
-                    strokeWidth={1.3}
-                    className="
-                      transition-transform
-                      duration-300
-                      group-hover:translate-x-1
-                    "
-                  />
-                </button>
+                />
               </div>
+
+              <span
+                className="
+                  text-[10px]
+                  tracking-[0.2em]
+                  text-white/30
+                "
+              >
+                {String(events.length).padStart(2, "0")}
+              </span>
             </div>
+
+            {/* PREVIOUS */}
+
+            <button
+              onClick={previousEvent}
+              aria-label="Previous event"
+              className="
+                group
+                flex
+                h-20
+                w-20
+                items-center
+                justify-center
+                border-l
+                border-white/10
+                transition-all
+                duration-500
+                hover:bg-white
+                hover:text-black
+                md:h-24
+                md:w-24
+              "
+            >
+              <ArrowLeft
+                size={21}
+                strokeWidth={1.3}
+                className="
+                  transition-transform
+                  duration-500
+                  group-hover:-translate-x-1
+                "
+              />
+            </button>
+
+            {/* NEXT */}
+
+            <button
+              onClick={nextEvent}
+              aria-label="Next event"
+              className="
+                group
+                flex
+                h-20
+                min-w-[130px]
+                items-center
+                justify-center
+                gap-4
+                border-l
+                border-white/10
+                bg-violet-200
+                px-7
+                text-black
+                transition-all
+                duration-500
+                hover:bg-white
+                md:h-24
+                md:min-w-[165px]
+              "
+            >
+              <span
+                className="
+                  text-[10px]
+                  uppercase
+                  tracking-[0.22em]
+                "
+              >
+                Next
+              </span>
+
+              <ArrowRight
+                size={20}
+                strokeWidth={1.4}
+                className="
+                  transition-transform
+                  duration-500
+                  group-hover:translate-x-2
+                "
+              />
+            </button>
           </div>
-        </div>
-      </motion.div>
-    </section>
-  );
-}
 
-/* ============================================================
-   EVENT CARD
-============================================================ */
+          {/* DECORATIVE BIG TEXT */}
 
-function EventCard({
-  event,
-  index,
-  active,
-  onHover,
-}) {
-  return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 120,
-        rotate: index % 2 === 0 ? -3 : 3,
-        filter: "blur(15px)",
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-        rotate: 0,
-        filter: "blur(0px)",
-      }}
-      viewport={{
-        once: true,
-      }}
-      transition={{
-        duration: 0.9,
-        delay: index * 0.08,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      onMouseEnter={onHover}
-      className="
-        group
-        w-[16vw]
-        min-w-[210px]
-        shrink-0
-      "
-    >
-      {/* ==================================================
-          IMAGE
-      ================================================== */}
-
-      <motion.div
-        animate={{
-          y: active ? -15 : 0,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 180,
-          damping: 20,
-        }}
-        className="
-          relative
-          aspect-[3/4]
-          overflow-hidden
-          border
-          border-violet-200/[0.10]
-          bg-[#08060d]
-        "
-      >
-        <motion.img
-          src={event.image}
-          alt={event.title}
-          draggable="false"
-          animate={{
-            scale: active ? 1.08 : 1,
-          }}
-          transition={{
-            duration: 0.7,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="
-            h-full
-            w-full
-            select-none
-            object-cover
-          "
-        />
-
-        {/* DARK / PURPLE OVERLAY */}
-
-        <motion.div
-          animate={{
-            opacity: active ? 0.05 : 0.32,
-          }}
-          className="
-            absolute
-            inset-0
-            bg-gradient-to-b
-            from-[#0c0714]/20
-            via-black/10
-            to-[#090511]/60
-          "
-        />
-
-        {/* ACTIVE PURPLE GLOW */}
-
-        <motion.div
-          animate={{
-            opacity: active ? 1 : 0,
-          }}
-          transition={{
-            duration: 0.5,
-          }}
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-            bg-gradient-to-t
-            from-violet-950/35
-            via-transparent
-            to-transparent
-          "
-        />
-
-        {/* NUMBER */}
-
-        <div
-          className="
-            absolute
-            left-3
-            top-3
-            flex
-            items-center
-            gap-2
-          "
-        >
-          <div
-            className={`
-              h-[5px]
-              w-[5px]
-              rounded-full
-              transition-all
-              duration-500
-
-              ${
-                active
-                  ? "bg-violet-300 shadow-[0_0_10px_rgba(196,181,253,0.8)]"
-                  : "bg-white/40"
-              }
-            `}
-          />
-
-          <span
+          <motion.p
+            style={{
+              x: headingX,
+            }}
             className="
-              text-[10px]
-              tracking-[0.2em]
-              text-white/80
+              pointer-events-none
+              absolute
+              bottom-[12%]
+              right-[-5%]
+              -z-10
+              select-none
+              whitespace-nowrap
+              text-[11vw]
+              leading-none
+              tracking-[-0.06em]
+              text-white/[0.018]
             "
           >
-            {event.number}
-          </span>
-        </div>
-
-        {/* ACTIVE CORNER */}
-
-        <motion.div
-          animate={{
-            opacity: active ? 1 : 0,
-            scale: active ? 1 : 0.7,
-          }}
-          className="
-            absolute
-            bottom-3
-            right-3
-
-            flex
-            h-8
-            w-8
-            items-center
-            justify-center
-
-            rounded-full
-
-            border
-            border-violet-100/20
-
-            bg-black/30
-            backdrop-blur-md
-          "
-        >
-          <ArrowUpRight
-            size={14}
-            strokeWidth={1.2}
-          />
+            NIRVANA
+          </motion.p>
         </motion.div>
-      </motion.div>
-
-      {/* ==================================================
-          CARD INFO
-      ================================================== */}
-
-      <div
-        className="
-          flex
-          items-start
-          justify-between
-          pt-3
-        "
-      >
-        <p
-          className={`
-            text-xs
-            uppercase
-            tracking-[0.12em]
-            transition-colors
-            duration-300
-
-            ${
-              active
-                ? "text-violet-100"
-                : "text-white/70"
-            }
-          `}
-        >
-          {event.title}
-        </p>
-
-        <p
-          className="
-            text-xs
-            text-violet-100/30
-          "
-        >
-          {event.year}
-        </p>
       </div>
-    </motion.div>
+
+      {/* ======================================================
+          BOTTOM SCROLL LINE
+      ====================================================== */}
+
+      <motion.div
+        initial={{
+          scaleX: 0,
+        }}
+        whileInView={{
+          scaleX: 1,
+        }}
+        viewport={{
+          once: true,
+        }}
+        transition={{
+          duration: 1.4,
+          ease,
+        }}
+        className="
+          absolute
+          bottom-0
+          left-0
+          z-30
+          h-px
+          w-full
+          origin-left
+          bg-gradient-to-r
+          from-violet-400/70
+          via-violet-200/20
+          to-transparent
+        "
+      />
+    </section>
   );
 }

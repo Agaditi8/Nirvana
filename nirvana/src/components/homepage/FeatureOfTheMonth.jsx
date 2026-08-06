@@ -49,9 +49,6 @@ export default function ThirdSection() {
     w-full
     flex-col
     overflow-hidden
-    border
-    border-violet-200/10
-    bg-[#050407]
   "
       >
         {/* ================================================

@@ -22,16 +22,13 @@ const WINNING_LINES = [
 ];
 
 /* ============================================================
-   FIFTH SECTION
+   GAME
 ============================================================ */
 
 export default function Game() {
   const [board, setBoard] = useState(Array(9).fill(null));
-
   const [playerTurn, setPlayerTurn] = useState(true);
-
   const [winner, setWinner] = useState(null);
-
   const [winningCells, setWinningCells] = useState([]);
 
   const [score, setScore] = useState({
@@ -74,11 +71,7 @@ export default function Game() {
   ========================================================== */
 
   const handleCellClick = (index) => {
-    if (
-      board[index] ||
-      winner ||
-      !playerTurn
-    ) {
+    if (board[index] || winner || !playerTurn) {
       return;
     }
 
@@ -99,7 +92,7 @@ export default function Game() {
   };
 
   /* ==========================================================
-     NIRVANA / COMPUTER MOVE
+     COMPUTER MOVE
   ========================================================== */
 
   useEffect(() => {
@@ -114,18 +107,14 @@ export default function Game() {
 
   const makeComputerMove = () => {
     const available = board
-      .map((cell, index) =>
-        cell === null ? index : null
-      )
+      .map((cell, index) => (cell === null ? index : null))
       .filter((index) => index !== null);
 
     if (!available.length) return;
 
-    /*
-      First try winning.
-    */
-
     let selectedMove = null;
+
+    /* Try winning */
 
     for (const index of available) {
       const testBoard = [...board];
@@ -140,9 +129,7 @@ export default function Game() {
       }
     }
 
-    /*
-      Otherwise block player.
-    */
+    /* Block player */
 
     if (selectedMove === null) {
       for (const index of available) {
@@ -159,9 +146,7 @@ export default function Game() {
       }
     }
 
-    /*
-      Prefer center.
-    */
+    /* Prefer center */
 
     if (
       selectedMove === null &&
@@ -170,16 +155,12 @@ export default function Game() {
       selectedMove = 4;
     }
 
-    /*
-      Otherwise choose random.
-    */
+    /* Otherwise random */
 
     if (selectedMove === null) {
       selectedMove =
         available[
-        Math.floor(
-          Math.random() * available.length
-        )
+          Math.floor(Math.random() * available.length)
         ];
     }
 
@@ -205,7 +186,6 @@ export default function Game() {
 
   const finishGame = (result) => {
     setWinner(result.winner);
-
     setWinningCells(result.line);
 
     if (result.winner === "N") {
@@ -224,22 +204,15 @@ export default function Game() {
   };
 
   /* ==========================================================
-     RESET BOARD
+     RESET
   ========================================================== */
 
   const resetBoard = () => {
     setBoard(Array(9).fill(null));
-
     setWinner(null);
-
     setWinningCells([]);
-
     setPlayerTurn(true);
   };
-
-  /* ==========================================================
-     RESET EVERYTHING
-  ========================================================== */
 
   const resetEverything = () => {
     resetBoard();
@@ -286,28 +259,48 @@ export default function Game() {
         w-full
         overflow-hidden
         bg-black
-        p-6
+        px-6
+        py-10
         text-white
       "
     >
       {/* ======================================================
-          MAIN FRAME
+          VERY SUBTLE PAGE GLOW
+          Black remains dominant.
+      ====================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-1/2
+          top-1/2
+          h-[700px]
+          w-[700px]
+          -translate-x-1/2
+          -translate-y-1/2
+          rounded-full
+          bg-violet-950/[0.07]
+          blur-[180px]
+        "
+      />
+
+      {/* ======================================================
+          CONTENT
       ====================================================== */}
 
       <motion.div
         initial={{
           opacity: 0,
-          y: 80,
-          scale: 0.97,
+          y: 70,
         }}
         whileInView={{
           opacity: 1,
           y: 0,
-          scale: 1,
         }}
         viewport={{
           once: true,
-          amount: 0.1,
+          amount: 0.08,
         }}
         transition={{
           duration: 1.1,
@@ -315,123 +308,33 @@ export default function Game() {
         }}
         className="
           relative
+          z-10
+          mx-auto
           flex
-          min-h-[calc(100vh-48px)]
+          min-h-[calc(100vh-80px)]
           w-full
+          max-w-[1600px]
           flex-col
-          overflow-hidden
-
-         
-
-          bg-[#050407]
         "
       >
         {/* ==================================================
-            BACKGROUND
-        ================================================== */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-
-            bg-[radial-gradient(circle_at_18%_25%,rgba(105,70,180,0.18),transparent_28%),radial-gradient(circle_at_82%_65%,rgba(40,50,130,0.16),transparent_34%),radial-gradient(circle_at_55%_90%,rgba(95,45,140,0.10),transparent_35%),linear-gradient(135deg,#050407_0%,#090711_48%,#05060b_100%)]
-          "
-        />
-
-        {/* GALAXY DOTS */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-            opacity-[0.14]
-
-            [background-image:radial-gradient(rgba(205,190,255,0.7)_0.6px,transparent_0.6px)]
-            [background-size:25px_25px]
-          "
-        />
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-            opacity-[0.06]
-
-            [background-image:radial-gradient(rgba(120,145,255,0.9)_0.5px,transparent_0.5px)]
-            [background-position:11px_8px]
-            [background-size:39px_39px]
-          "
-        />
-
-        {/* PURPLE GLOW */}
-
-        <div
-          className="
-            pointer-events-none
-            absolute
-            left-1/2
-            top-[45%]
-
-            h-[500px]
-            w-[500px]
-
-            -translate-x-1/2
-            -translate-y-1/2
-
-            rounded-full
-
-            bg-violet-800/[0.08]
-
-            blur-[140px]
-          "
-        />
-
-        {/* ==================================================
-            TOP BAR
+            TOP
         ================================================== */}
 
         <div
           className="
             relative
-            z-20
-
             flex
-            h-[11vh]
-            min-h-[90px]
+            min-h-[110px]
             shrink-0
-
             items-center
             justify-between
-
-            
-
-            px-6
+            px-2
           "
         >
           {/* LEFT */}
 
           <div className="flex items-center gap-5">
-            <span
-              className="
-                text-[10px]
-                tracking-[0.25em]
-                text-violet-200/35
-              "
-            >
-              05
-            </span>
-
-            <div
-              className="
-                h-7
-                w-px
-                bg-violet-200/[0.15]
-              "
-            />
 
             <p
               className="
@@ -453,10 +356,8 @@ export default function Game() {
               left-1/2
               hidden
               -translate-x-1/2
-
               items-center
               gap-3
-
               lg:flex
             "
           >
@@ -501,26 +402,18 @@ export default function Game() {
               Nirvana
             </span>
           </div>
-
-
-
         </div>
 
         {/* ==================================================
-            MAIN GAME AREA
+            GAME AREA
         ================================================== */}
 
         <div
           className="
-            relative
-            z-10
-
             grid
             min-h-0
             flex-1
-
             grid-cols-1
-
             lg:grid-cols-[1fr_520px_1fr]
           "
         >
@@ -532,18 +425,13 @@ export default function Game() {
             className="
               relative
               hidden
-
-              border-r
-              border-violet-200/[0.10]
-
               p-8
-
               lg:flex
               lg:flex-col
               lg:justify-between
             "
           >
-            {/* TOP */}
+            {/* PLAYER SYMBOL */}
 
             <motion.div
               initial={{
@@ -593,30 +481,46 @@ export default function Game() {
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 className="
-    flex
-    h-[130px]
-    w-[130px]
-    items-center
-    justify-center
-  "
+                  flex
+                  h-[130px]
+                  w-[130px]
+                  items-center
+                  justify-center
+                "
               >
                 <img
                   src="/images/icons/Game-Pon2.png"
                   alt="Your game symbol"
                   draggable="false"
                   className="
-      h-full
-      w-full
-      select-none
-      object-contain
-    "
+                    h-full
+                    w-full
+                    select-none
+                    object-contain
+                  "
                 />
               </motion.div>
             </motion.div>
 
-            {/* BOTTOM */}
+            {/* PLAYER SCORE */}
 
-            <div>
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.4,
+              }}
+            >
               <p
                 className="
                   max-w-[230px]
@@ -627,7 +531,7 @@ export default function Game() {
               >
                 Three in a row.
                 <br />
-                That's all you need.
+                That&apos;s all you need.
                 <br />
                 Probably.
               </p>
@@ -668,11 +572,11 @@ export default function Game() {
                   Wins
                 </span>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* ==================================================
-              CENTER GAME
+              CENTER
           ================================================== */}
 
           <div
@@ -682,7 +586,6 @@ export default function Game() {
               flex-col
               items-center
               justify-center
-
               px-6
               py-8
             "
@@ -711,19 +614,19 @@ export default function Game() {
                   duration: 0.35,
                 }}
                 className="
-                  mb-7
+                  mb-8
                   flex
                   items-center
-                  gap-3
+                  gap-4
                 "
               >
                 <motion.div
                   animate={
                     !playerTurn && !winner
                       ? {
-                        scale: [1, 1.5, 1],
-                        opacity: [0.3, 1, 0.3],
-                      }
+                          scale: [1, 1.5, 1],
+                          opacity: [0.3, 1, 0.3],
+                        }
                       : {}
                   }
                   transition={{
@@ -731,14 +634,11 @@ export default function Game() {
                     repeat: Infinity,
                   }}
                   className="
-                    h-[5px]
-                    w-[5px]
-
+                    h-[8px]
+                    w-[8px]
                     rounded-full
-
                     bg-violet-300
-
-                    shadow-[0_0_10px_rgba(196,181,253,0.8)]
+                    shadow-[0_0_14px_rgba(196,181,253,0.9)]
                   "
                 />
 
@@ -746,9 +646,13 @@ export default function Game() {
                   className="
                     text-[20px]
                     uppercase
-                    tracking-[0.32em]
-                    text-white/45
+                    tracking-[0.25em]
+                    text-white/65
                   "
+                  style={{
+                    fontFamily:
+                      '"Instrument Serif", serif',
+                  }}
                 >
                   {getStatus()}
                 </p>
@@ -756,7 +660,9 @@ export default function Game() {
             </AnimatePresence>
 
             {/* ==================================================
-                BOARD
+                PURPLE TIC TAC TOE AREA
+
+                Purple treatment ONLY exists here.
             ================================================== */}
 
             <motion.div
@@ -780,47 +686,110 @@ export default function Game() {
                 ease: [0.16, 1, 0.3, 1],
               }}
               className="
-                grid
+                relative
                 aspect-square
                 w-full
                 max-w-[430px]
-
-                grid-cols-3
-                grid-rows-3
-
-                border
-                border-violet-200/[0.15]
-
-                bg-black/10
-
-                backdrop-blur-sm
+                overflow-hidden
+                bg-[#090611]
+                shadow-[0_0_80px_rgba(109,40,217,0.13)]
               "
             >
-              {board.map((cell, index) => (
-                <GameCell
-                  key={index}
-                  value={cell}
-                  index={index}
-                  winner={winningCells.includes(
-                    index
-                  )}
-                  disabled={
-                    !playerTurn ||
-                    winner ||
-                    cell !== null
-                  }
-                  onClick={() =>
-                    handleCellClick(index)
-                  }
-                />
-              ))}
+              {/* PURPLE / BLACK BACKGROUND */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.18),transparent_38%),radial-gradient(circle_at_80%_75%,rgba(76,29,149,0.22),transparent_42%),linear-gradient(135deg,#08050d_0%,#11091d_50%,#07050c_100%)]
+                "
+              />
+
+              {/* BOARD GALAXY DOTS */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  opacity-[0.18]
+                  [background-image:radial-gradient(rgba(221,214,254,0.8)_0.65px,transparent_0.65px)]
+                  [background-size:22px_22px]
+                "
+              />
+
+              {/* SECOND DOT LAYER */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  opacity-[0.10]
+                  [background-image:radial-gradient(rgba(129,140,248,0.9)_0.5px,transparent_0.5px)]
+                  [background-position:9px_13px]
+                  [background-size:37px_37px]
+                "
+              />
+
+              {/* CENTRAL PURPLE GLOW */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  left-1/2
+                  top-1/2
+                  h-[280px]
+                  w-[280px]
+                  -translate-x-1/2
+                  -translate-y-1/2
+                  rounded-full
+                  bg-violet-700/[0.10]
+                  blur-[80px]
+                "
+              />
+
+              {/* ACTUAL GRID */}
+
+              <div
+                className="
+                  relative
+                  z-10
+                  grid
+                  h-full
+                  w-full
+                  grid-cols-3
+                  grid-rows-3
+                "
+              >
+                {board.map((cell, index) => (
+                  <GameCell
+                    key={index}
+                    value={cell}
+                    index={index}
+                    winner={winningCells.includes(
+                      index
+                    )}
+                    disabled={
+                      !playerTurn ||
+                      winner ||
+                      cell !== null
+                    }
+                    onClick={() =>
+                      handleCellClick(index)
+                    }
+                  />
+                ))}
+              </div>
             </motion.div>
 
             {/* INSTRUCTION */}
 
             <p
               className="
-                mt-6
+                mt-7
                 text-[12px]
                 uppercase
                 tracking-[0.3em]
@@ -832,27 +801,39 @@ export default function Game() {
           </div>
 
           {/* ==================================================
-              RIGHT — NIRVANA
+              RIGHT
           ================================================== */}
 
           <div
             className="
               relative
               hidden
-
-              border-l
-              border-violet-200/[0.10]
-
               p-8
-
               lg:flex
               lg:flex-col
               lg:justify-between
             "
           >
-            {/* TOP */}
+            {/* NIRVANA SYMBOL */}
 
-            <div className="text-right">
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: 50,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.2,
+              }}
+              className="text-right"
+            >
               <p
                 className="
                   mb-5
@@ -869,7 +850,7 @@ export default function Game() {
                 initial={{
                   opacity: 0,
                   scale: 0.7,
-                  rotate: -10,
+                  rotate: 10,
                 }}
                 whileInView={{
                   opacity: 1,
@@ -884,31 +865,48 @@ export default function Game() {
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 className="
-    ml-auto
-    flex
-    h-[130px]
-    w-[130px]
-    items-center
-    justify-center
-  "
+                  ml-auto
+                  flex
+                  h-[130px]
+                  w-[130px]
+                  items-center
+                  justify-center
+                "
               >
-                <motion.img
+                <img
                   src="/images/icons/Game-Pon.png"
                   alt="Nirvana game piece"
                   draggable="false"
                   className="
-      h-full
-      w-full
-      select-none
-      object-contain
-    "
+                    h-full
+                    w-full
+                    select-none
+                    object-contain
+                  "
                 />
               </motion.div>
-            </div>
+            </motion.div>
 
-            {/* BOTTOM */}
+            {/* NIRVANA SCORE */}
 
-            <div className="text-right">
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.4,
+              }}
+              className="text-right"
+            >
               <p
                 className="
                   ml-auto
@@ -960,41 +958,36 @@ export default function Game() {
                   ).padStart(2, "0")}
                 </span>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
         {/* ==================================================
-            BOTTOM BAR
+            BOTTOM CONTROLS
+            No border / no containing bar
         ================================================== */}
 
         <div
           className="
-            relative
-            z-20
-
-            grid
-            min-h-[76px]
+            flex
+            min-h-[90px]
             shrink-0
-
-            grid-cols-[1fr_auto_auto]
-
-            border-t
-            border-violet-200/[0.12]
-
-            bg-black/10
-
-            backdrop-blur-md
+            flex-col
+            items-center
+            justify-between
+            gap-5
+            px-2
+            pt-5
+            md:flex-row
           "
         >
-          {/* SCORE */}
+          {/* SMALL SCORE */}
 
           <div
             className="
               flex
               items-center
               gap-7
-              px-6
             "
           >
             <div>
@@ -1062,124 +1055,109 @@ export default function Game() {
             </div>
           </div>
 
-          {/* RESET SCORE */}
+          {/* BUTTONS */}
 
-          <button
-            onClick={resetEverything}
+          <div
             className="
-              group
-
               flex
               items-center
               gap-3
-
-              border-l
-              border-violet-200/[0.12]
-
-              px-7
-
-              text-[9px]
-              uppercase
-              tracking-[0.22em]
-
-              text-white/35
-
-              transition-all
-              duration-500
-
-              hover:bg-white
-              hover:text-black
             "
           >
-            <RotateCcw
-              size={14}
-              strokeWidth={1.2}
-            />
-
-            Reset score
-          </button>
-
-          {/* NEW ROUND */}
-
-          <button
-            onClick={resetBoard}
-            className="
-              group
-
-              relative
-              flex
-              items-center
-              gap-5
-              overflow-hidden
-
-              border-l
-              border-violet-200/[0.12]
-
-              bg-[#0d0915]
-
-              px-8
-
-              transition-all
-              duration-500
-
-              hover:bg-violet-100
-              hover:text-black
-            "
-          >
-            <div
+            <button
+              onClick={resetEverything}
               className="
-                pointer-events-none
-                absolute
-                -right-10
-                top-1/2
-
-                h-24
-                w-24
-
-                -translate-y-1/2
-
-                rounded-full
-
-                bg-violet-700/20
-
-                blur-[35px]
-
-                transition-opacity
-                duration-500
-
-                group-hover:opacity-0
-              "
-            />
-
-            <span
-              className="
-                relative
-                z-10
-
+                group
+                flex
+                items-center
+                gap-3
+                px-6
+                py-4
                 text-[9px]
                 uppercase
-                tracking-[0.25em]
-              "
-            >
-              New round
-            </span>
-
-            <span
-              className="
-                relative
-                z-10
-
-                text-lg
-
-                transition-transform
+                tracking-[0.22em]
+                text-white/35
+                transition-all
                 duration-500
-
-                group-hover:rotate-90
+                hover:text-white
               "
             >
-              +
-            </span>
-          </button>
+              <RotateCcw
+                size={14}
+                strokeWidth={1.2}
+                className="
+                  transition-transform
+                  duration-500
+                  group-hover:-rotate-180
+                "
+              />
+
+              Reset score
+            </button>
+
+            <button
+              onClick={resetBoard}
+              className="
+                group
+                relative
+                flex
+                items-center
+                gap-5
+                overflow-hidden
+                bg-[#100a19]
+                px-7
+                py-4
+                text-white
+                transition-all
+                duration-500
+                hover:bg-violet-100
+                hover:text-black
+              "
+            >
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  -right-8
+                  top-1/2
+                  h-20
+                  w-20
+                  -translate-y-1/2
+                  rounded-full
+                  bg-violet-700/25
+                  blur-[30px]
+                  transition-opacity
+                  duration-500
+                  group-hover:opacity-0
+                "
+              />
+
+              <span
+                className="
+                  relative
+                  z-10
+                  text-[9px]
+                  uppercase
+                  tracking-[0.25em]
+                "
+              >
+                New round
+              </span>
+
+              <span
+                className="
+                  relative
+                  z-10
+                  text-lg
+                  transition-transform
+                  duration-500
+                  group-hover:rotate-90
+                "
+              >
+                +
+              </span>
+            </button>
+          </div>
         </div>
       </motion.div>
     </section>
@@ -1202,16 +1180,16 @@ function GameCell({
       whileHover={
         !disabled
           ? {
-            backgroundColor:
-              "rgba(139, 92, 246, 0.08)",
-          }
+              backgroundColor:
+                "rgba(139, 92, 246, 0.12)",
+            }
           : {}
       }
       whileTap={
         !disabled
           ? {
-            scale: 0.94,
-          }
+              scale: 0.94,
+            }
           : {}
       }
       onClick={onClick}
@@ -1224,27 +1202,30 @@ function GameCell({
         justify-center
         overflow-hidden
 
-        border-violet-200/[0.13]
+        border-violet-200/[0.18]
 
         transition-colors
         duration-500
 
         ${index % 3 !== 2 ? "border-r" : ""}
-
         ${index < 6 ? "border-b" : ""}
 
-        ${winner
-          ? "bg-violet-300/[0.08]"
-          : "bg-transparent"
+        ${
+          winner
+            ? "bg-violet-300/[0.10]"
+            : "bg-transparent"
         }
 
-        ${disabled
-          ? "cursor-default"
-          : "cursor-pointer"
+        ${
+          disabled
+            ? "cursor-default"
+            : "cursor-pointer"
         }
       `}
     >
-      {/* HOVER CORNERS */}
+      {/* ==================================================
+          HOVER DETAILS
+      ================================================== */}
 
       {!value && (
         <>
@@ -1253,44 +1234,38 @@ function GameCell({
               absolute
               left-3
               top-3
-
               h-2
               w-2
-
               border-l
               border-t
               border-violet-200/0
-
               transition-all
               duration-300
-
               group-hover:border-violet-200/30
             "
           />
 
           <div
             className="
+              absolute
               bottom-3
               right-3
-              absolute
-
               h-2
               w-2
-
               border-b
               border-r
               border-violet-200/0
-
               transition-all
               duration-300
-
               group-hover:border-violet-200/30
             "
           />
         </>
       )}
 
-      {/* WIN GLOW */}
+      {/* ==================================================
+          WIN GLOW
+      ================================================== */}
 
       <AnimatePresence>
         {winner && (
@@ -1318,14 +1293,10 @@ function GameCell({
             className="
               pointer-events-none
               absolute
-
               h-[80%]
               w-[80%]
-
               rounded-full
-
               bg-violet-600/20
-
               blur-[30px]
             "
           />
@@ -1333,7 +1304,7 @@ function GameCell({
       </AnimatePresence>
 
       {/* ==================================================
-          SYMBOL
+          PLAYER
       ================================================== */}
 
       <AnimatePresence mode="wait">
@@ -1358,28 +1329,32 @@ function GameCell({
               damping: 14,
             }}
             className="
-      relative
-      z-10
-      flex
-      h-[70%]
-      w-[70%]
-      items-center
-      justify-center
-    "
+              relative
+              z-10
+              flex
+              h-[70%]
+              w-[70%]
+              items-center
+              justify-center
+            "
           >
-            <motion.img
+            <img
               src="/images/icons/Game-Pon2.png"
               alt="Player"
               draggable="false"
               className="
-        h-full
-        w-full
-        select-none
-        object-contain
-      "
+                h-full
+                w-full
+                select-none
+                object-contain
+              "
             />
           </motion.div>
         )}
+
+        {/* ==================================================
+            NIRVANA
+        ================================================== */}
 
         {value === "STAR" && (
           <motion.div
@@ -1402,25 +1377,25 @@ function GameCell({
               damping: 14,
             }}
             className="
-      relative
-      z-10
-      flex
-      h-[70%]
-      w-[70%]
-      items-center
-      justify-center
-    "
+              relative
+              z-10
+              flex
+              h-[70%]
+              w-[70%]
+              items-center
+              justify-center
+            "
           >
-            <motion.img
+            <img
               src="/images/icons/Game-Pon.png"
               alt="Nirvana"
               draggable="false"
               className="
-        h-full
-        w-full
-        select-none
-        object-contain
-      "
+                h-full
+                w-full
+                select-none
+                object-contain
+              "
             />
           </motion.div>
         )}
@@ -1434,7 +1409,6 @@ function GameCell({
           absolute
           bottom-2
           left-2
-
           text-[7px]
           tracking-[0.2em]
           text-white/[0.12]

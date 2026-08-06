@@ -50,6 +50,16 @@ export default function MarqueeText() {
       "
     >
 
+      {/* ambient background wash so single icons don't sit on flat black */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(124,58,237,0.10),transparent_70%)]
+        "
+      />
+
       {/* =====================================================
           ROW 01
       ===================================================== */}
@@ -66,12 +76,10 @@ export default function MarqueeText() {
         </BigSerif>
 
 
-        <IconCapsule
+        <IconMark
           icon={PenTool}
           progress={scrollYProgress}
           direction={1}
-          shape="soft"
-          label="CREATE"
         />
 
 
@@ -109,12 +117,10 @@ export default function MarqueeText() {
         </BigSerif>
 
 
-        <IconCapsule
+        <IconMark
           icon={Palette}
           progress={scrollYProgress}
           direction={-1}
-          shape="wave"
-          label="EXPLORE"
         />
 
 
@@ -142,12 +148,10 @@ export default function MarqueeText() {
         </BigSerif>
 
 
-        <IconCapsule
+        <IconMark
           icon={Layers3}
           progress={scrollYProgress}
           direction={1}
-          shape="cut"
-          label="DESIGN"
         />
 
 
@@ -185,12 +189,10 @@ export default function MarqueeText() {
         </BigSerif>
 
 
-        <IconCapsule
+        <IconMark
           icon={Spline}
           progress={scrollYProgress}
           direction={-1}
-          shape="pill"
-          label="EVOLVE"
         />
 
 
@@ -350,7 +352,7 @@ function MovingRow({
         items-center
         overflow-hidden
         border-b
-        border-violet-200/[0.12]
+        border-violet-200/[0.10]
       "
     >
 
@@ -367,7 +369,7 @@ function MovingRow({
           w-max
           min-w-max
           items-center
-          gap-5
+          gap-7
           whitespace-nowrap
           will-change-transform
         "
@@ -382,7 +384,7 @@ function MovingRow({
             flex
             shrink-0
             items-center
-            gap-5
+            gap-7
           "
         >
           {children}
@@ -403,7 +405,7 @@ function MovingRow({
             flex
             shrink-0
             items-center
-            gap-5
+            gap-7
           "
         >
           {children}
@@ -440,7 +442,7 @@ function BigSerif({
 
         ${
           muted
-            ? "text-violet-200/45"
+            ? "text-violet-200/40"
             : "text-white"
         }
       `}
@@ -457,557 +459,187 @@ function BigSerif({
 
 
 /* ============================================================
-   DESIGN ICON CAPSULE
+   SINGLE ICON MARK
+
+   A small, quiet icon badge — no shape gimmicks, no label,
+   just a fine ring, a soft violet glow, and the icon itself.
+   Reads premium sitting inline with the serif type instead
+   of competing with it.
 ============================================================ */
 
-function IconCapsule({
+function IconMark({
   icon: Icon,
-  shape = "pill",
   progress,
   direction = 1,
-  label,
 }) {
 
 
   /* ========================================================
-     DIFFERENT CAPSULE SHAPES
+     SUBTLE DRIFT
   ======================================================== */
 
-  const shapes = {
-
-    pill:
-      "rounded-full",
-
-    soft:
-      "rounded-[38px]",
-
-    wave:
-      "rounded-[50%_18%_50%_18%/40%_50%_40%_50%]",
-
-    cut:
-      "[clip-path:polygon(8%_0,92%_0,100%_50%,92%_100%,8%_100%,0_50%)]",
-
-  };
-
-
-
-  /* ========================================================
-     ICON X PARALLAX
-  ======================================================== */
-
-  const iconX = useTransform(
+  const x = useTransform(
     progress,
-
-    [
-      0,
-      0.5,
-      1,
-    ],
-
-    direction === 1
-
-      ? [
-          -22,
-          0,
-          22,
-        ]
-
-      : [
-          22,
-          0,
-          -22,
-        ]
+    [0, 0.5, 1],
+    direction === 1 ? [-14, 0, 14] : [14, 0, -14]
   );
 
-
-
-  /* ========================================================
-     ICON Y PARALLAX
-  ======================================================== */
-
-  const iconY = useTransform(
+  const y = useTransform(
     progress,
-
-    [
-      0,
-      0.5,
-      1,
-    ],
-
-    direction === 1
-
-      ? [
-          -25,
-          0,
-          25,
-        ]
-
-      : [
-          25,
-          0,
-          -25,
-        ]
+    [0, 0.5, 1],
+    direction === 1 ? [-10, 0, 10] : [10, 0, -10]
   );
-
-
-
-  /* ========================================================
-     ICON ROTATION
-  ======================================================== */
 
   const rotate = useTransform(
     progress,
-
-    [
-      0,
-      0.5,
-      1,
-    ],
-
-    direction === 1
-
-      ? [
-          -14,
-          0,
-          14,
-        ]
-
-      : [
-          14,
-          0,
-          -14,
-        ]
+    [0, 0.5, 1],
+    direction === 1 ? [-8, 0, 8] : [8, 0, -8]
   );
 
-
-
-  /* ========================================================
-     ICON SCALE
-  ======================================================== */
-
-  const iconScale = useTransform(
+  const scale = useTransform(
     progress,
-
-    [
-      0,
-      0.5,
-      1,
-    ],
-
-    [
-      0.72,
-      1,
-      0.72,
-    ]
+    [0, 0.5, 1],
+    [0.82, 1, 0.82]
   );
 
-
-
-  /* ========================================================
-     ICON BLUR
-  ======================================================== */
-
-  const iconBlur = useTransform(
+  const blur = useTransform(
     progress,
-
+    [0, 0.2, 0.5, 0.8, 1],
     [
-      0,
-      0.2,
-      0.5,
-      0.8,
-      1,
-    ],
-
-    [
-      "blur(12px)",
-      "blur(3px)",
+      "blur(8px)",
+      "blur(2px)",
       "blur(0px)",
-      "blur(3px)",
-      "blur(12px)",
+      "blur(2px)",
+      "blur(8px)",
     ]
   );
-
-
-
-  /* ========================================================
-     PURPLE GLOW
-  ======================================================== */
 
   const glowOpacity = useTransform(
     progress,
-
-    [
-      0,
-      0.5,
-      1,
-    ],
-
-    [
-      0.1,
-      0.65,
-      0.1,
-    ]
+    [0, 0.5, 1],
+    [0.15, 0.55, 0.15]
   );
 
-
-
-  /* ========================================================
-     DECORATIVE BACKGROUND ICON ROTATION
-  ======================================================== */
-
-  const backgroundRotate = useTransform(
+  const ringOpacity = useTransform(
     progress,
-
-    [
-      0,
-      1,
-    ],
-
-    direction === 1
-
-      ? [
-          -20,
-          20,
-        ]
-
-      : [
-          20,
-          -20,
-        ]
+    [0, 0.5, 1],
+    [0.15, 0.4, 0.15]
   );
 
 
   return (
 
-    <div
-      className={`
+    <motion.div
+      style={{
+        x,
+        y,
+        rotate,
+        scale,
+        filter: blur,
+      }}
+      className="
         relative
 
         flex
 
-        h-[100px]
-        w-[250px]
+        h-[76px]
+        w-[76px]
 
         shrink-0
 
         items-center
         justify-center
 
-        overflow-hidden
+        rounded-full
 
-        border
-        border-violet-200/[0.12]
+        will-change-transform
 
-        bg-[radial-gradient(circle_at_50%_50%,rgba(96,70,165,0.20),transparent_55%),linear-gradient(135deg,#0b0712_0%,#07060c_45%,#05050a_100%)]
-
-        md:h-[115px]
-        md:w-[290px]
-
-        ${shapes[shape]}
-      `}
+        md:h-[92px]
+        md:w-[92px]
+      "
     >
 
-
       {/* ==================================================
-          PURPLE GLOW
+          SOFT VIOLET GLOW
       ================================================== */}
 
       <motion.div
-        style={{
-          opacity: glowOpacity,
-        }}
-        className="
-          pointer-events-none
-
-          absolute
-
-          left-1/2
-          top-1/2
-
-          h-[130px]
-          w-[130px]
-
-          -translate-x-1/2
-          -translate-y-1/2
-
-          rounded-full
-
-          bg-violet-500/30
-
-          blur-[45px]
-        "
-      />
-
-
-
-      {/* ==================================================
-          DARK BLUE GLOW
-      ================================================== */}
-
-      <div
-        className="
-          pointer-events-none
-
-          absolute
-
-          -bottom-[50px]
-          -right-[30px]
-
-          h-[120px]
-          w-[150px]
-
-          rounded-full
-
-          bg-blue-900/20
-
-          blur-[50px]
-        "
-      />
-
-
-
-      {/* ==================================================
-          GALAXY DOTS
-      ================================================== */}
-
-      <div
+        style={{ opacity: glowOpacity }}
         className="
           pointer-events-none
 
           absolute
           inset-0
 
-          opacity-[0.22]
+          rounded-full
 
-          [background-image:radial-gradient(rgba(210,200,255,0.75)_0.6px,transparent_0.6px)]
+          bg-violet-500/40
 
-          [background-size:19px_19px]
+          blur-[22px]
         "
       />
 
 
 
       {/* ==================================================
-          SECOND DOT LAYER
+          FINE RING
       ================================================== */}
 
-      <div
+      <motion.div
+        style={{ opacity: ringOpacity }}
         className="
           pointer-events-none
 
           absolute
           inset-0
 
-          opacity-[0.1]
+          rounded-full
 
-          [background-image:radial-gradient(rgba(120,145,255,0.9)_0.5px,transparent_0.5px)]
-
-          [background-position:8px_11px]
-
-          [background-size:31px_31px]
+          border
+          border-violet-200
         "
       />
 
 
 
       {/* ==================================================
-          LARGE BACKGROUND ICON
-      ================================================== */}
-
-      <motion.div
-        style={{
-          rotate: backgroundRotate,
-        }}
-        className="
-          pointer-events-none
-
-          absolute
-
-          left-1/2
-          top-1/2
-
-          -translate-x-1/2
-          -translate-y-1/2
-        "
-      >
-
-        <Icon
-          strokeWidth={0.55}
-          className="
-            h-[125px]
-            w-[125px]
-            text-violet-200/[0.07]
-          "
-        />
-
-      </motion.div>
-
-
-
-      {/* ==================================================
-          LEFT DECORATIVE LINE
+          GLASS DISC
       ================================================== */}
 
       <div
         className="
           absolute
-          left-4
-          top-1/2
+          inset-[6px]
 
-          h-px
-          w-[35px]
+          rounded-full
 
-          -translate-y-1/2
+          bg-white/[0.03]
 
-          bg-gradient-to-r
-          from-transparent
-          to-violet-200/20
+          backdrop-blur-sm
         "
       />
 
 
 
       {/* ==================================================
-          MAIN ICON
+          ICON
       ================================================== */}
 
-      <motion.div
-        style={{
-          x: iconX,
-          y: iconY,
-          rotate,
-          scale: iconScale,
-          filter: iconBlur,
-        }}
+      <Icon
+        size={26}
+        strokeWidth={1.15}
         className="
           relative
           z-10
 
-          flex
+          text-violet-50/90
 
-          h-[68px]
-          w-[68px]
-
-          items-center
-          justify-center
-
-          rounded-full
-
-          border
-          border-violet-100/[0.15]
-
-          bg-black/30
-
-          shadow-[0_0_30px_rgba(111,91,255,0.12)]
-
-          backdrop-blur-md
-
-          will-change-transform
-        "
-      >
-
-        <Icon
-          size={30}
-          strokeWidth={1.1}
-          className="text-violet-50/90"
-        />
-
-      </motion.div>
-
-
-
-      {/* ==================================================
-          RIGHT DECORATIVE LINE
-      ================================================== */}
-
-      <div
-        className="
-          absolute
-          right-4
-          top-1/2
-
-          h-px
-          w-[35px]
-
-          -translate-y-1/2
-
-          bg-gradient-to-l
-          from-transparent
-          to-violet-200/20
+          md:h-8
+          md:w-8
         "
       />
 
+    </motion.div>
 
-
-      {/* ==================================================
-          SMALL LABEL
-      ================================================== */}
-
-      <div
-        className="
-          absolute
-          bottom-[7px]
-          left-1/2
-
-          z-20
-
-          -translate-x-1/2
-
-          text-[7px]
-
-          uppercase
-
-          tracking-[0.3em]
-
-          text-violet-100/35
-        "
-      >
-        {label}
-      </div>
-
-
-
-      {/* ==================================================
-          SUBTLE TOP SHINE
-      ================================================== */}
-
-      <div
-        className="
-          pointer-events-none
-
-          absolute
-          inset-0
-
-          bg-gradient-to-br
-
-          from-white/[0.05]
-
-          via-transparent
-
-          to-violet-500/[0.06]
-        "
-      />
-
-
-
-      {/* ==================================================
-          INNER BORDER
-      ================================================== */}
-
-      <div
-        className="
-          pointer-events-none
-
-          absolute
-          inset-[1px]
-
-          rounded-[inherit]
-
-          border
-          border-white/[0.025]
-        "
-      />
-
-    </div>
   );
 }
