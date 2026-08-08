@@ -3,7 +3,8 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-const ease = [0.16, 1, 0.3, 1];
+// Framer Motion expects a cubic-bezier tuple, not a generic number[].
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function NotFound() {
   return (
@@ -13,14 +14,13 @@ export default function NotFound() {
         flex
         min-h-screen
         w-full
+        flex-col
         items-center
         justify-center
         overflow-hidden
-        bg-[var(--color-black)]
         px-5
         py-16
-        text-primary
-        sm:px-8
+        bg-[var(--color-background)]
       "
     >
       {/* =====================================================
@@ -28,7 +28,6 @@ export default function NotFound() {
       ===================================================== */}
 
       <div className="noise z-0 opacity-[0.06]" />
-
 
       {/* =====================================================
           VIOLET ATMOSPHERE
@@ -56,7 +55,6 @@ export default function NotFound() {
         "
       />
 
-
       {/* =====================================================
           CONTENT
       ===================================================== */}
@@ -73,7 +71,6 @@ export default function NotFound() {
           text-center
         "
       >
-
         {/* =================================================
             NIRA
         ================================================= */}
@@ -137,7 +134,6 @@ export default function NotFound() {
           </motion.div>
         </motion.div>
 
-
         {/* =================================================
             SMALL LABEL
         ================================================= */}
@@ -183,7 +179,6 @@ export default function NotFound() {
           />
         </motion.div>
 
-
         {/* =================================================
             MAIN HEADING
         ================================================= */}
@@ -218,11 +213,8 @@ export default function NotFound() {
           UH OH.
           <br />
 
-          <span className="text-subtle">
-            WHERE DID IT GO?
-          </span>
+          <span className="text-subtle">WHERE DID IT GO?</span>
         </motion.h1>
-
 
         {/* =================================================
             FUNNY COPY
@@ -249,7 +241,6 @@ export default function NotFound() {
             sm:mt-9
           "
         >
-
           <p
             className="
               text-body-lg
@@ -261,7 +252,6 @@ export default function NotFound() {
           >
             Nira went looking for this page.
             <br />
-
             She found absolutely nothing.
           </p>
 
@@ -272,14 +262,10 @@ export default function NotFound() {
               text-subtle
             "
           >
-            Apparently, this page decided to
-            <span className="text-primary">
-              {" "}touch grass.
-            </span>
+            Apparently, this page decided
+            <span className="text-primary"> touch grass.</span>
           </p>
-
         </motion.div>
-
 
         {/* =================================================
             CTA
@@ -329,9 +315,7 @@ export default function NotFound() {
             sm:py-4
           "
         >
-          <span>
-            TAKE ME HOME
-          </span>
+          <span>TAKE ME HOME</span>
 
           <ArrowUpRight
             size={16}
@@ -345,7 +329,6 @@ export default function NotFound() {
             "
           />
         </motion.a>
-
 
         {/* =================================================
             BOTTOM MICRO COPY
@@ -372,9 +355,7 @@ export default function NotFound() {
         >
           NO PAGE WAS HARMED IN THE MAKING OF THIS ERROR.
         </motion.p>
-
       </div>
-
 
       {/* =====================================================
           DECORATIVE CORNERS
@@ -417,7 +398,6 @@ export default function NotFound() {
           sm:w-9
         "
       />
-
     </main>
   );
 }
