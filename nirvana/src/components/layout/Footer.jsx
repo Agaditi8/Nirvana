@@ -1,24 +1,22 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
-
-/* ============================================================
-   IMAGE CONFIG
-
-   Replace these URLs with your own images later.
-
-   x / y positions are intentionally partially outside viewport.
-============================================================ */
 
 const floatingImages = [
   {
     id: 1,
     src: "/images/icons/Footer-2.png",
     side: "left",
-    className:
+    desktopClass:
       "left-[-3vw] bottom-[7%] w-[clamp(170px,19vw,330px)] aspect-[3/4]",
+    mobileClass:
+      "left-[-18px] bottom-[20%] w-[105px] aspect-[3/4]",
     rotate: 9,
     delay: 0.22,
   },
@@ -26,16 +24,14 @@ const floatingImages = [
     id: 2,
     src: "/images/icons/Footer-1.png",
     side: "right",
-    className:
+    desktopClass:
       "right-[-4vw] bottom-[5%] w-[clamp(180px,20vw,350px)] aspect-[3/4]",
+    mobileClass:
+      "right-[-18px] bottom-[17%] w-[110px] aspect-[3/4]",
     rotate: -8,
     delay: 0.28,
   },
 ];
-
-/* ============================================================
-   FOOTER
-============================================================ */
 
 export default function Footer() {
   const footerRef = useRef(null);
@@ -45,9 +41,9 @@ export default function Footer() {
     offset: ["start end", "end start"],
   });
 
-  /* ----------------------------------------------------------
+  /* ============================================================
      PARALLAX
-  ---------------------------------------------------------- */
+  ============================================================ */
 
   const titleY = useTransform(
     scrollYProgress,
@@ -58,132 +54,62 @@ export default function Footer() {
   const leftParallax = useTransform(
     scrollYProgress,
     [0, 1],
-    [50, -70]
+    [35, -50]
   );
 
   const rightParallax = useTransform(
     scrollYProgress,
     [0, 1],
-    [-30, 70]
+    [-25, 55]
   );
 
   return (
     <footer
       ref={footerRef}
       className="
+        section
         relative
         min-h-screen
         w-full
         overflow-hidden
-        bg-[#050505]
-        text-white
+        bg-[var(--color-black)]
+        text-primary
       "
     >
       {/* ======================================================
-          BACKGROUND GRID
+          BACKGROUND NOISE
       ====================================================== */}
 
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          opacity-[0.18]
-          [background-image:radial-gradient(rgba(255,255,255,0.12)_1px,transparent_1px)]
-          [background-size:32px_32px]
-        "
-      />
+      <div className="noise z-0 opacity-[0.06]" />
+
 
       {/* ======================================================
-          PURPLE GLOW
+          DARK VIOLET ATMOSPHERE
       ====================================================== */}
 
       <div
         className="
+          violet-glow-soft
           pointer-events-none
           absolute
           left-1/2
           top-1/2
-          h-[600px]
-          w-[700px]
+          h-[380px]
+          w-[420px]
           -translate-x-1/2
           -translate-y-1/2
           rounded-full
-          bg-violet-800/[0.10]
-          blur-[180px]
+          opacity-60
+
+          sm:h-[500px]
+          sm:w-[550px]
+
+          lg:h-[600px]
+          lg:w-[700px]
+          lg:opacity-80
         "
       />
 
-      {/* ======================================================
-          TOP BAR
-      ====================================================== */}
-
-      <motion.div
-        initial={{
-          opacity: 0,
-          y: 25,
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-        viewport={{
-          once: true,
-        }}
-        transition={{
-          duration: 0.8,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="
-          relative
-          z-30
-          flex
-          items-center
-          justify-between
-          border-b
-          border-white/10
-          px-6
-          py-5
-          md:px-10
-          lg:px-14
-        "
-      >
-        <div className="flex items-center gap-3">
-          <span
-            className="
-              h-[6px]
-              w-[6px]
-              rounded-full
-              bg-violet-300
-              shadow-[0_0_12px_rgba(196,181,253,0.8)]
-            "
-          />
-
-          <p
-            className="
-              text-[10px]
-              uppercase
-              tracking-[0.28em]
-              text-white/45
-            "
-          >
-            Nirvana / IGDTUW
-          </p>
-        </div>
-
-        <p
-          className="
-            hidden
-            text-[10px]
-            uppercase
-            tracking-[0.28em]
-            text-white/30
-            md:block
-          "
-        >
-          Design • Create • Experiment
-        </p>
-      </motion.div>
 
       {/* ======================================================
           FLOATING IMAGES
@@ -194,7 +120,8 @@ export default function Footer() {
           pointer-events-none
           absolute
           inset-0
-          z-30
+          z-10
+          overflow-hidden
         "
       >
         {floatingImages.map((image) => (
@@ -206,6 +133,7 @@ export default function Footer() {
           />
         ))}
       </div>
+
 
       {/* ======================================================
           CENTER CONTENT
@@ -220,11 +148,18 @@ export default function Footer() {
           flex-col
           items-center
           justify-center
-          px-6
+          px-5
+          py-24
           text-center
+
+          sm:px-6
+          sm:py-28
         "
       >
-        {/* EYEBROW */}
+
+        {/* ====================================================
+            EYEBROW
+        ==================================================== */}
 
         <motion.div
           initial={{
@@ -243,47 +178,46 @@ export default function Footer() {
             delay: 0.15,
           }}
           className="
-            mb-8
+            mb-6
             flex
             items-center
-            gap-4
+            gap-3
+
+            sm:mb-8
+            sm:gap-4
           "
         >
           <div
             className="
               h-px
-              w-10
-              bg-gradient-to-r
-              from-transparent
-              to-violet-300/70
+              w-6
+              bg-[var(--color-violet-muted)]
+              opacity-60
+
+              sm:w-10
             "
           />
 
-          <p
-            className="
-              text-[10px]
-              uppercase
-              tracking-[0.35em]
-              text-white/45
-            "
-          >
+          <p className="text-micro text-subtle">
             Until the next idea
           </p>
 
           <div
             className="
               h-px
-              w-10
-              bg-gradient-to-l
-              from-transparent
-              to-violet-300/70
+              w-6
+              bg-[var(--color-violet-muted)]
+              opacity-60
+
+              sm:w-10
             "
           />
         </motion.div>
 
-        {/* ==================================================
+
+        {/* ====================================================
             HUGE TITLE
-        ================================================== */}
+        ==================================================== */}
 
         <motion.div
           style={{
@@ -294,7 +228,7 @@ export default function Footer() {
           <motion.h2
             initial={{
               opacity: 0,
-              y: 120,
+              y: 100,
               filter: "blur(14px)",
             }}
             whileInView={{
@@ -312,19 +246,20 @@ export default function Footer() {
             }}
             className="
               select-none
-              text-[clamp(6rem,17vw,18rem)]
-              leading-[0.68]
-              tracking-[-0.075em]
-              text-white
+              text-[clamp(4rem,20vw,7rem)]
+              leading-[0.72]
+              tracking-[-0.07em]
+              text-primary
+
+              sm:text-[clamp(6rem,15vw,10rem)]
+              lg:text-display-xl
             "
-            style={{
-              fontFamily: '"Instrument Serif", serif',
-            }}
           >
             NIRVANA
           </motion.h2>
 
-          {/* PURPLE GLOW UNDER TEXT */}
+
+          {/* Dark violet glow */}
 
           <div
             className="
@@ -333,16 +268,23 @@ export default function Footer() {
               bottom-[-20%]
               left-1/2
               -z-10
-              h-[100px]
-              w-[70%]
+              h-[70px]
+              w-[75%]
               -translate-x-1/2
-              bg-violet-600/10
-              blur-[80px]
+              bg-[var(--color-violet-deep)]
+              opacity-30
+              blur-[70px]
+
+              sm:h-[100px]
+              sm:blur-[80px]
             "
           />
         </motion.div>
 
-        {/* SUBTEXT */}
+
+        {/* ====================================================
+            SUBTEXT
+        ==================================================== */}
 
         <motion.p
           initial={{
@@ -361,12 +303,14 @@ export default function Footer() {
             delay: 0.3,
           }}
           className="
-            mt-12
-            max-w-md
-            text-sm
-            font-light
-            leading-7
-            text-white/45
+            text-body
+            mt-8
+            max-w-[280px]
+            leading-6
+            text-muted
+
+            sm:mt-12
+            sm:max-w-md
           "
         >
           A space for ideas that refuse to stay still.
@@ -374,7 +318,10 @@ export default function Footer() {
           Made by designers, dreamers and everything in between.
         </motion.p>
 
-        {/* CTA */}
+
+        {/* ====================================================
+            CTA
+        ==================================================== */}
 
         <motion.a
           href="#"
@@ -401,44 +348,49 @@ export default function Footer() {
           }}
           className="
             group
-            mt-10
+            mt-8
             flex
-            h-14
+            h-12
             items-center
-            gap-4
+            gap-3
             rounded-full
             border
-            border-violet-200/20
-            bg-violet-200
-            px-7
-            text-black
-            transition-colors
+            border-[var(--color-violet-muted)]
+            bg-[var(--color-violet-soft)]
+            px-6
+            text-primary
+            transition-all
             duration-500
-            hover:bg-white
+            hover:bg-[var(--color-violet-muted)]
+            hover:text-primary
+
+            sm:mt-10
+            sm:h-14
+            sm:gap-4
+            sm:px-7
           "
         >
-          <span
-            className="
-              text-[10px]
-              uppercase
-              tracking-[0.22em]
-            "
-          >
+          <span className="text-micro">
             Join Nirvana
           </span>
 
           <ArrowUpRight
-            size={17}
+            size={16}
             strokeWidth={1.4}
             className="
               transition-transform
               duration-500
               group-hover:translate-x-1
               group-hover:-translate-y-1
+
+              sm:h-[17px]
+              sm:w-[17px]
             "
           />
         </motion.a>
+
       </div>
+
 
       {/* ======================================================
           BOTTOM BAR
@@ -464,95 +416,149 @@ export default function Footer() {
           relative
           z-30
           grid
+          grid-cols-1
           border-t
-          border-white/10
+          border-[var(--color-border)]
+
           md:grid-cols-[1fr_auto_1fr]
         "
       >
-        {/* LEFT */}
+
+        {/* ====================================================
+            LEFT
+        ==================================================== */}
 
         <div
           className="
             flex
             items-center
-            px-6
-            py-5
+            justify-center
+            px-5
+            py-4
+
+            md:justify-start
             md:px-10
+            md:py-5
+
             lg:px-14
           "
         >
-          <p
-            className="
-              text-[9px]
-              uppercase
-              tracking-[0.25em]
-              text-white/30
-            "
-          >
+          <p className="text-micro text-subtle">
             © 2026 Nirvana
           </p>
         </div>
 
-        {/* SOCIALS */}
 
-        <div
-          className="
-            flex
-            border-y
-            border-white/10
-            md:border-x
-            md:border-y-0
-          "
-        >
-          {["Instagram", "LinkedIn", "Behance"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="
-                group
-                flex
-                items-center
-                gap-2
-                border-r
-                border-white/10
-                px-6
-                py-5
-                text-[9px]
-                uppercase
-                tracking-[0.2em]
-                text-white/45
-                transition-all
-                duration-300
-                last:border-r-0
-                hover:bg-white
-                hover:text-black
-              "
-            >
-              {item}
-
-              <ArrowUpRight
-                size={11}
-                className="
-                  transition-transform
-                  duration-300
-                  group-hover:translate-x-[2px]
-                  group-hover:-translate-y-[2px]
-                "
-              />
-            </a>
-          ))}
-        </div>
-
-        {/* RIGHT */}
+        {/* ====================================================
+            SOCIALS
+        ==================================================== */}
 
         <div
           className="
             flex
             items-center
-            justify-end
-            px-6
-            py-5
+            justify-center
+            gap-7
+            border-y
+            border-[var(--color-border)]
+            px-5
+            py-4
+
+            sm:gap-8
+
+            md:border-x
+            md:border-y-0
+            md:px-8
+            md:py-5
+
+            lg:px-10
+          "
+        >
+
+          {/* Instagram */}
+
+          <a
+            href="#"
+            className="
+              group
+              flex
+              items-center
+              gap-2
+              text-micro
+              text-subtle
+              transition-colors
+              duration-300
+              hover:text-primary
+            "
+          >
+            <span>
+              Instagram
+            </span>
+
+            <ArrowUpRight
+              size={11}
+              strokeWidth={1.4}
+              className="
+                transition-transform
+                duration-300
+                group-hover:translate-x-[2px]
+                group-hover:-translate-y-[2px]
+              "
+            />
+          </a>
+
+
+          {/* LinkedIn */}
+
+          <a
+            href="#"
+            className="
+              group
+              flex
+              items-center
+              gap-2
+              text-micro
+              text-subtle
+              transition-colors
+              duration-300
+              hover:text-primary
+            "
+          >
+            <span>
+              LinkedIn
+            </span>
+
+            <ArrowUpRight
+              size={11}
+              strokeWidth={1.4}
+              className="
+                transition-transform
+                duration-300
+                group-hover:translate-x-[2px]
+                group-hover:-translate-y-[2px]
+              "
+            />
+          </a>
+
+        </div>
+
+
+        {/* ====================================================
+            RIGHT
+        ==================================================== */}
+
+        <div
+          className="
+            flex
+            items-center
+            justify-center
+            px-5
+            py-4
+
+            md:justify-end
             md:px-10
+            md:py-5
+
             lg:px-14
           "
         >
@@ -564,22 +570,22 @@ export default function Footer() {
               })
             }
             className="
-              group
-              text-[9px]
-              uppercase
-              tracking-[0.25em]
-              text-white/30
+              text-micro
+              text-subtle
               transition-colors
-              hover:text-white
+              hover:text-primary
             "
           >
             Back to top ↑
           </button>
         </div>
+
       </motion.div>
+
     </footer>
   );
 }
+
 
 /* ============================================================
    FLOATING IMAGE
@@ -596,7 +602,7 @@ function FloatingImage({
     <motion.div
       initial={{
         opacity: 0,
-        x: fromLeft ? -180 : 180,
+        x: fromLeft ? -120 : 120,
         rotate: fromLeft
           ? image.rotate - 10
           : image.rotate + 10,
@@ -618,11 +624,16 @@ function FloatingImage({
         ease: [0.16, 1, 0.3, 1],
       }}
       style={{
-        y: fromLeft ? leftParallax : rightParallax,
+        y: fromLeft
+          ? leftParallax
+          : rightParallax,
       }}
       className={`
         absolute
-        ${image.className}
+        ${image.desktopClass}
+        ${image.mobileClass}
+
+        sm:${image.desktopClass}
       `}
     >
       <div
@@ -631,8 +642,6 @@ function FloatingImage({
           h-full
           w-full
           overflow-hidden
-          
-          shadow-[0_30px_100px_rgba(0,0,0,0.7)]
         "
       >
         <motion.img
@@ -646,22 +655,15 @@ function FloatingImage({
             duration: 0.6,
             ease: [0.16, 1, 0.3, 1],
           }}
+          onError={(event) => {
+            event.currentTarget.style.display = "none";
+          }}
           className="
             absolute
             inset-0
             h-full
             w-full
             object-cover
-          "
-        />
-
-        {/* slight dark treatment */}
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-           
           "
         />
       </div>

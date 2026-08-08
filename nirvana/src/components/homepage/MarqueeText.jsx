@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-
 import {
   motion,
   useScroll,
@@ -17,7 +16,14 @@ import {
 
 
 /* ============================================================
-   THIRD SECTION
+   ANIMATION
+============================================================ */
+
+const ease = [0.16, 1, 0.3, 1];
+
+
+/* ============================================================
+   MAIN COMPONENT
 ============================================================ */
 
 export default function MarqueeText() {
@@ -25,13 +31,6 @@ export default function MarqueeText() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-
-    /*
-      0   = section entering viewport
-      0.5 = section centered
-      1   = section leaving viewport
-    */
-
     offset: ["start end", "end start"],
   });
 
@@ -40,25 +39,40 @@ export default function MarqueeText() {
     <section
       ref={sectionRef}
       className="
+        section
         relative
         w-full
         overflow-hidden
-        bg-black
-        px-6
         py-24
-        text-white
       "
     >
 
-      {/* ambient background wash so single icons don't sit on flat black */}
+      {/* ======================================================
+          NOISE
+      ====================================================== */}
+
+      <div className="noise z-0 opacity-[0.06]" />
+
+
+      {/* ======================================================
+          DARK VIOLET ATMOSPHERE
+      ====================================================== */}
+
       <div
         className="
+          violet-glow-soft
           pointer-events-none
           absolute
-          inset-0
-          bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(124,58,237,0.10),transparent_70%)]
+          left-1/2
+          top-0
+          h-[500px]
+          w-[700px]
+          -translate-x-1/2
+          rounded-full
+          opacity-70
         "
       />
+
 
       {/* =====================================================
           ROW 01
@@ -70,11 +84,9 @@ export default function MarqueeText() {
         distance={280}
         parallax={55}
       >
-
         <BigSerif>
           The
         </BigSerif>
-
 
         <IconMark
           icon={PenTool}
@@ -82,18 +94,14 @@ export default function MarqueeText() {
           direction={1}
         />
 
-
         <BigSerif muted>
           Art of
         </BigSerif>
 
-
         <BigSerif>
           Creating
         </BigSerif>
-
       </MovingRow>
-
 
 
       {/* =====================================================
@@ -106,16 +114,13 @@ export default function MarqueeText() {
         distance={330}
         parallax={-45}
       >
-
         <BigSerif muted>
           Ideas
         </BigSerif>
 
-
         <BigSerif>
           Into
         </BigSerif>
-
 
         <IconMark
           icon={Palette}
@@ -123,13 +128,10 @@ export default function MarqueeText() {
           direction={-1}
         />
 
-
         <BigSerif>
           Visuals
         </BigSerif>
-
       </MovingRow>
-
 
 
       {/* =====================================================
@@ -142,11 +144,9 @@ export default function MarqueeText() {
         distance={380}
         parallax={60}
       >
-
         <BigSerif>
           for
         </BigSerif>
-
 
         <IconMark
           icon={Layers3}
@@ -154,18 +154,14 @@ export default function MarqueeText() {
           direction={1}
         />
 
-
         <BigSerif muted>
           Curious
         </BigSerif>
 
-
         <BigSerif>
           Minds
         </BigSerif>
-
       </MovingRow>
-
 
 
       {/* =====================================================
@@ -178,16 +174,13 @@ export default function MarqueeText() {
         distance={300}
         parallax={-55}
       >
-
         <BigSerif muted>
           To Design
         </BigSerif>
 
-
         <BigSerif>
           Without
         </BigSerif>
-
 
         <IconMark
           icon={Spline}
@@ -195,11 +188,9 @@ export default function MarqueeText() {
           direction={-1}
         />
 
-
         <BigSerif>
           Limits!
         </BigSerif>
-
       </MovingRow>
 
     </section>
@@ -207,20 +198,8 @@ export default function MarqueeText() {
 }
 
 
-
 /* ============================================================
    MOVING ROW
-
-   direction -1 = LEFT
-   direction  1 = RIGHT
-
-   Each row:
-   - moves horizontally
-   - moves slightly vertically
-   - becomes sharp in center
-   - blurs when entering/leaving
-   - fades slightly
-   - scales slightly
 ============================================================ */
 
 function MovingRow({
@@ -231,7 +210,6 @@ function MovingRow({
   parallax = 50,
 }) {
 
-
   /* ========================================================
      HORIZONTAL MOVEMENT
   ======================================================== */
@@ -239,12 +217,10 @@ function MovingRow({
   const x = useTransform(
     progress,
     [0, 1],
-
     direction === 1
       ? [-distance, distance]
       : [distance, -distance]
   );
-
 
 
   /* ========================================================
@@ -254,7 +230,6 @@ function MovingRow({
   const y = useTransform(
     progress,
     [0, 0.5, 1],
-
     [
       parallax,
       0,
@@ -263,18 +238,12 @@ function MovingRow({
   );
 
 
-
   /* ========================================================
      BLUR
-
-     ENTERING → BLUR
-     CENTER   → SHARP
-     LEAVING → BLUR
   ======================================================== */
 
   const blur = useTransform(
     progress,
-
     [
       0,
       0.18,
@@ -282,7 +251,6 @@ function MovingRow({
       0.82,
       1,
     ],
-
     [
       "blur(14px)",
       "blur(4px)",
@@ -293,14 +261,12 @@ function MovingRow({
   );
 
 
-
   /* ========================================================
      OPACITY
   ======================================================== */
 
   const opacity = useTransform(
     progress,
-
     [
       0,
       0.15,
@@ -308,7 +274,6 @@ function MovingRow({
       0.85,
       1,
     ],
-
     [
       0.25,
       0.8,
@@ -319,20 +284,17 @@ function MovingRow({
   );
 
 
-
   /* ========================================================
      SCALE
   ======================================================== */
 
   const scale = useTransform(
     progress,
-
     [
       0,
       0.5,
       1,
     ],
-
     [
       0.96,
       1,
@@ -342,7 +304,6 @@ function MovingRow({
 
 
   return (
-
     <div
       className="
         relative
@@ -352,7 +313,7 @@ function MovingRow({
         items-center
         overflow-hidden
         border-b
-        border-violet-200/[0.10]
+        border-[var(--color-border)]
       "
     >
 
@@ -391,12 +352,8 @@ function MovingRow({
         </div>
 
 
-
         {/* ==================================================
             SECOND COPY
-
-            Gives the horizontal movement a more continuous
-            marquee-like appearance.
         ================================================== */}
 
         <div
@@ -418,53 +375,36 @@ function MovingRow({
 }
 
 
-
 /* ============================================================
-   LARGE SERIF TYPOGRAPHY
+   LARGE DISPLAY TEXT
 ============================================================ */
 
 function BigSerif({
   children,
   muted = false,
 }) {
-
   return (
-
     <span
       className={`
+        text-display-lg
         shrink-0
-
-        text-[clamp(5rem,8vw,9rem)]
-
-        leading-[0.75]
-
-        tracking-[-0.05em]
+        whitespace-nowrap
 
         ${
           muted
-            ? "text-violet-200/40"
-            : "text-white"
+            ? "text-subtle"
+            : "text-primary"
         }
       `}
-      style={{
-        fontFamily: '"Instrument Serif", serif',
-      }}
     >
       {children}
     </span>
-
   );
 }
 
 
-
 /* ============================================================
-   SINGLE ICON MARK
-
-   A small, quiet icon badge — no shape gimmicks, no label,
-   just a fine ring, a soft violet glow, and the icon itself.
-   Reads premium sitting inline with the serif type instead
-   of competing with it.
+   ICON MARK
 ============================================================ */
 
 function IconMark({
@@ -473,7 +413,6 @@ function IconMark({
   direction = 1,
 }) {
 
-
   /* ========================================================
      SUBTLE DRIFT
   ======================================================== */
@@ -481,26 +420,36 @@ function IconMark({
   const x = useTransform(
     progress,
     [0, 0.5, 1],
-    direction === 1 ? [-14, 0, 14] : [14, 0, -14]
+    direction === 1
+      ? [-14, 0, 14]
+      : [14, 0, -14]
   );
+
 
   const y = useTransform(
     progress,
     [0, 0.5, 1],
-    direction === 1 ? [-10, 0, 10] : [10, 0, -10]
+    direction === 1
+      ? [-10, 0, 10]
+      : [10, 0, -10]
   );
+
 
   const rotate = useTransform(
     progress,
     [0, 0.5, 1],
-    direction === 1 ? [-8, 0, 8] : [8, 0, -8]
+    direction === 1
+      ? [-8, 0, 8]
+      : [8, 0, -8]
   );
+
 
   const scale = useTransform(
     progress,
     [0, 0.5, 1],
     [0.82, 1, 0.82]
   );
+
 
   const blur = useTransform(
     progress,
@@ -514,21 +463,8 @@ function IconMark({
     ]
   );
 
-  const glowOpacity = useTransform(
-    progress,
-    [0, 0.5, 1],
-    [0.15, 0.55, 0.15]
-  );
-
-  const ringOpacity = useTransform(
-    progress,
-    [0, 0.5, 1],
-    [0.15, 0.4, 0.15]
-  );
-
 
   return (
-
     <motion.div
       style={{
         x,
@@ -538,108 +474,28 @@ function IconMark({
         filter: blur,
       }}
       className="
-        relative
-
         flex
-
-        h-[76px]
-        w-[76px]
-
         shrink-0
-
         items-center
         justify-center
-
-        rounded-full
-
         will-change-transform
-
-        md:h-[92px]
-        md:w-[92px]
       "
     >
 
       {/* ==================================================
-          SOFT VIOLET GLOW
-      ================================================== */}
-
-      <motion.div
-        style={{ opacity: glowOpacity }}
-        className="
-          pointer-events-none
-
-          absolute
-          inset-0
-
-          rounded-full
-
-          bg-violet-500/40
-
-          blur-[22px]
-        "
-      />
-
-
-
-      {/* ==================================================
-          FINE RING
-      ================================================== */}
-
-      <motion.div
-        style={{ opacity: ringOpacity }}
-        className="
-          pointer-events-none
-
-          absolute
-          inset-0
-
-          rounded-full
-
-          border
-          border-violet-200
-        "
-      />
-
-
-
-      {/* ==================================================
-          GLASS DISC
-      ================================================== */}
-
-      <div
-        className="
-          absolute
-          inset-[6px]
-
-          rounded-full
-
-          bg-white/[0.03]
-
-          backdrop-blur-sm
-        "
-      />
-
-
-
-      {/* ==================================================
-          ICON
+          SIMPLE ICON ONLY
       ================================================== */}
 
       <Icon
-        size={26}
+        size={48}
         strokeWidth={1.15}
         className="
-          relative
-          z-10
-
-          text-violet-50/90
-
-          md:h-8
-          md:w-8
+          text-[var(--color-violet-muted)]
+          md:h-14
+          md:w-14
         "
       />
 
     </motion.div>
-
   );
 }

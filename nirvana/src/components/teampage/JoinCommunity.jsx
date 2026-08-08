@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, MousePointer2 } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 /* ============================================================
    JOIN COMMUNITY
@@ -11,16 +11,15 @@ import { ArrowUpRight, MousePointer2 } from "lucide-react";
 export default function JoinCommunity() {
   return (
     <section
+      id="join-community"
       className="
         relative
-        h-auto
         min-h-screen
         w-full
         overflow-hidden
-        bg-[#050505]
-        text-white
-        lg:h-screen
-        lg:min-h-[720px]
+        bg-[var(--color-black)]
+        text-primary
+
       "
     >
       {/* ======================================================
@@ -32,9 +31,9 @@ export default function JoinCommunity() {
           pointer-events-none
           absolute
           inset-0
-          opacity-[0.13]
-          [background-image:radial-gradient(rgba(255,255,255,0.16)_0.7px,transparent_0.7px)]
-          [background-size:28px_28px]
+          opacity-[0.045]
+          [background-image:radial-gradient(rgba(255,255,255,0.8)_0.6px,transparent_0.6px)]
+          [background-size:30px_30px]
         "
       />
 
@@ -42,81 +41,34 @@ export default function JoinCommunity() {
         className="
           pointer-events-none
           absolute
-          left-[15%]
-          top-[20%]
+          left-[10%]
+          top-[15%]
           h-[500px]
           w-[500px]
           rounded-full
-          bg-violet-800/[0.10]
-          blur-[150px]
+          bg-[var(--color-violet-deep)]
+          opacity-[0.12]
+          blur-[180px]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          bottom-[10%]
+          right-[5%]
+          h-[450px]
+          w-[450px]
+          rounded-full
+          bg-[var(--color-violet-muted)]
+          opacity-[0.06]
+          blur-[180px]
         "
       />
 
       {/* ======================================================
-          TOP BAR
-      ====================================================== */}
-
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{
-          duration: 0.7,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="
-          relative
-          z-30
-          flex
-          h-[64px]
-          items-center
-          justify-between
-          border-b
-          border-white/10
-          px-6
-          md:px-10
-          lg:px-12
-        "
-      >
-        <div className="flex items-center gap-3">
-          <span
-            className="
-              h-[6px]
-              w-[6px]
-              rounded-full
-              bg-violet-300
-              shadow-[0_0_12px_rgba(196,181,253,0.8)]
-            "
-          />
-
-          <p
-            className="
-              text-[10px]
-              uppercase
-              tracking-[0.3em]
-              text-white/45
-            "
-          >
-            Nirvana / Recruitment
-          </p>
-        </div>
-
-        <p
-          className="
-            hidden
-            text-[9px]
-            uppercase
-            tracking-[0.25em]
-            text-white/25
-            sm:block
-          "
-        >
-          Applications Open
-        </p>
-      </motion.div>
-
-      {/* ======================================================
-          MAIN GRID
+          MAIN CONTENT
       ====================================================== */}
 
       <div
@@ -124,34 +76,34 @@ export default function JoinCommunity() {
           relative
           z-10
           grid
-          lg:h-[calc(100%-64px)]
-          lg:grid-cols-[41%_59%]
+          min-h-screen
+          lg:grid-cols-[40%_60%]
         "
       >
         {/* ==================================================
-            LEFT SIDE
+            LEFT — INTRO
         ================================================== */}
 
         <div
           className="
-            relative
             flex
             min-h-[650px]
             flex-col
             justify-between
             border-b
             border-white/10
-            px-7
-            py-10
+            px-6
+            py-12
             md:px-10
-            lg:min-h-0
+            md:py-16
+            lg:min-h-screen
             lg:border-b-0
             lg:border-r
-            lg:px-12
-            lg:py-12
+            lg:px-14
+            lg:py-16
           "
         >
-          {/* TOP COPY */}
+          {/* TOP */}
 
           <div>
             <motion.div
@@ -163,84 +115,58 @@ export default function JoinCommunity() {
                 opacity: 1,
                 y: 0,
               }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="
-                mb-7
-                flex
-                items-center
-                gap-3
-              "
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.7,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="mb-8"
             >
-              <span
+              <p
                 className="
-                  text-[9px]
-                  uppercase
-                  tracking-[0.3em]
-                  text-violet-300
+                  text-micro
+                  text-[var(--color-violet-muted)]
                 "
               >
-                01
-              </span>
-
-              <div
-                className="
-                  h-px
-                  w-12
-                  bg-gradient-to-r
-                  from-violet-300/70
-                  to-transparent
-                "
-              />
-
-              <span
-                className="
-                  text-[9px]
-                  uppercase
-                  tracking-[0.3em]
-                  text-white/30
-                "
-              >
-                Join Us
-              </span>
+                01 / JOIN NIRVANA
+              </p>
             </motion.div>
 
             {/* HEADING */}
 
             <div className="overflow-hidden">
-              <motion.h2
+              <motion.h1
                 initial={{
-                  y: 100,
-                  rotate: 2,
                   opacity: 0,
+                  y: 70,
                 }}
                 whileInView={{
-                  y: 0,
-                  rotate: 0,
                   opacity: 1,
+                  y: 0,
                 }}
-                viewport={{ once: true }}
+                viewport={{
+                  once: true,
+                }}
                 transition={{
                   duration: 0.9,
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 className="
+                  text-display-lg
                   max-w-[600px]
-                  text-[clamp(4.8rem,7.4vw,8rem)]
-                  leading-[0.76]
-                  tracking-[-0.055em]
+                  leading-[0.82]
+                  text-primary
                 "
-                style={{
-                  fontFamily: '"Instrument Serif", serif',
-                }}
               >
-                Become our 
+                BECOME PART
                 <br />
 
-                <span className="text-violet-200/55">
-                  Techie
+                <span className="text-muted">
+                  OF NIRVANA.
                 </span>
-              </motion.h2>
+              </motion.h1>
             </div>
 
             {/* DESCRIPTION */}
@@ -248,151 +174,96 @@ export default function JoinCommunity() {
             <motion.p
               initial={{
                 opacity: 0,
-                y: 25,
+                y: 20,
               }}
               whileInView={{
                 opacity: 1,
                 y: 0,
               }}
-              viewport={{ once: true }}
+              viewport={{
+                once: true,
+              }}
               transition={{
                 duration: 0.7,
-                delay: 0.25,
+                delay: 0.2,
+                ease: [0.16, 1, 0.3, 1],
               }}
               className="
-                mt-8
-                max-w-[390px]
-                text-sm
-                font-light
+                text-body-lg
+                mt-9
+                max-w-[430px]
                 leading-7
-                text-white/40
+                text-muted
               "
             >
-              Interact with the website on your right to see your web designing potential. There&apos;s
-              probably a place for you here.
-
-              You can Edit text , shuffle images , shuffle sections. Go explore!
+              Interact with the website on your right and
+              explore what you could create with Nirvana.
+              Experiment with layouts, images and ideas.
             </motion.p>
           </div>
 
           {/* ==================================================
-              CTA AREA
+              CTA
           ================================================== */}
 
           <motion.div
             initial={{
               opacity: 0,
-              y: 30,
+              y: 25,
             }}
             whileInView={{
               opacity: 1,
               y: 0,
             }}
-            viewport={{ once: true }}
+            viewport={{
+              once: true,
+            }}
             transition={{
               duration: 0.7,
-              delay: 0.35,
+              delay: 0.3,
+              ease: [0.16, 1, 0.3, 1],
             }}
-            className="mt-12"
+            className="mt-14"
           >
-            <p
-              className="
-                mb-4
-                text-[9px]
-                uppercase
-                tracking-[0.28em]
-                text-white/25
-              "
-            >
-              Ready when you are
+            <p className="text-micro mb-4 text-muted">
+              READY WHEN YOU ARE
             </p>
 
-            <div className="flex flex-col gap-2 sm:flex-row">
-              {/* PRIMARY */}
+            <a
+              href="#"
+              className="
+                group
+                flex
+                w-full
+                items-center
+                justify-between
+                border
+                border-[var(--color-violet-border)]
+                bg-[var(--color-violet-surface)]
+                px-5
+                py-4
+                text-primary
+                transition-all
+                duration-500
+                hover:border-[var(--color-violet-muted)]
+                hover:bg-[var(--color-violet-surface-hover)]
+              "
+            >
+              <span className="text-button">
+                FILL THE FORM
+              </span>
 
-              <a
-                href="#"
+              <ArrowUpRight
+                size={19}
+                strokeWidth={1.3}
                 className="
-                  group
-                  flex
-                  h-[68px]
-                  flex-1
-                  items-center
-                  justify-between
-                  bg-violet-200
-                  px-6
-                  text-black
-                  transition-colors
+                  transition-transform
                   duration-500
-                  hover:bg-white
+                  group-hover:translate-x-1
+                  group-hover:-translate-y-1
                 "
-              >
-                <span
-                  className="
-                    text-sm
-                    uppercase
-                    tracking-[0.14em]
-                  "
-                >
-                  Fill the form
-                </span>
-
-                <ArrowUpRight
-                  size={20}
-                  strokeWidth={1.4}
-                  className="
-                    transition-transform
-                    duration-500
-                    group-hover:translate-x-1
-                    group-hover:-translate-y-1
-                  "
-                />
-              </a>
-
-              {/* SECONDARY */}
-
-              <a
-                href="#"
-                className="
-                  group
-                  flex
-                  h-[68px]
-                  flex-1
-                  items-center
-                  justify-between
-                  border
-                  border-white/10
-                  px-6
-                  transition-all
-                  duration-500
-                  hover:border-white/30
-                  hover:bg-white/[0.06]
-                "
-              >
-                <span
-                  className="
-                    text-sm
-                    uppercase
-                    tracking-[0.14em]
-                    text-white/65
-                  "
-                >
-                  Meet the team
-                </span>
-
-                <ArrowUpRight
-                  size={18}
-                  strokeWidth={1.3}
-                  className="
-                    text-white/50
-                    transition-transform
-                    duration-500
-                    group-hover:translate-x-1
-                    group-hover:-translate-y-1
-                  "
-                />
-              </a>
-            </div>
+              />
+            </a>
 
             <div
               className="
@@ -402,33 +273,19 @@ export default function JoinCommunity() {
                 justify-between
               "
             >
-              <p
-                className="
-                  text-[9px]
-                  uppercase
-                  tracking-[0.2em]
-                  text-white/20
-                "
-              >
-                Design / Content / Events / PR
-              </p>
+              <span className="text-micro text-muted">
+                DESIGN / CONTENT / EVENTS / PR
+              </span>
 
-              <p
-                className="
-                  text-[9px]
-                  uppercase
-                  tracking-[0.2em]
-                  text-white/20
-                "
-              >
+              <span className="text-micro text-muted">
                 IGDTUW
-              </p>
+              </span>
             </div>
           </motion.div>
         </div>
 
         {/* ==================================================
-            RIGHT SIDE — DESIGN PLAYGROUND
+            RIGHT — DESIGN PLAYGROUND
         ================================================== */}
 
         <WebsitePreview />
@@ -436,6 +293,7 @@ export default function JoinCommunity() {
     </section>
   );
 }
+
 
 /* ============================================================
    WEBSITE PREVIEW
@@ -451,8 +309,10 @@ function WebsitePreview() {
       title: "Ideas deserve room to play.",
       description:
         "A student-led collective exploring visual culture, communication and experimental design.",
-      image: "https://picsum.photos/seed/nirvana-builder-hero/900/1100",
+      image:
+        "https://picsum.photos/seed/nirvana-builder-hero/900/1100",
     },
+
     {
       id: "gallery-1",
       type: "gallery",
@@ -463,6 +323,7 @@ function WebsitePreview() {
         "https://picsum.photos/seed/nirvana-b3/600/800",
       ],
     },
+
     {
       id: "cta-1",
       type: "cta",
@@ -472,6 +333,10 @@ function WebsitePreview() {
   ];
 
   const [sections, setSections] = useState(initialSections);
+
+  /* ==========================================================
+      ADD SECTION
+  ========================================================== */
 
   const addSection = (type) => {
     const id = `${type}-${Date.now()}`;
@@ -530,19 +395,28 @@ function WebsitePreview() {
     setSections((prev) => [...prev, templates[type]]);
   };
 
+  /* ==========================================================
+      DELETE
+  ========================================================== */
+
   const deleteSection = (id) => {
     setSections((prev) =>
       prev.filter((section) => section.id !== id)
     );
   };
 
+  /* ==========================================================
+      MOVE
+  ========================================================== */
+
   const moveSection = (fromIndex, toIndex) => {
     if (
       toIndex < 0 ||
       toIndex >= sections.length ||
       fromIndex === toIndex
-    )
+    ) {
       return;
+    }
 
     setSections((prev) => {
       const copy = [...prev];
@@ -553,6 +427,10 @@ function WebsitePreview() {
       return copy;
     });
   };
+
+  /* ==========================================================
+      UPDATE
+  ========================================================== */
 
   const updateSection = (id, key, value) => {
     setSections((prev) =>
@@ -576,13 +454,16 @@ function WebsitePreview() {
         items-center
         justify-center
         overflow-hidden
-        p-5
-        md:p-8
-        lg:min-h-0
-        lg:p-10
+        px-5
+        py-12
+        md:px-8
+        lg:min-h-screen
+        lg:px-10
       "
     >
-      {/* BACKGROUND GLOW */}
+      {/* ==================================================
+          ATMOSPHERE
+      ================================================== */}
 
       <div
         className="
@@ -590,24 +471,26 @@ function WebsitePreview() {
           absolute
           left-1/2
           top-1/2
-          h-[80%]
-          w-[80%]
+          h-[75%]
+          w-[75%]
           -translate-x-1/2
           -translate-y-1/2
-          bg-violet-800/[0.08]
-          blur-[120px]
+          rounded-full
+          bg-[var(--color-violet-deep)]
+          opacity-[0.08]
+          blur-[150px]
         "
       />
 
-      {/* ======================================================
-          BUILDER WINDOW
-      ====================================================== */}
+      {/* ==================================================
+          BUILDER
+      ================================================== */}
 
       <motion.div
         initial={{
           opacity: 0,
           y: 60,
-          scale: 0.96,
+          scale: 0.97,
         }}
         whileInView={{
           opacity: 1,
@@ -624,85 +507,70 @@ function WebsitePreview() {
         className="
           relative
           flex
-          h-[min(690px,80vh)]
+          h-[min(720px,82vh)]
           w-full
-          max-w-[1050px]
+          max-w-[1100px]
           flex-col
           overflow-hidden
-          rounded-[14px]
           border
-          border-white/[0.12]
-          bg-[#111]
-          shadow-[0_40px_120px_rgba(0,0,0,0.7)]
+          border-white/[0.10]
+          bg-[#0b0a0d]
+          shadow-[0_35px_100px_rgba(0,0,0,0.55)]
         "
       >
         {/* ==================================================
-            TOP BROWSER BAR
+            BROWSER HEADER
         ================================================== */}
 
         <div
           className="
             flex
-            h-[48px]
+            h-[44px]
             shrink-0
             items-center
+            justify-between
             border-b
             border-white/[0.08]
-            bg-[#161616]
+            bg-[#0e0d10]
             px-4
           "
         >
-          {/* DOTS */}
-
-          <div className="flex gap-[6px]">
-            <div className="h-[7px] w-[7px] rounded-full bg-white/20" />
-            <div className="h-[7px] w-[7px] rounded-full bg-white/15" />
-            <div className="h-[7px] w-[7px] rounded-full bg-white/10" />
+          <div className="flex items-center gap-[5px]">
+            <span className="h-[6px] w-[6px] bg-white/20" />
+            <span className="h-[6px] w-[6px] bg-white/15" />
+            <span className="h-[6px] w-[6px] bg-white/10" />
           </div>
-
-          {/* URL */}
 
           <div
             className="
-              mx-auto
+              absolute
+              left-1/2
               flex
-              h-[27px]
+              h-[25px]
               w-[38%]
+              -translate-x-1/2
               items-center
               justify-center
-              rounded-md
               border
               border-white/[0.06]
-              bg-white/[0.035]
+              bg-white/[0.025]
             "
           >
-            <div className="mr-2 h-1 w-1 rounded-full bg-green-400" />
-
-            <span
-              className="
-                text-[8px]
-                tracking-[0.08em]
-                text-white/30
-              "
-            >
+            <span className="text-micro text-white/25">
               your-nirvana.design
             </span>
           </div>
-
-          {/* VIEW */}
 
           <div className="flex items-center gap-1">
             <button
               onClick={() => setView("desktop")}
               className={`
-                rounded
                 px-2
                 py-1
                 text-[7px]
                 uppercase
                 tracking-[0.1em]
-                transition
-
+                transition-colors
                 ${
                   view === "desktop"
                     ? "bg-white text-black"
@@ -716,14 +584,12 @@ function WebsitePreview() {
             <button
               onClick={() => setView("mobile")}
               className={`
-                rounded
                 px-2
                 py-1
                 text-[7px]
                 uppercase
                 tracking-[0.1em]
-                transition
-
+                transition-colors
                 ${
                   view === "mobile"
                     ? "bg-white text-black"
@@ -741,6 +607,7 @@ function WebsitePreview() {
         ================================================== */}
 
         <div className="flex min-h-0 flex-1">
+
           {/* ==================================================
               LEFT COMPONENT PANEL
           ================================================== */}
@@ -753,12 +620,10 @@ function WebsitePreview() {
               flex-col
               border-r
               border-white/[0.08]
-              bg-[#131313]
+              bg-[#0d0c0f]
               md:flex
             "
           >
-            {/* PANEL TITLE */}
-
             <div
               className="
                 border-b
@@ -767,35 +632,18 @@ function WebsitePreview() {
                 py-4
               "
             >
-              <p
-                className="
-                  text-[8px]
-                  font-medium
-                  uppercase
-                  tracking-[0.18em]
-                  text-white/70
-                "
-              >
-                Add section
+              <p className="text-micro text-white/60">
+                ADD SECTION
               </p>
 
-              <p
-                className="
-                  mt-1
-                  text-[7px]
-                  leading-4
-                  text-white/25
-                "
-              >
+              <p className="mt-2 text-[7px] leading-4 text-white/25">
                 Build your own
                 <br />
                 Nirvana page.
               </p>
             </div>
 
-            {/* COMPONENTS */}
-
-            <div className="flex flex-col gap-[6px] p-2">
+            <div className="flex flex-col gap-1 p-2">
               <BuilderButton
                 label="Hero"
                 icon="H"
@@ -833,23 +681,23 @@ function WebsitePreview() {
               />
             </div>
 
-            {/* TIP */}
-
-            <div className="mt-auto border-t border-white/[0.08] p-4">
-              <p
-                className="
-                  text-[7px]
-                  leading-[1.6]
-                  text-white/25
-                "
-              >
-                Add blocks, move them around and edit the copy.
+            <div
+              className="
+                mt-auto
+                border-t
+                border-white/[0.08]
+                p-4
+              "
+            >
+              <p className="text-[7px] leading-[1.6] text-white/25">
+                Add blocks, move them around
+                and edit the copy.
               </p>
             </div>
           </div>
 
           {/* ==================================================
-              CENTER PREVIEW AREA
+              PREVIEW
           ================================================== */}
 
           <div
@@ -861,14 +709,12 @@ function WebsitePreview() {
               items-start
               justify-center
               overflow-auto
-              bg-[#202020]
+              bg-[#18171a]
               p-5
               [scrollbar-width:none]
               [&::-webkit-scrollbar]:hidden
             "
           >
-            {/* WEBSITE */}
-
             <motion.div
               layout
               animate={{
@@ -885,14 +731,14 @@ function WebsitePreview() {
                 min-h-full
                 max-w-[760px]
                 overflow-hidden
-                bg-[#f1efe9]
+                bg-[#eeeae4]
                 text-[#111]
-                shadow-[0_25px_80px_rgba(0,0,0,0.4)]
+                shadow-[0_25px_80px_rgba(0,0,0,0.35)]
               "
             >
-              {/* ==============================================
+              {/* ==================================================
                   WEBSITE NAV
-              =============================================== */}
+              ================================================== */}
 
               <div
                 className="
@@ -900,12 +746,12 @@ function WebsitePreview() {
                   top-0
                   z-40
                   flex
-                  h-[48px]
+                  h-[46px]
                   items-center
                   justify-between
                   border-b
                   border-black/10
-                  bg-[#f1efe9]/90
+                  bg-[#eeeae4]/90
                   px-5
                   backdrop-blur-xl
                 "
@@ -918,7 +764,6 @@ function WebsitePreview() {
                       w-5
                       items-center
                       justify-center
-                      rounded-full
                       bg-black
                       text-[7px]
                       text-white
@@ -927,14 +772,7 @@ function WebsitePreview() {
                     N
                   </div>
 
-                  <p
-                    className="
-                      text-[8px]
-                      font-medium
-                      uppercase
-                      tracking-[0.15em]
-                    "
-                  >
+                  <p className="text-micro text-black">
                     Nirvana
                   </p>
                 </div>
@@ -943,7 +781,6 @@ function WebsitePreview() {
                   className={`
                     items-center
                     gap-4
-
                     ${
                       view === "mobile"
                         ? "hidden"
@@ -951,24 +788,27 @@ function WebsitePreview() {
                     }
                   `}
                 >
-                  {["Work", "About", "Archive"].map((item) => (
-                    <span
-                      key={item}
-                      className="
-                        text-[7px]
-                        uppercase
-                        tracking-[0.12em]
-                        text-black/35
-                      "
-                    >
-                      {item}
-                    </span>
-                  ))}
+                  {["Work", "About", "Archive"].map(
+                    (item) => (
+                      <span
+                        key={item}
+                        className="
+                          text-[7px]
+                          uppercase
+                          tracking-[0.12em]
+                          text-black/35
+                        "
+                      >
+                        {item}
+                      </span>
+                    )
+                  )}
                 </div>
 
                 <button
                   className="
-                    rounded-full
+                    border
+                    border-black
                     bg-black
                     px-3
                     py-[6px]
@@ -982,9 +822,9 @@ function WebsitePreview() {
                 </button>
               </div>
 
-              {/* ==============================================
+              {/* ==================================================
                   USER SECTIONS
-              =============================================== */}
+              ================================================== */}
 
               {sections.map((section, index) => (
                 <EditableSection
@@ -999,9 +839,9 @@ function WebsitePreview() {
                 />
               ))}
 
-              {/* ==============================================
-                  ADD SECTION BOTTOM
-              =============================================== */}
+              {/* ==================================================
+                  ADD SECTION
+              ================================================== */}
 
               <button
                 onClick={() => addSection("text")}
@@ -1020,8 +860,8 @@ function WebsitePreview() {
                   uppercase
                   tracking-[0.15em]
                   text-black/30
-                  transition
-                  hover:bg-violet-100
+                  transition-colors
+                  hover:bg-[#ded8e5]
                   hover:text-black
                 "
               >
@@ -1036,20 +876,14 @@ function WebsitePreview() {
                   flex
                   items-center
                   justify-between
-                  bg-black
+                  bg-[#0b0a0d]
                   px-5
                   py-5
                   text-white
                 "
               >
                 <div>
-                  <p
-                    className="
-                      text-[8px]
-                      uppercase
-                      tracking-[0.15em]
-                    "
-                  >
+                  <p className="text-micro">
                     Nirvana
                   </p>
 
@@ -1058,14 +892,7 @@ function WebsitePreview() {
                   </p>
                 </div>
 
-                <span
-                  className="
-                    text-[6px]
-                    uppercase
-                    tracking-[0.15em]
-                    text-white/30
-                  "
-                >
+                <span className="text-micro text-white/25">
                   IGDTUW / 2026
                 </span>
               </div>
@@ -1084,33 +911,25 @@ function WebsitePreview() {
               flex-col
               border-l
               border-white/[0.08]
-              bg-[#131313]
+              bg-[#0d0c0f]
               lg:flex
             "
           >
-            <div className="border-b border-white/[0.08] p-4">
-              <p
-                className="
-                  text-[8px]
-                  uppercase
-                  tracking-[0.16em]
-                  text-white/60
-                "
-              >
-                Page
+            <div
+              className="
+                border-b
+                border-white/[0.08]
+                p-4
+              "
+            >
+              <p className="text-micro text-white/60">
+                PAGE
               </p>
             </div>
 
             <div className="p-3">
-              <p
-                className="
-                  text-[7px]
-                  uppercase
-                  tracking-[0.12em]
-                  text-white/20
-                "
-              >
-                Sections
+              <p className="text-micro text-white/20">
+                SECTIONS
               </p>
 
               <div className="mt-3 flex flex-col gap-1">
@@ -1121,12 +940,12 @@ function WebsitePreview() {
                       flex
                       items-center
                       gap-2
-                      rounded
                       px-2
                       py-[7px]
                       text-[7px]
                       text-white/35
-                      hover:bg-white/[0.05]
+                      transition-colors
+                      hover:bg-white/[0.04]
                     "
                   >
                     <span className="text-white/15">
@@ -1154,7 +973,7 @@ function WebsitePreview() {
                 uppercase
                 tracking-[0.14em]
                 text-white/30
-                transition
+                transition-colors
                 hover:bg-white/[0.04]
                 hover:text-white
               "
@@ -1165,45 +984,37 @@ function WebsitePreview() {
         </div>
 
         {/* ==================================================
-            STATUS BAR
+            STATUS
         ================================================== */}
 
         <div
           className="
             flex
-            h-[28px]
+            h-[27px]
             shrink-0
             items-center
             justify-between
             border-t
             border-white/[0.08]
-            bg-[#151515]
+            bg-[#0d0c0f]
             px-4
           "
         >
           <div className="flex items-center gap-2">
-            <div className="h-1 w-1 rounded-full bg-green-400" />
-
-            <p
+            <div
               className="
-                text-[6px]
-                uppercase
-                tracking-[0.15em]
-                text-white/25
+                h-[5px]
+                w-[5px]
+                bg-[var(--color-violet-muted)]
               "
-            >
+            />
+
+            <p className="text-micro text-white/25">
               Live editing
             </p>
           </div>
 
-          <p
-            className="
-              text-[6px]
-              uppercase
-              tracking-[0.15em]
-              text-white/20
-            "
-          >
+          <p className="text-micro text-white/20">
             {sections.length} sections
           </p>
         </div>
@@ -1217,7 +1028,11 @@ function WebsitePreview() {
    BUILDER BUTTON
 ============================================================ */
 
-function BuilderButton({ label, icon, onClick }) {
+function BuilderButton({
+  label,
+  icon,
+  onClick,
+}) {
   return (
     <button
       onClick={onClick}
@@ -1226,15 +1041,14 @@ function BuilderButton({ label, icon, onClick }) {
         flex
         items-center
         gap-3
-        rounded-md
         border
         border-transparent
         px-3
         py-[9px]
         text-left
-        transition
+        transition-colors
         hover:border-white/[0.08]
-        hover:bg-white/[0.05]
+        hover:bg-white/[0.04]
       "
     >
       <div
@@ -1244,15 +1058,15 @@ function BuilderButton({ label, icon, onClick }) {
           w-6
           items-center
           justify-center
-          rounded
           border
           border-white/10
-          bg-white/[0.03]
+          bg-white/[0.02]
           text-[8px]
           text-white/40
-          transition
-          group-hover:bg-violet-200
-          group-hover:text-black
+          transition-colors
+          group-hover:border-[var(--color-violet-border)]
+          group-hover:bg-[var(--color-violet-surface)]
+          group-hover:text-white
         "
       >
         {icon}
@@ -1303,9 +1117,9 @@ function EditableSection({
         border-black/10
       "
     >
-      {/* ======================================================
-          SECTION CONTROLS
-      ====================================================== */}
+      {/* ==================================================
+          CONTROLS
+      ================================================== */}
 
       <div
         className="
@@ -1315,9 +1129,7 @@ function EditableSection({
           z-30
           flex
           translate-y-[-5px]
-          items-center
           overflow-hidden
-          rounded-md
           border
           border-black/10
           bg-white
@@ -1331,7 +1143,9 @@ function EditableSection({
       >
         <button
           disabled={index === 0}
-          onClick={() => moveSection(index, index - 1)}
+          onClick={() =>
+            moveSection(index, index - 1)
+          }
           className="
             px-2
             py-[6px]
@@ -1347,7 +1161,9 @@ function EditableSection({
 
         <button
           disabled={index === total - 1}
-          onClick={() => moveSection(index, index + 1)}
+          onClick={() =>
+            moveSection(index, index + 1)
+          }
           className="
             border-l
             border-black/10
@@ -1364,7 +1180,9 @@ function EditableSection({
         </button>
 
         <button
-          onClick={() => deleteSection(section.id)}
+          onClick={() =>
+            deleteSection(section.id)
+          }
           className="
             border-l
             border-black/10
@@ -1372,7 +1190,7 @@ function EditableSection({
             py-[6px]
             text-[8px]
             text-black/40
-            hover:bg-red-500
+            hover:bg-black
             hover:text-white
           "
         >
@@ -1380,16 +1198,15 @@ function EditableSection({
         </button>
       </div>
 
-      {/* ======================================================
+      {/* ==================================================
           HERO
-      ====================================================== */}
+      ================================================== */}
 
       {section.type === "hero" && (
         <div
           className={`
             grid
             min-h-[300px]
-
             ${
               view === "mobile"
                 ? "grid-cols-1"
@@ -1397,25 +1214,16 @@ function EditableSection({
             }
           `}
         >
-          <div
-            className="
-              flex
-              flex-col
-              justify-between
-              p-7
-            "
-          >
+          <div className="flex flex-col justify-between p-7">
             <div>
               <p
                 className="
+                  text-micro
                   mb-5
-                  text-[7px]
-                  uppercase
-                  tracking-[0.2em]
-                  text-violet-700
+                  text-[#5b486c]
                 "
               >
-                Nirvana / IGDTUW
+                NIRVANA / IGDTUW
               </p>
 
               <EditableText
@@ -1428,8 +1236,8 @@ function EditableSection({
                   )
                 }
                 className="
-                  text-[clamp(2.4rem,4vw,4rem)]
-                  leading-[0.82]
+                  text-[clamp(2rem,4vw,3.6rem)]
+                  leading-[0.84]
                   tracking-[-0.05em]
                 "
               />
@@ -1467,21 +1275,23 @@ function EditableSection({
         </div>
       )}
 
-      {/* ======================================================
-          TEXT SECTION
-      ====================================================== */}
+      {/* ==================================================
+          TEXT
+      ================================================== */}
 
       {section.type === "text" && (
         <div className="grid gap-8 p-8 md:grid-cols-[.5fr_1.5fr]">
           <EditableText
             value={section.eyebrow}
             onChange={(value) =>
-              updateSection(section.id, "eyebrow", value)
+              updateSection(
+                section.id,
+                "eyebrow",
+                value
+              )
             }
             className="
-              text-[7px]
-              uppercase
-              tracking-[0.2em]
+              text-micro
               text-black/35
             "
           />
@@ -1490,11 +1300,15 @@ function EditableSection({
             <EditableText
               value={section.title}
               onChange={(value) =>
-                updateSection(section.id, "title", value)
+                updateSection(
+                  section.id,
+                  "title",
+                  value
+                )
               }
               className="
                 max-w-[450px]
-                text-[28px]
+                text-[26px]
                 leading-[0.95]
                 tracking-[-0.035em]
               "
@@ -1521,9 +1335,9 @@ function EditableSection({
         </div>
       )}
 
-      {/* ======================================================
-          SINGLE IMAGE
-      ====================================================== */}
+      {/* ==================================================
+          IMAGE
+      ================================================== */}
 
       {section.type === "image" && (
         <div className="p-5">
@@ -1531,7 +1345,11 @@ function EditableSection({
             src={section.image}
             height="h-[300px]"
             onChange={(value) =>
-              updateSection(section.id, "image", value)
+              updateSection(
+                section.id,
+                "image",
+                value
+              )
             }
           />
 
@@ -1546,29 +1364,31 @@ function EditableSection({
             }
             className="
               mt-3
-              text-[7px]
-              uppercase
-              tracking-[0.13em]
+              text-micro
               text-black/35
             "
           />
         </div>
       )}
 
-      {/* ======================================================
+      {/* ==================================================
           GALLERY
-      ====================================================== */}
+      ================================================== */}
 
       {section.type === "gallery" && (
         <div className="p-6">
           <EditableText
             value={section.title}
             onChange={(value) =>
-              updateSection(section.id, "title", value)
+              updateSection(
+                section.id,
+                "title",
+                value
+              )
             }
             className="
               mb-5
-              text-[24px]
+              text-[23px]
               tracking-[-0.04em]
             "
           />
@@ -1577,7 +1397,6 @@ function EditableSection({
             className={`
               grid
               gap-2
-
               ${
                 view === "mobile"
                   ? "grid-cols-1"
@@ -1585,43 +1404,56 @@ function EditableSection({
               }
             `}
           >
-            {section.images.map((image, imageIndex) => (
-              <EditableImage
-                key={`${section.id}-${imageIndex}`}
-                src={image}
-                height="h-[220px]"
-                onChange={(value) => {
-                  const newImages = [...section.images];
+            {section.images.map(
+              (image, imageIndex) => (
+                <EditableImage
+                  key={`${section.id}-${imageIndex}`}
+                  src={image}
+                  height="h-[220px]"
+                  onChange={(value) => {
+                    const newImages = [
+                      ...section.images,
+                    ];
 
-                  newImages[imageIndex] = value;
+                    newImages[imageIndex] = value;
 
-                  updateSection(
-                    section.id,
-                    "images",
-                    newImages
-                  );
-                }}
-              />
-            ))}
+                    updateSection(
+                      section.id,
+                      "images",
+                      newImages
+                    );
+                  }}
+                />
+              )
+            )}
           </div>
         </div>
       )}
 
-      {/* ======================================================
+      {/* ==================================================
           STATS
-      ====================================================== */}
+      ================================================== */}
 
       {section.type === "stats" && (
-        <div className="bg-violet-200 p-7">
+        <div
+          className="
+            bg-[#e0d9e5]
+            p-7
+          "
+        >
           <EditableText
             value={section.title}
             onChange={(value) =>
-              updateSection(section.id, "title", value)
+              updateSection(
+                section.id,
+                "title",
+                value
+              )
             }
             className="
               mb-7
               max-w-[350px]
-              text-[28px]
+              text-[27px]
               leading-[0.95]
             "
           />
@@ -1641,21 +1473,14 @@ function EditableSection({
                   last:border-r-0
                 "
               >
-                <p
-                  className="
-                    text-[30px]
-                    leading-none
-                  "
-                >
+                <p className="text-[30px] leading-none">
                   {number}
                 </p>
 
                 <p
                   className="
                     mt-2
-                    text-[6px]
-                    uppercase
-                    tracking-[0.15em]
+                    text-micro
                     text-black/45
                   "
                 >
@@ -1667,9 +1492,9 @@ function EditableSection({
         </div>
       )}
 
-      {/* ======================================================
+      {/* ==================================================
           CTA
-      ====================================================== */}
+      ================================================== */}
 
       {section.type === "cta" && (
         <div
@@ -1678,7 +1503,7 @@ function EditableSection({
             items-end
             justify-between
             gap-8
-            bg-[#171717]
+            bg-[#0b0a0d]
             p-8
             text-white
           "
@@ -1686,11 +1511,15 @@ function EditableSection({
           <EditableText
             value={section.title}
             onChange={(value) =>
-              updateSection(section.id, "title", value)
+              updateSection(
+                section.id,
+                "title",
+                value
+              )
             }
             className="
               max-w-[380px]
-              text-[32px]
+              text-[30px]
               leading-[0.9]
             "
           />
@@ -1698,14 +1527,15 @@ function EditableSection({
           <button
             className="
               shrink-0
-              rounded-full
-              bg-violet-200
+              border
+              border-white/20
+              bg-white
               px-5
               py-3
-              text-[7px]
-              uppercase
-              tracking-[0.14em]
+              text-micro
               text-black
+              transition-colors
+              hover:bg-white/80
             "
           >
             {section.button}
@@ -1735,18 +1565,14 @@ function EditableText({
       }
       className={`
         cursor-text
-        rounded-sm
         outline-none
-        transition
-        hover:bg-violet-200/30
-        focus:bg-violet-200/50
+        transition-colors
+        hover:bg-[#ddd6e3]/40
+        focus:bg-[#ddd6e3]/60
         focus:ring-1
-        focus:ring-violet-500/30
+        focus:ring-[#6a5777]/20
         ${className}
       `}
-      style={{
-        fontFamily: '"Instrument Serif", serif',
-      }}
     >
       {value}
     </div>
@@ -1796,6 +1622,9 @@ function EditableImage({
           h-full
           w-full
           object-cover
+          transition-transform
+          duration-700
+          group-hover/image:scale-[1.03]
         "
       />
 
@@ -1808,25 +1637,25 @@ function EditableImage({
           justify-center
           bg-black/0
           opacity-0
-          transition
-          group-hover/image:bg-black/25
+          transition-all
+          duration-300
+          group-hover/image:bg-black/20
           group-hover/image:opacity-100
         "
       >
         <button
           onClick={shuffle}
           className="
-            rounded-full
-            bg-white
+            border
+            border-white/30
+            bg-black/70
             px-4
             py-2
-            text-[7px]
-            uppercase
-            tracking-[0.12em]
-            text-black
-            shadow-lg
-            transition-transform
-            hover:scale-105
+            text-micro
+            text-white
+            backdrop-blur-sm
+            transition-colors
+            hover:bg-black
           "
         >
           Shuffle image

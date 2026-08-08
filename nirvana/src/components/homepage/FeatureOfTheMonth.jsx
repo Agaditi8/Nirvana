@@ -1,33 +1,58 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  ArrowLeft,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+
+import { featureofthemonthData } from "@/data/Homepage/featureofthemonth";
+
+const ease = [0.16, 1, 0.3, 1];
 
 export default function ThirdSection() {
   return (
     <section
       className="
+        section
         relative
-        min-h-screen
         w-full
-        bg-black
-        p-6
-        text-white
+        overflow-hidden
+        bg-[var(--color-black)]
+        py-0
+        text-primary
       "
     >
       {/* ==================================================
+          BACKGROUND
+      ================================================== */}
+
+      <div className="noise z-0 opacity-[0.06]" />
+
+      <div
+        className="
+          violet-glow-soft
+          pointer-events-none
+          absolute
+          left-1/2
+          top-[20%]
+          z-0
+          h-[500px]
+          w-[700px]
+          -translate-x-1/2
+          rounded-full
+          opacity-60
+        "
+      />
+
+
+      {/* ==================================================
           MAIN FRAME
+          NO OUTER BOX / FULL WIDTH
       ================================================== */}
 
       <motion.div
         initial={{
           opacity: 0,
           y: 80,
-          scale: 0.97,
+          scale: 0.99,
         }}
         whileInView={{
           opacity: 1,
@@ -40,85 +65,19 @@ export default function ThirdSection() {
         }}
         transition={{
           duration: 1.1,
-          ease: [0.16, 1, 0.3, 1],
+          ease,
         }}
         className="
-    relative
-    flex
-    h-[calc(100vh-48px)]
-    w-full
-    flex-col
-    overflow-hidden
-  "
+          relative
+          z-10
+          flex
+          min-h-screen
+          w-full
+          flex-col
+          overflow-hidden
+          bg-[var(--color-surface)]
+        "
       >
-        {/* ================================================
-      DARK PURPLE / SPACE BACKGROUND
-  ================================================ */}
-
-        <div
-          className="
-      pointer-events-none
-      absolute
-      inset-0
-      z-0
-      bg-[radial-gradient(circle_at_15%_20%,rgba(92,65,160,0.16),transparent_30%),radial-gradient(circle_at_85%_75%,rgba(38,50,110,0.16),transparent_35%),radial-gradient(circle_at_55%_45%,rgba(69,38,96,0.08),transparent_38%),linear-gradient(135deg,#050407_0%,#090711_48%,#05060b_100%)]
-    "
-        />
-
-        {/* ================================================
-      TINY STAR / NOISE DOTS
-  ================================================ */}
-
-        <div
-          className="
-      pointer-events-none
-      absolute
-      inset-0
-      z-0
-      opacity-[0.16]
-      [background-image:radial-gradient(rgba(190,175,255,0.65)_0.6px,transparent_0.6px)]
-      [background-size:24px_24px]
-    "
-        />
-
-        {/* ================================================
-      SECOND RANDOM-LOOKING DOT LAYER
-  ================================================ */}
-
-        <div
-          className="
-      pointer-events-none
-      absolute
-      inset-0
-      z-0
-      opacity-[0.08]
-      [background-image:radial-gradient(rgba(120,145,255,0.8)_0.5px,transparent_0.5px)]
-      [background-position:11px_8px]
-      [background-size:37px_37px]
-    "
-        />
-
-        {/* ================================================
-      VERY SUBTLE TOP GLOW
-  ================================================ */}
-
-        <div
-          className="
-      pointer-events-none
-      absolute
-      left-1/2
-      top-[-20%]
-      z-0
-      h-[45%]
-      w-[70%]
-      -translate-x-1/2
-      rounded-full
-      bg-violet-800/[0.08]
-      blur-[100px]
-    "
-        />
-
-
 
         {/* ==================================================
             LARGE HEADING
@@ -127,12 +86,17 @@ export default function ThirdSection() {
         <div
           className="
             flex
-            h-[19vh]
+            min-h-[105px]
             shrink-0
             items-center
             justify-center
             border-b
-            border-white/20
+            border-[var(--color-border)]
+            px-4
+            py-5
+            sm:min-h-[125px]
+            md:h-[19vh]
+            md:px-8
           "
         >
           <motion.h2
@@ -152,34 +116,291 @@ export default function ThirdSection() {
             transition={{
               duration: 1,
               delay: 0.1,
-              ease: [0.16, 1, 0.3, 1],
+              ease,
             }}
             className="
+              text-[clamp(1.8rem,7vw,3.2rem)]
               whitespace-nowrap
               text-center
-              text-[clamp(4rem,7vw,8rem)]
-              leading-none
-              tracking-[-0.05em]
+              leading-[0.85]
+              tracking-[-0.055em]
+              text-primary
+              md:text-display-lg
             "
-            style={{
-              fontFamily: '"Instrument Serif", serif',
-            }}
           >
-            FEATURE OF THE MONTH
+            {featureofthemonthData.heading}
           </motion.h2>
         </div>
 
 
         {/* ==================================================
-            MAIN CONTENT
+            MOBILE
+        ================================================== */}
+
+        <div className="flex flex-col md:hidden">
+
+          {/* ISSUE */}
+
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 25,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              duration: 0.8,
+              delay: 0.15,
+              ease,
+            }}
+            className="
+              flex
+              items-end
+              justify-between
+              border-b
+              border-[var(--color-border)]
+              px-4
+              py-4
+            "
+          >
+            <div>
+              <p className="text-micro mb-2 text-subtle">
+                {featureofthemonthData.issue.number}
+              </p>
+
+              <p
+                className="
+                  text-[1.35rem]
+                  leading-[0.9]
+                  tracking-[-0.03em]
+                  text-primary
+                "
+              >
+                {featureofthemonthData.issue.organization}
+              </p>
+
+              <p
+                className="
+                  text-[1.35rem]
+                  leading-[0.9]
+                  tracking-[-0.03em]
+                  text-primary
+                "
+              >
+                {featureofthemonthData.issue.college}
+              </p>
+            </div>
+
+            <span className="text-micro text-[var(--color-violet-muted)]">
+              FEATURE
+            </span>
+          </motion.div>
+
+
+          {/* IMAGE */}
+
+          <div
+            className="
+              relative
+              h-[40svh]
+              min-h-[220px]
+              max-h-[340px]
+              overflow-hidden
+              border-b
+              border-[var(--color-border)]
+              p-3
+            "
+          >
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.92,
+              }}
+              whileInView={{
+                opacity: 1,
+                scale: 1,
+              }}
+              viewport={{
+                once: true,
+                amount: 0.25,
+              }}
+              transition={{
+                duration: 0.9,
+                ease,
+              }}
+              className="
+                relative
+                h-full
+                w-full
+                overflow-hidden
+                bg-[var(--color-surface-soft)]
+              "
+            >
+              <motion.img
+                src={featureofthemonthData.featuredImage.src}
+                alt={featureofthemonthData.featuredImage.alt}
+                initial={{
+                  scale: 1.15,
+                }}
+                whileInView={{
+                  scale: 1,
+                }}
+                viewport={{
+                  once: true,
+                }}
+                transition={{
+                  duration: 1.2,
+                  ease,
+                }}
+                className="
+                  absolute
+                  inset-0
+                  h-full
+                  w-full
+                  object-cover
+                "
+              />
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  bg-black/5
+                "
+              />
+
+              <div
+                className="
+                  absolute
+                  left-3
+                  top-3
+                  z-10
+                  text-micro
+                  text-primary
+                "
+              >
+                {featureofthemonthData.featuredImage.label}
+              </div>
+            </motion.div>
+          </div>
+
+
+          {/* CREATOR + DESCRIPTION */}
+
+          <div
+            className="
+              grid
+              grid-cols-2
+              border-b
+              border-[var(--color-border)]
+            "
+          >
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: -20,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.7,
+                ease,
+              }}
+              className="
+                border-r
+                border-[var(--color-border)]
+                p-4
+              "
+            >
+              <p className="text-micro mb-2 text-subtle">
+                {featureofthemonthData.designer.label}
+              </p>
+
+              <h3
+                className="
+                  text-[1.65rem]
+                  leading-[0.85]
+                  tracking-[-0.04em]
+                  text-primary
+                "
+              >
+                {featureofthemonthData.designer.name.split(" ")[0]}
+                <br />
+
+                {featureofthemonthData.designer.name
+                  .split(" ")
+                  .slice(1)
+                  .join(" ")}
+              </h3>
+
+              <p className="mt-2 text-[10px] leading-4 text-muted">
+                {featureofthemonthData.designer.department}
+              </p>
+            </motion.div>
+
+
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: 20,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.7,
+                delay: 0.1,
+                ease,
+              }}
+              className="flex items-end p-4"
+            >
+              <p
+                className="
+                  text-[10px]
+                  leading-[1.5]
+                  text-muted
+                "
+              >
+                {featureofthemonthData.description}
+              </p>
+            </motion.div>
+          </div>
+
+
+          {/* MOBILE BUTTONS */}
+
+          <FeatureButtons />
+
+        </div>
+
+
+        {/* ==================================================
+            DESKTOP
+            ORIGINAL 3-COLUMN STRUCTURE
         ================================================== */}
 
         <div
           className="
-            grid
+            hidden
             min-h-0
             flex-1
             grid-cols-[0.7fr_2.2fr_0.95fr]
+            md:grid
           "
         >
 
@@ -191,7 +412,7 @@ export default function ThirdSection() {
             className="
               relative
               border-r
-              border-white/20
+              border-[var(--color-border)]
             "
           >
             <motion.div
@@ -211,7 +432,7 @@ export default function ThirdSection() {
               transition={{
                 duration: 1,
                 delay: 0.25,
-                ease: [0.16, 1, 0.3, 1],
+                ease,
               }}
               className="
                 absolute
@@ -220,38 +441,21 @@ export default function ThirdSection() {
                 right-5
               "
             >
-              {/* SMALL NUMBER */}
-
-              <p
-                className="
-                  mb-5
-                  text-xs
-                  uppercase
-                  tracking-[0.25em]
-                  text-white/40
-                "
-              >
-                02 / 2026
+              <p className="text-micro mb-5 text-subtle">
+                {featureofthemonthData.issue.number}
               </p>
 
-              {/* DATE */}
-
               <p
                 className="
-                  text-[clamp(2.5rem,3.6vw,3rem)]
+                  text-h2
                   leading-[0.88]
-                  tracking-[-0.04em]
+                  text-primary
                 "
-                style={{
-                  fontFamily: '"Instrument Serif", serif',
-                }}
               >
-                NIRVANA
-                <br />
-                IGDTUW
+                {featureofthemonthData.issue.organization}
                 <br />
 
-
+                {featureofthemonthData.issue.college}
               </p>
             </motion.div>
           </div>
@@ -267,7 +471,7 @@ export default function ThirdSection() {
               min-h-0
               overflow-hidden
               border-r
-              border-white/20
+              border-[var(--color-border)]
               p-5
             "
           >
@@ -303,12 +507,12 @@ export default function ThirdSection() {
                 h-full
                 w-full
                 overflow-hidden
-                bg-neutral-900
+                bg-[var(--color-surface-soft)]
               "
             >
               <motion.img
-                src="/images/hero/hero-left.png"
-                alt="Featured Nirvana project"
+                src={featureofthemonthData.featuredImage.src}
+                alt={featureofthemonthData.featuredImage.alt}
                 initial={{
                   scale: 1.3,
                 }}
@@ -323,7 +527,7 @@ export default function ThirdSection() {
                 }}
                 transition={{
                   duration: 1.5,
-                  ease: [0.16, 1, 0.3, 1],
+                  ease,
                 }}
                 className="
                   absolute
@@ -335,8 +539,6 @@ export default function ThirdSection() {
                 "
               />
 
-              {/* IMAGE OVERLAY */}
-
               <div
                 className="
                   pointer-events-none
@@ -346,48 +548,37 @@ export default function ThirdSection() {
                 "
               />
 
-
-              {/* IMAGE NUMBER */}
-
               <div
                 className="
                   absolute
                   left-4
                   top-4
                   z-10
-                  text-[10px]
-                  uppercase
-                  tracking-[0.2em]
-                  text-white/70
+                  text-micro
+                  text-primary
                 "
               >
-                Featured / 001
+                {featureofthemonthData.featuredImage.label}
               </div>
-
-
-              {/* IMAGE ARROW */}
-
-
             </motion.div>
           </div>
 
 
           {/* ==================================================
-    RIGHT
-================================================== */}
+              RIGHT
+          ================================================== */}
 
           <div
             className="
-    flex
-    h-full
-    min-h-0
-    flex-col
-    overflow-hidden
-  "
+              flex
+              h-full
+              min-h-0
+              flex-col
+              overflow-hidden
+            "
           >
-            {/* ================================================
-      RIGHT TOP — CREATOR
-  ================================================ */}
+
+            {/* CREATOR */}
 
             <motion.div
               initial={{
@@ -406,59 +597,42 @@ export default function ThirdSection() {
               transition={{
                 duration: 1,
                 delay: 0.35,
-                ease: [0.16, 1, 0.3, 1],
+                ease,
               }}
               className="
-      shrink-0
-      border-b
-      border-violet-200/10
-      p-5
-    "
+                shrink-0
+                border-b
+                border-[var(--color-border)]
+                p-5
+              "
             >
-              <p
-                className="
-        mb-3
-        text-[10px]
-        uppercase
-        tracking-[0.25em]
-        text-violet-100/40
-      "
-              >
-                Featured Designer
+              <p className="text-micro mb-3 text-subtle">
+                {featureofthemonthData.designer.label}
               </p>
 
               <h3
                 className="
-        text-[clamp(1.8rem,2.3vw,2.8rem)]
-        leading-[0.9]
-        tracking-[-0.03em]
-      "
-                style={{
-                  fontFamily: '"Instrument Serif", serif',
-                }}
+                  text-h3
+                  leading-[0.9]
+                  text-primary
+                "
               >
-                ANUSHKA
+                {featureofthemonthData.designer.name.split(" ")[0]}
                 <br />
-                KOTNALA
+
+                {featureofthemonthData.designer.name
+                  .split(" ")
+                  .slice(1)
+                  .join(" ")}
               </h3>
 
-              <p
-                className="
-        mt-3
-        text-xs
-        uppercase
-        tracking-[0.12em]
-        text-white/40
-      "
-              >
-                CSE_AI / 3rd Year
+              <p className="text-caption mt-3 text-muted">
+                {featureofthemonthData.designer.department}
               </p>
             </motion.div>
 
 
-            {/* ================================================
-      DESCRIPTION — THIS TAKES REMAINING SPACE
-  ================================================ */}
+            {/* DESCRIPTION */}
 
             <motion.div
               initial={{
@@ -475,214 +649,201 @@ export default function ThirdSection() {
                 delay: 0.5,
               }}
               className="
-      flex
-      min-h-0
-      flex-1
-      items-end
-      p-5
-    "
+                flex
+                min-h-0
+                flex-1
+                items-end
+                p-5
+              "
             >
               <p
                 className="
-        max-w-[260px]
-        text-xs
-        leading-relaxed
-        text-white/40
-      "
+                  text-body-sm
+                  max-w-[260px]
+                  leading-relaxed
+                  text-muted
+                "
               >
-                Celebrating standout work from the
-                creative community at Nirvana.
+                {featureofthemonthData.description}
               </p>
             </motion.div>
 
 
-            {/* ================================================
-      BUTTON AREA
+            {/* BUTTONS */}
 
-      shrink-0 is IMPORTANT
-  ================================================ */}
+            <FeatureButtons />
 
-            <div className="relative z-20 shrink-0">
-
-              {/* ================================================
-        SEE ALL FEATURES
-    ================================================ */}
-
-              <a
-                href="#"
-                className="
-        group
-        flex
-        w-full
-        items-center
-        justify-between
-        border-t
-        border-violet-200/10
-        bg-[#08060d]
-        px-5
-        py-3.5
-        transition-all
-        duration-500
-        hover:bg-[#110c1d]
-      "
-              >
-                <span
-                  className="
-          text-[17px]
-          text-white/80
-          transition-colors
-          duration-300
-          group-hover:text-white
-        "
-                  style={{
-                    fontFamily: '"Instrument Serif", serif',
-                  }}
-                >
-                  See all features
-                </span>
-
-                <ArrowUpRight
-                  size={19}
-                  strokeWidth={1.3}
-                  className="
-          text-violet-200/70
-          transition-transform
-          duration-500
-          group-hover:rotate-45
-          group-hover:text-white
-        "
-                />
-              </a>
-
-
-              {/* ================================================
-        REGISTER NOW
-    ================================================ */}
-
-              <a
-                href="#"
-                className="
-        group
-        relative
-        flex
-        w-full
-        items-center
-        justify-between
-        overflow-hidden
-        border-t
-        border-violet-200/10
-        bg-[#0e0917]
-        px-5
-        py-4
-        text-white
-        transition-all
-        duration-500
-        hover:bg-[#171023]
-      "
-              >
-                {/* PURPLE GLOW */}
-
-                <div
-                  className="
-          pointer-events-none
-          absolute
-          -right-10
-          top-1/2
-          h-24
-          w-24
-          -translate-y-1/2
-          rounded-full
-          bg-violet-700/20
-          blur-[35px]
-          transition-all
-          duration-700
-          group-hover:bg-violet-600/30
-        "
-                />
-
-                {/* DOT TEXTURE */}
-
-                <div
-                  className="
-          pointer-events-none
-          absolute
-          inset-0
-          opacity-[0.1]
-          [background-image:radial-gradient(rgba(200,190,255,0.8)_0.5px,transparent_0.5px)]
-          [background-size:15px_15px]
-      "
-                />
-
-                <div className="relative z-10">
-                  <span
-                    className="
-            block
-            text-[9px]
-            uppercase
-            tracking-[0.22em]
-            text-violet-200/40
-          "
-                  >
-                    Applications open
-                  </span>
-
-                  <span
-                    className="
-            mt-1
-            block
-            text-[clamp(1.4rem,1.8vw,2rem)]
-            leading-none
-          "
-                    style={{
-                      fontFamily: '"Instrument Serif", serif',
-                    }}
-                  >
-                    REGISTER NOW
-                  </span>
-                </div>
-
-
-                {/* ARROW */}
-
-                <div
-                  className="
-          relative
-          z-10
-          flex
-          h-9
-          w-9
-          shrink-0
-          items-center
-          justify-center
-          rounded-full
-          border
-          border-violet-200/15
-          bg-violet-200/[0.05]
-          transition-all
-          duration-500
-          group-hover:border-violet-200/30
-          group-hover:bg-violet-200/10
-        "
-                >
-                  <ArrowUpRight
-                    size={18}
-                    strokeWidth={1.3}
-                    className="
-            transition-transform
-            duration-500
-            group-hover:translate-x-[2px]
-            group-hover:-translate-y-[2px]
-          "
-                  />
-                </div>
-              </a>
-
-            </div>
           </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+
+function FeatureButtons() {
+  return (
+    <div className="relative z-20 shrink-0">
+
+      {/* SEE ALL FEATURES */}
+
+      <a
+        href={
+          featureofthemonthData.actions
+            .seeAllFeatures.href
+        }
+        className="
+          group
+          flex
+          w-full
+          items-center
+          justify-between
+          border-t
+          border-[var(--color-border)]
+          bg-[var(--color-surface-soft)]
+          px-4
+          py-3
+          transition-all
+          duration-500
+          hover:bg-[var(--color-violet-soft)]
+          sm:px-5
+          sm:py-3.5
+        "
+      >
+        <span
+          className="
+            text-body
+            text-muted
+            transition-colors
+            duration-300
+            group-hover:text-primary
+          "
+        >
+          {
+            featureofthemonthData.actions
+              .seeAllFeatures.label
+          }
+        </span>
+
+        <ArrowUpRight
+          size={18}
+          strokeWidth={1.3}
+          className="
+            shrink-0
+            text-[var(--color-violet-muted)]
+            transition-all
+            duration-500
+            group-hover:translate-x-1
+            group-hover:-translate-y-1
+            group-hover:rotate-45
+          "
+        />
+      </a>
+
+
+      {/* REGISTER */}
+
+      <a
+        href={
+          featureofthemonthData.actions
+            .register.href
+        }
+        className="
+          group
+          relative
+          flex
+          w-full
+          items-center
+          justify-between
+          overflow-hidden
+          border-t
+          border-[var(--color-border)]
+          bg-[var(--color-violet-soft)]
+          px-4
+          py-3
+          text-primary
+          transition-all
+          duration-500
+          hover:bg-[var(--color-violet-muted)]
+          sm:px-5
+          sm:py-4
+        "
+      >
+        <div className="relative z-10">
+
+          <span
+            className="
+              text-micro
+              block
+              text-subtle
+            "
+          >
+            {
+              featureofthemonthData.actions
+                .register.eyebrow
+            }
+          </span>
+
+          <span
+            className="
+              text-body
+              mt-1
+              block
+              text-primary
+            "
+          >
+            {
+              featureofthemonthData.actions
+                .register.label
+            }
+          </span>
+
         </div>
 
 
-      </motion.div>
-    </section>
+        <motion.div
+          className="
+            relative
+            z-10
+            flex
+            shrink-0
+            items-center
+            justify-center
+            text-[var(--color-violet-muted)]
+          "
+          whileHover={{
+            x: 4,
+            y: -4,
+          }}
+          transition={{
+            duration: 0.4,
+            ease,
+          }}
+        >
+          <ArrowUpRight
+            size={19}
+            strokeWidth={1.2}
+          />
+        </motion.div>
+
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            opacity-[0.08]
+            [background-image:radial-gradient(rgba(200,190,220,0.8)_0.5px,transparent_0.5px)]
+            [background-size:15px_15px]
+          "
+        />
+
+      </a>
+
+    </div>
   );
 }

@@ -21,6 +21,8 @@ const WINNING_LINES = [
   [2, 4, 6],
 ];
 
+const ease = [0.16, 1, 0.3, 1];
+
 /* ============================================================
    GAME
 ============================================================ */
@@ -258,15 +260,15 @@ export default function Game() {
         min-h-screen
         w-full
         overflow-hidden
-        bg-black
+        bg-[var(--color-black)]
         px-6
         py-10
-        text-white
+        text-primary
+        md:px-10
       "
     >
       {/* ======================================================
-          VERY SUBTLE PAGE GLOW
-          Black remains dominant.
+          SUBTLE ATMOSPHERE
       ====================================================== */}
 
       <div
@@ -275,13 +277,13 @@ export default function Game() {
           absolute
           left-1/2
           top-1/2
-          h-[700px]
-          w-[700px]
+          h-[650px]
+          w-[650px]
           -translate-x-1/2
           -translate-y-1/2
           rounded-full
-          bg-violet-950/[0.07]
-          blur-[180px]
+          bg-[radial-gradient(circle,rgba(67,47,88,0.14),transparent_68%)]
+          blur-[100px]
         "
       />
 
@@ -304,7 +306,7 @@ export default function Game() {
         }}
         transition={{
           duration: 1.1,
-          ease: [0.16, 1, 0.3, 1],
+          ease,
         }}
         className="
           relative
@@ -335,15 +337,7 @@ export default function Game() {
           {/* LEFT */}
 
           <div className="flex items-center gap-5">
-
-            <p
-              className="
-                text-[11px]
-                uppercase
-                tracking-[0.28em]
-                text-white/55
-              "
-            >
+            <p className="text-micro text-muted">
               Nirvana Playground
             </p>
           </div>
@@ -361,44 +355,23 @@ export default function Game() {
               lg:flex
             "
           >
-            <span
-              className="
-                text-[11px]
-                uppercase
-                tracking-[0.25em]
-                text-white/25
-              "
-            >
+            <span className="text-micro text-subtle">
               Tic
             </span>
 
-            <span className="text-violet-300/50">
+            <span className="text-[var(--color-violet-muted)]">
               /
             </span>
 
-            <span
-              className="
-                text-[11px]
-                uppercase
-                tracking-[0.25em]
-                text-white/25
-              "
-            >
+            <span className="text-micro text-subtle">
               Tac
             </span>
 
-            <span className="text-violet-300/50">
+            <span className="text-[var(--color-violet-muted)]">
               /
             </span>
 
-            <span
-              className="
-                text-[11px]
-                uppercase
-                tracking-[0.25em]
-                text-white/25
-              "
-            >
+            <span className="text-micro text-subtle">
               Nirvana
             </span>
           </div>
@@ -450,15 +423,7 @@ export default function Game() {
                 delay: 0.2,
               }}
             >
-              <p
-                className="
-                  mb-4
-                  text-[11px]
-                  uppercase
-                  tracking-[0.3em]
-                  text-violet-100/30
-                "
-              >
+              <p className="text-micro mb-4 text-subtle">
                 Your symbol
               </p>
 
@@ -478,7 +443,7 @@ export default function Game() {
                 }}
                 transition={{
                   duration: 0.9,
-                  ease: [0.16, 1, 0.3, 1],
+                  ease,
                 }}
                 className="
                   flex
@@ -521,54 +486,20 @@ export default function Game() {
                 delay: 0.4,
               }}
             >
-              <p
-                className="
-                  max-w-[230px]
-                  text-sm
-                  leading-relaxed
-                  text-white/35
-                "
-              >
+              <p className="max-w-[230px] text-body-sm text-subtle leading-relaxed">
                 Three in a row.
                 <br />
-                That&apos;s all you need.
+                That's all you need.
                 <br />
                 Probably.
               </p>
 
-              <div
-                className="
-                  mt-8
-                  flex
-                  items-end
-                  gap-3
-                "
-              >
-                <span
-                  className="
-                    text-[clamp(4rem,6vw,7rem)]
-                    leading-[0.65]
-                  "
-                  style={{
-                    fontFamily:
-                      '"Instrument Serif", serif',
-                  }}
-                >
-                  {String(score.player).padStart(
-                    2,
-                    "0"
-                  )}
+              <div className="mt-8 flex items-end gap-3">
+                <span className="text-display-md leading-[0.7] text-primary">
+                  {String(score.player).padStart(2, "0")}
                 </span>
 
-                <span
-                  className="
-                    pb-1
-                    text-[8px]
-                    uppercase
-                    tracking-[0.25em]
-                    text-white/25
-                  "
-                >
+                <span className="text-micro pb-1 text-subtle">
                   Wins
                 </span>
               </div>
@@ -624,8 +555,8 @@ export default function Game() {
                   animate={
                     !playerTurn && !winner
                       ? {
-                          scale: [1, 1.5, 1],
-                          opacity: [0.3, 1, 0.3],
+                          scale: [1, 1.35, 1],
+                          opacity: [0.35, 1, 0.35],
                         }
                       : {}
                   }
@@ -634,35 +565,21 @@ export default function Game() {
                     repeat: Infinity,
                   }}
                   className="
-                    h-[8px]
-                    w-[8px]
+                    h-[6px]
+                    w-[6px]
                     rounded-full
-                    bg-violet-300
-                    shadow-[0_0_14px_rgba(196,181,253,0.9)]
+                    bg-[var(--color-violet-muted)]
                   "
                 />
 
-                <p
-                  className="
-                    text-[20px]
-                    uppercase
-                    tracking-[0.25em]
-                    text-white/65
-                  "
-                  style={{
-                    fontFamily:
-                      '"Instrument Serif", serif',
-                  }}
-                >
+                <p className="text-body-lg uppercase tracking-[0.2em] text-muted">
                   {getStatus()}
                 </p>
               </motion.div>
             </AnimatePresence>
 
             {/* ==================================================
-                PURPLE TIC TAC TOE AREA
-
-                Purple treatment ONLY exists here.
+                GAME BOARD
             ================================================== */}
 
             <motion.div
@@ -683,7 +600,7 @@ export default function Game() {
               }}
               transition={{
                 duration: 1.2,
-                ease: [0.16, 1, 0.3, 1],
+                ease,
               }}
               className="
                 relative
@@ -691,63 +608,44 @@ export default function Game() {
                 w-full
                 max-w-[430px]
                 overflow-hidden
-                bg-[#090611]
-                shadow-[0_0_80px_rgba(109,40,217,0.13)]
+                border
+                border-[var(--color-border)]
+                bg-[var(--color-surface)]
               "
             >
-              {/* PURPLE / BLACK BACKGROUND */}
+              {/* BOARD BACKGROUND */}
 
               <div
                 className="
                   pointer-events-none
                   absolute
                   inset-0
-                  bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.18),transparent_38%),radial-gradient(circle_at_80%_75%,rgba(76,29,149,0.22),transparent_42%),linear-gradient(135deg,#08050d_0%,#11091d_50%,#07050c_100%)]
+                  bg-[radial-gradient(circle_at_25%_20%,rgba(67,47,88,0.18),transparent_38%),radial-gradient(circle_at_80%_75%,rgba(45,38,75,0.16),transparent_42%),linear-gradient(135deg,#08080a_0%,#0d0b11_50%,#070708_100%)]
                 "
               />
 
-              {/* BOARD GALAXY DOTS */}
+              {/* BOARD DOTS */}
 
               <div
                 className="
                   pointer-events-none
                   absolute
                   inset-0
-                  opacity-[0.18]
+                  opacity-[0.12]
                   [background-image:radial-gradient(rgba(221,214,254,0.8)_0.65px,transparent_0.65px)]
                   [background-size:22px_22px]
                 "
               />
 
-              {/* SECOND DOT LAYER */}
-
               <div
                 className="
                   pointer-events-none
                   absolute
                   inset-0
-                  opacity-[0.10]
+                  opacity-[0.06]
                   [background-image:radial-gradient(rgba(129,140,248,0.9)_0.5px,transparent_0.5px)]
                   [background-position:9px_13px]
                   [background-size:37px_37px]
-                "
-              />
-
-              {/* CENTRAL PURPLE GLOW */}
-
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  left-1/2
-                  top-1/2
-                  h-[280px]
-                  w-[280px]
-                  -translate-x-1/2
-                  -translate-y-1/2
-                  rounded-full
-                  bg-violet-700/[0.10]
-                  blur-[80px]
                 "
               />
 
@@ -769,9 +667,7 @@ export default function Game() {
                     key={index}
                     value={cell}
                     index={index}
-                    winner={winningCells.includes(
-                      index
-                    )}
+                    winner={winningCells.includes(index)}
                     disabled={
                       !playerTurn ||
                       winner ||
@@ -787,15 +683,7 @@ export default function Game() {
 
             {/* INSTRUCTION */}
 
-            <p
-              className="
-                mt-7
-                text-[12px]
-                uppercase
-                tracking-[0.3em]
-                text-white/20
-              "
-            >
+            <p className="text-micro mt-7 text-subtle">
               Select an empty square
             </p>
           </div>
@@ -834,15 +722,7 @@ export default function Game() {
               }}
               className="text-right"
             >
-              <p
-                className="
-                  mb-5
-                  text-[11px]
-                  uppercase
-                  tracking-[0.3em]
-                  text-violet-100/30
-                "
-              >
+              <p className="text-micro mb-5 text-subtle">
                 Nirvana
               </p>
 
@@ -862,7 +742,7 @@ export default function Game() {
                 }}
                 transition={{
                   duration: 1,
-                  ease: [0.16, 1, 0.3, 1],
+                  ease,
                 }}
                 className="
                   ml-auto
@@ -907,55 +787,19 @@ export default function Game() {
               }}
               className="text-right"
             >
-              <p
-                className="
-                  ml-auto
-                  max-w-[230px]
-                  text-sm
-                  leading-relaxed
-                  text-white/35
-                "
-              >
+              <p className="ml-auto max-w-[230px] text-body-sm text-subtle leading-relaxed">
                 The house plays ✦.
                 <br />
                 Beat Nirvana if you can.
               </p>
 
-              <div
-                className="
-                  mt-8
-                  flex
-                  items-end
-                  justify-end
-                  gap-3
-                "
-              >
-                <span
-                  className="
-                    pb-1
-                    text-[8px]
-                    uppercase
-                    tracking-[0.25em]
-                    text-white/25
-                  "
-                >
+              <div className="mt-8 flex items-end justify-end gap-3">
+                <span className="text-micro pb-1 text-subtle">
                   Wins
                 </span>
 
-                <span
-                  className="
-                    text-[clamp(4rem,6vw,7rem)]
-                    leading-[0.65]
-                    text-violet-100
-                  "
-                  style={{
-                    fontFamily:
-                      '"Instrument Serif", serif',
-                  }}
-                >
-                  {String(
-                    score.nirvana
-                  ).padStart(2, "0")}
+                <span className="text-display-md leading-[0.7] text-[var(--color-violet-muted)]">
+                  {String(score.nirvana).padStart(2, "0")}
                 </span>
               </div>
             </motion.div>
@@ -964,7 +808,6 @@ export default function Game() {
 
         {/* ==================================================
             BOTTOM CONTROLS
-            No border / no containing bar
         ================================================== */}
 
         <div
@@ -991,79 +834,33 @@ export default function Game() {
             "
           >
             <div>
-              <p
-                className="
-                  text-[8px]
-                  uppercase
-                  tracking-[0.25em]
-                  text-white/25
-                "
-              >
+              <p className="text-micro text-subtle">
                 You
               </p>
 
-              <p
-                className="
-                  mt-1
-                  text-lg
-                  leading-none
-                "
-                style={{
-                  fontFamily:
-                    '"Instrument Serif", serif',
-                }}
-              >
-                {String(score.player).padStart(
-                  2,
-                  "0"
-                )}
+              <p className="text-body-lg mt-1 leading-none text-primary">
+                {String(score.player).padStart(2, "0")}
               </p>
             </div>
 
-            <span className="text-white/15">
+            <span className="text-[var(--color-border-strong)]">
               /
             </span>
 
             <div>
-              <p
-                className="
-                  text-[8px]
-                  uppercase
-                  tracking-[0.25em]
-                  text-white/25
-                "
-              >
+              <p className="text-micro text-subtle">
                 Nirvana
               </p>
 
-              <p
-                className="
-                  mt-1
-                  text-lg
-                  leading-none
-                  text-violet-200
-                "
-                style={{
-                  fontFamily:
-                    '"Instrument Serif", serif',
-                }}
-              >
-                {String(
-                  score.nirvana
-                ).padStart(2, "0")}
+              <p className="text-body-lg mt-1 leading-none text-[var(--color-violet-muted)]">
+                {String(score.nirvana).padStart(2, "0")}
               </p>
             </div>
           </div>
 
           {/* BUTTONS */}
 
-          <div
-            className="
-              flex
-              items-center
-              gap-3
-            "
-          >
+          <div className="flex items-center gap-3">
             <button
               onClick={resetEverything}
               className="
@@ -1071,15 +868,13 @@ export default function Game() {
                 flex
                 items-center
                 gap-3
-                px-6
+                px-5
                 py-4
-                text-[9px]
-                uppercase
-                tracking-[0.22em]
-                text-white/35
-                transition-all
+                text-micro
+                text-subtle
+                transition-colors
                 duration-500
-                hover:text-white
+                hover:text-primary
               "
             >
               <RotateCcw
@@ -1104,43 +899,19 @@ export default function Game() {
                 items-center
                 gap-5
                 overflow-hidden
-                bg-[#100a19]
+                border
+                border-[var(--color-border)]
+                bg-[var(--color-violet-soft)]
                 px-7
                 py-4
-                text-white
+                text-primary
                 transition-all
                 duration-500
-                hover:bg-violet-100
-                hover:text-black
+                hover:bg-[var(--color-violet-muted)]
+                hover:text-white
               "
             >
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  -right-8
-                  top-1/2
-                  h-20
-                  w-20
-                  -translate-y-1/2
-                  rounded-full
-                  bg-violet-700/25
-                  blur-[30px]
-                  transition-opacity
-                  duration-500
-                  group-hover:opacity-0
-                "
-              />
-
-              <span
-                className="
-                  relative
-                  z-10
-                  text-[9px]
-                  uppercase
-                  tracking-[0.25em]
-                "
-              >
+              <span className="relative z-10 text-micro">
                 New round
               </span>
 
@@ -1181,7 +952,7 @@ function GameCell({
         !disabled
           ? {
               backgroundColor:
-                "rgba(139, 92, 246, 0.12)",
+                "rgba(70, 52, 88, 0.16)",
             }
           : {}
       }
@@ -1201,9 +972,7 @@ function GameCell({
         items-center
         justify-center
         overflow-hidden
-
-        border-violet-200/[0.18]
-
+        border-[var(--color-border)]
         transition-colors
         duration-500
 
@@ -1212,7 +981,7 @@ function GameCell({
 
         ${
           winner
-            ? "bg-violet-300/[0.10]"
+            ? "bg-[var(--color-violet-soft)]"
             : "bg-transparent"
         }
 
@@ -1238,10 +1007,11 @@ function GameCell({
               w-2
               border-l
               border-t
-              border-violet-200/0
-              transition-all
+              border-[var(--color-violet-muted)]
+              opacity-0
+              transition-opacity
               duration-300
-              group-hover:border-violet-200/30
+              group-hover:opacity-50
             "
           />
 
@@ -1254,17 +1024,18 @@ function GameCell({
               w-2
               border-b
               border-r
-              border-violet-200/0
-              transition-all
+              border-[var(--color-violet-muted)]
+              opacity-0
+              transition-opacity
               duration-300
-              group-hover:border-violet-200/30
+              group-hover:opacity-50
             "
           />
         </>
       )}
 
       {/* ==================================================
-          WIN GLOW
+          WIN STATE
       ================================================== */}
 
       <AnimatePresence>
@@ -1275,7 +1046,7 @@ function GameCell({
               scale: 0,
             }}
             animate={{
-              opacity: [0.15, 0.4, 0.15],
+              opacity: [0.1, 0.3, 0.1],
               scale: 1,
             }}
             transition={{
@@ -1293,11 +1064,11 @@ function GameCell({
             className="
               pointer-events-none
               absolute
-              h-[80%]
-              w-[80%]
+              h-[65%]
+              w-[65%]
               rounded-full
-              bg-violet-600/20
-              blur-[30px]
+              bg-[var(--color-violet-soft)]
+              blur-[25px]
             "
           />
         )}
@@ -1411,7 +1182,8 @@ function GameCell({
           left-2
           text-[7px]
           tracking-[0.2em]
-          text-white/[0.12]
+          text-subtle
+          opacity-50
         "
       >
         0{index + 1}

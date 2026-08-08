@@ -10,6 +10,11 @@ import Link from "next/link";
 
 const menu = [
   {
+    name: "HOME",
+    href: "/",
+    number: "00",
+  },
+  {
     name: "ABOUT",
     href: "/about",
     number: "01",
@@ -36,36 +41,28 @@ const menu = [
   },
 ];
 
-/* ============================================================
-   NIRVANA LINKS
 
-   Add the real Nirvana links here.
+/* ============================================================
+   SOCIAL LINKS
 ============================================================ */
 
 const socialLinks = [
   {
     name: "Instagram",
-    href: "#",
+    href: "https://www.instagram.com/designclubigdtuw/",
   },
   {
     name: "LinkedIn",
-    href: "#",
-  },
-  {
-    name: "Behance",
-    href: "#",
-  },
-  {
-    name: "GitHub",
-    href: "#",
+    href: "https://www.linkedin.com/in/nirvana-design-club-of-igdtuw-6590203a8/",
   },
 ];
 
 const WHATSAPP_LINK =
   "https://chat.whatsapp.com/ImoVWQe1jslG5O72ubUnq2";
 
+
 /* ============================================================
-   ANIMATION VARIANTS
+   ANIMATION
 ============================================================ */
 
 const container = {
@@ -73,7 +70,7 @@ const container = {
 
   show: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
       delayChildren: 0.05,
     },
   },
@@ -97,11 +94,12 @@ const item = {
   },
 };
 
+
 /* ============================================================
    MENU OVERLAY
 ============================================================ */
 
-export default function MenuOverlay() {
+export default function MenuOverlay({ onClose }) {
   return (
     <motion.div
       initial={{
@@ -122,30 +120,61 @@ export default function MenuOverlay() {
         inset-0
         z-40
         overflow-hidden
-        bg-black
+        bg-[var(--color-black)]
+        text-primary
       "
     >
-      {/* SUBTLE PURPLE GLOW */}
+
+      {/* ====================================================
+          NOISE
+      ==================================================== */}
+
+      <div className="noise z-0 opacity-[0.06]" />
+
+
+      {/* ====================================================
+          DARK VIOLET ATMOSPHERE
+      ==================================================== */}
 
       <div
         className="
+          violet-glow-soft
           pointer-events-none
           absolute
-          right-[10%]
-          top-[20%]
-          h-[500px]
-          w-[500px]
+          right-[8%]
+          top-[18%]
+          h-[350px]
+          w-[350px]
           rounded-full
-          bg-violet-900/[0.12]
-          blur-[160px]
+          opacity-60
+
+          md:h-[500px]
+          md:w-[500px]
+          md:opacity-80
         "
       />
 
-      <div className="relative z-10 flex h-screen">
 
-        {/* ====================================================
-            LEFT SIDE
-        ==================================================== */}
+      {/* ====================================================
+          MAIN LAYOUT
+      ==================================================== */}
+
+      <div
+        className="
+          relative
+          z-10
+          flex
+          h-full
+          w-full
+          flex-col
+
+          md:flex-row
+        "
+      >
+
+        {/* ==================================================
+            LEFT SIDE — MENU
+        ================================================== */}
 
         <motion.div
           variants={container}
@@ -153,28 +182,42 @@ export default function MenuOverlay() {
           animate="show"
           className="
             flex
-            w-[70%]
+            h-[60%]
+            w-full
             flex-col
-            border-r
-            border-white/10
+
+            md:h-full
+            md:w-[70%]
+            md:border-r
+            md:border-[var(--color-border)]
           "
         >
+
           {menu.map((menuItem, index) => (
             <motion.div
               key={menuItem.name}
               variants={item}
               className="
                 relative
-                h-1/5
+                flex-1
                 border-b
-                border-white/10
+                border-[var(--color-border)]
+
+                md:h-1/6
+                md:flex-none
               "
               style={{
-                marginLeft: `${index * 40}px`,
+                marginLeft:
+                  typeof window !== "undefined" &&
+                  window.innerWidth >= 768
+                    ? `${index * 40}px`
+                    : "0px",
               }}
             >
+
               <Link
                 href={menuItem.href}
+                onClick={onClose}
                 className="
                   group
                   relative
@@ -183,10 +226,17 @@ export default function MenuOverlay() {
                   w-full
                   items-center
                   overflow-hidden
-                  px-20
+                  px-5
+
+                  sm:px-7
+
+                  md:px-20
                 "
               >
-                {/* HOVER BACKGROUND */}
+
+                {/* ==================================================
+                    HOVER BACKGROUND
+                ================================================== */}
 
                 <div
                   className="
@@ -194,7 +244,7 @@ export default function MenuOverlay() {
                     inset-0
                     origin-left
                     scale-x-0
-                    bg-violet-500/[0.08]
+                    bg-[var(--color-violet-soft)]
                     transition-transform
                     duration-700
                     ease-[cubic-bezier(0.16,1,0.3,1)]
@@ -202,70 +252,89 @@ export default function MenuOverlay() {
                   "
                 />
 
-                {/* NUMBER */}
+
+                {/* ==================================================
+                    NUMBER
+                ================================================== */}
 
                 <span
                   className="
                     relative
                     z-10
-                    mr-8
-                    text-[9px]
-                    tracking-[0.25em]
-                    text-white/20
+                    mr-4
+                    text-micro
+                    text-subtle
                     transition-colors
                     duration-500
-                    group-hover:text-violet-300
+                    group-hover:text-[var(--color-violet-muted)]
+
+                    sm:mr-5
+
+                    md:mr-8
                   "
                 >
                   {menuItem.number}
                 </span>
 
-                {/* TEXT */}
+
+                {/* ==================================================
+                    MENU TEXT
+                ================================================== */}
 
                 <motion.h2
                   className="
                     relative
                     z-10
-                    text-[clamp(2rem,3vw,3.5rem)]
-                    leading-none
-                    tracking-[-0.02em]
-                    text-white
+                    text-[clamp(1.8rem,8vw,3.5rem)]
+                    leading-[0.85]
+                    tracking-[-0.04em]
+                    text-primary
+                    transition-transform
+                    duration-500
+                    group-hover:translate-x-2
+
+                    md:text-h2
                   "
-                  style={{
-                    fontFamily:
-                      '"Instrument Serif", serif',
-                  }}
                 >
                   {menuItem.name}
                 </motion.h2>
 
-                {/* ARROW */}
+
+                {/* ==================================================
+                    ARROW
+                ================================================== */}
 
                 <span
                   className="
                     relative
                     z-10
                     ml-auto
-                    translate-x-8
-                    text-2xl
-                    text-violet-200
+                    translate-x-2
+                    text-xl
+                    text-[var(--color-violet-muted)]
                     opacity-0
                     transition-all
                     duration-500
                     group-hover:translate-x-0
                     group-hover:opacity-100
+
+                    sm:text-2xl
                   "
                 >
                   ↗
                 </span>
+
               </Link>
+
             </motion.div>
           ))}
+
         </motion.div>
 
-        {/* ====================================================
+
+        {/* ==================================================
             RIGHT SIDE
-        ==================================================== */}
+        ================================================== */}
 
         <motion.div
           initial={{
@@ -283,54 +352,91 @@ export default function MenuOverlay() {
           }}
           className="
             flex
-            w-[30%]
+            h-[40%]
+            w-full
             flex-col
             justify-between
-            px-10
-            py-14
+            px-5
+            py-5
+
+            sm:px-7
+            sm:py-6
+
+            md:h-full
+            md:w-[30%]
+            md:px-10
+            md:py-14
           "
         >
-          {/* TOP */}
+
+          {/* ==================================================
+              TOP
+          ================================================== */}
 
           <div>
-            {/* LOGO / HOME LINK */}
 
-            <Link href="/">
+            {/* LOGO */}
+
+            <Link
+              href="/"
+              onClick={onClose}
+            >
               <h1
                 className="
-                  mb-8
-                  text-5xl
-                  font-bold
-                  tracking-[0.25em]
-                  text-white
+                  mb-4
+                  font-display
+                  text-2xl
+                  tracking-[0.18em]
+                  text-primary
                   transition-colors
                   duration-300
-                  hover:text-violet-200
+                  hover:text-[var(--color-violet-muted)]
+
+                  sm:mb-6
+                  sm:text-3xl
+
+                  md:mb-8
+                  md:text-5xl
                 "
               >
                 NIRVANA
               </h1>
             </Link>
 
-            {/* IMAGE */}
 
-            <Link href="/">
+            {/* ==================================================
+                IMAGE
+            ================================================== */}
+
+            <Link
+              href="/"
+              onClick={onClose}
+            >
               <div
                 className="
                   group
                   relative
-                  mb-10
-                  h-72
+                  mb-4
+                  h-[120px]
                   w-full
                   overflow-hidden
-                  rounded-md
+                  border
+                  border-[var(--color-border)]
+                  bg-[var(--color-surface)]
+
+                  sm:h-[150px]
+                  sm:mb-5
+
+                  md:mb-10
+                  md:h-72
                 "
               >
+
                 <Image
                   src="/images/hero/navbar.png"
                   alt="Nirvana"
                   fill
-                  sizes="30vw"
+                  sizes="(max-width: 767px) 100vw, 30vw"
                   className="
                     object-cover
                     transition-transform
@@ -343,97 +449,137 @@ export default function MenuOverlay() {
                   className="
                     absolute
                     inset-0
-                    bg-violet-950/0
-                    transition-colors
+                    bg-[var(--color-violet-deep)]
+                    opacity-0
+                    transition-opacity
                     duration-500
-                    group-hover:bg-violet-950/10
+                    group-hover:opacity-[0.12]
                   "
                 />
+
               </div>
             </Link>
 
-            {/* JOIN COMMUNITY */}
+
+            {/* ==================================================
+                JOIN COMMUNITY
+            ================================================== */}
 
             <a
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={onClose}
               className="
                 group
                 inline-flex
                 items-center
-                gap-4
-                bg-white
-                px-7
-                py-4
-                text-[11px]
-                font-medium
-                uppercase
-                tracking-[0.25em]
-                text-black
+                gap-3
+                border
+                border-[var(--color-border-strong)]
+                bg-[var(--color-surface)]
+                px-4
+                py-3
+                text-micro
+                text-primary
                 transition-all
                 duration-500
-                hover:bg-violet-200
+                hover:border-[var(--color-violet-muted)]
+                hover:bg-[var(--color-violet-soft)]
+
+                sm:px-5
+                sm:py-3.5
+
+                md:gap-4
+                md:px-6
+                md:py-4
               "
             >
+
               Join Community
 
               <span
                 className="
-                  text-lg
+                  text-base
+                  text-[var(--color-violet-muted)]
                   transition-transform
                   duration-500
                   group-hover:translate-x-1
                   group-hover:-translate-y-1
+
+                  md:text-lg
                 "
               >
                 ↗
               </span>
+
             </a>
+
           </div>
+
 
           {/* ==================================================
               SOCIALS
           ================================================== */}
 
-          <div>
+          <div
+            className="
+              mt-5
+              md:mt-0
+            "
+          >
+
             <p
               className="
-                mb-5
-                text-[9px]
-                uppercase
-                tracking-[0.35em]
-                text-white/25
+                text-micro
+                mb-3
+                text-subtle
+
+                md:mb-5
               "
             >
               Connect
             </p>
 
+
             <div className="flex flex-col">
+
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={onClose}
                   className="
                     group
                     flex
                     items-center
                     justify-between
+                    border-b
+                    border-[var(--color-border)]
                     py-2
-                    text-zinc-400
+                    text-body-sm
+                    text-muted
                     transition-colors
                     duration-300
-                    hover:text-white
+                    first:border-t
+                    hover:text-primary
+
+                    md:py-3
                   "
                 >
-                  <span>{social.name}</span>
+
+                  <span>
+                    {social.name}
+                  </span>
+
 
                   <span
                     className="
                       translate-x-2
                       text-sm
+                      text-[var(--color-violet-muted)]
                       opacity-0
                       transition-all
                       duration-300
@@ -443,24 +589,35 @@ export default function MenuOverlay() {
                   >
                     ↗
                   </span>
+
                 </a>
               ))}
+
             </div>
+
+
+            {/* ==================================================
+                TAGLINE
+            ================================================== */}
 
             <p
               className="
-                mt-8
-                text-[9px]
-                uppercase
-                tracking-[0.25em]
-                text-white/15
+                text-micro
+                mt-4
+                text-subtle
+
+                md:mt-8
               "
             >
               Create / Explore / Evolve
             </p>
+
           </div>
+
         </motion.div>
+
       </div>
+
     </motion.div>
   );
 }

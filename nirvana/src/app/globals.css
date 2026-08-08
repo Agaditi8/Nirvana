@@ -1,9 +1,540 @@
 @import "tailwindcss";
+
+/* =========================================================
+   NIRVANA DESIGN SYSTEM
+   Dark / Violet / Editorial / Minimal
+========================================================= */
+
+:root {
+  /* =======================================================
+     COLORS
+  ======================================================= */
+
+  /* Core */
+  --color-black: #050406;
+  --color-surface: #09070b;
+  --color-surface-soft: #0f0b12;
+  --color-surface-violet: #120c17;
+
+  /* Text */
+  --color-white: #f1eef2;
+  --color-white-muted: rgba(241, 238, 242, 0.62);
+  --color-white-subtle: rgba(241, 238, 242, 0.38);
+  --color-white-faint: rgba(241, 238, 242, 0.18);
+
+  /* Borders */
+  --color-border: rgba(190, 166, 205, 0.12);
+  --color-border-subtle: rgba(190, 166, 205, 0.07);
+  --color-border-strong: rgba(190, 166, 205, 0.18);
+
+  /* Dark Violet */
+  --color-violet-deep: #1a1020;
+  --color-violet-dark: #24152d;
+  --color-violet: #382044;
+  --color-violet-muted: #54365f;
+  --color-violet-soft: rgba(84, 54, 95, 0.18);
+
+  /* Atmospheric Violet */
+  --color-glow: rgba(64, 35, 78, 0.22);
+  --color-glow-soft: rgba(64, 35, 78, 0.1);
+
+
+  /* =======================================================
+     SPACING
+  ======================================================= */
+
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 128px;
+  --space-5xl: 160px;
+
+
+  /* =======================================================
+     LAYOUT
+  ======================================================= */
+
+  --container-max: 1500px;
+  --container-padding: 24px;
+}
+
+
+/* =========================================================
+   BASE
+========================================================= */
+
 html {
+  background: var(--color-black);
+  color-scheme: dark;
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  background: black;
+  min-height: 100vh;
+
+  background: var(--color-black);
+  color: var(--color-white);
+
+  font-family: var(--font-body), sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   IMAGES
+========================================================= */
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   DISPLAY XL
+   Hero / giant statements
+--------------------------------------------------------- */
+
+.text-display-xl {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(5rem, 11vw, 11rem);
+  line-height: 0.82;
+  font-weight: 600;
+  letter-spacing: -0.06em;
+}
+
+
+/* ---------------------------------------------------------
+   DISPLAY LG
+   Major section headings
+--------------------------------------------------------- */
+
+.text-display-lg {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(3.5rem, 6vw, 7rem);
+  line-height: 0.84;
+  font-weight: 600;
+  letter-spacing: -0.055em;
+}
+
+
+/* ---------------------------------------------------------
+   DISPLAY MD
+   Smaller large statements
+--------------------------------------------------------- */
+
+.text-display-md {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  line-height: 0.88;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+
+
+/* ---------------------------------------------------------
+   H1
+--------------------------------------------------------- */
+
+.text-h1 {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(3rem, 5vw, 4rem);
+  line-height: 0.95;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+
+/* ---------------------------------------------------------
+   H2
+--------------------------------------------------------- */
+
+.text-h2 {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.5rem, 4vw, 3rem);
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+
+/* ---------------------------------------------------------
+   H3
+--------------------------------------------------------- */
+
+.text-h3 {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.875rem, 3vw, 2.25rem);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+
+/* ---------------------------------------------------------
+   H4
+--------------------------------------------------------- */
+
+.text-h4 {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.5rem, 2vw, 1.75rem);
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+
+/* ---------------------------------------------------------
+   LARGE BODY
+--------------------------------------------------------- */
+
+.text-body-lg {
+  font-family: var(--font-body), sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+
+/* ---------------------------------------------------------
+   BODY
+--------------------------------------------------------- */
+
+.text-body {
+  font-family: var(--font-body), sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+
+/* ---------------------------------------------------------
+   SMALL BODY
+--------------------------------------------------------- */
+
+.text-body-sm {
+  font-family: var(--font-body), sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+
+/* ---------------------------------------------------------
+   CAPTION
+--------------------------------------------------------- */
+
+.text-caption {
+  font-family: var(--font-body), sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+
+/* ---------------------------------------------------------
+   MICRO / LABEL
+--------------------------------------------------------- */
+
+.text-micro {
+  font-family: var(--font-body), sans-serif;
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   FONT UTILITIES
+========================================================= */
+
+.font-display {
+  font-family: var(--font-display), sans-serif;
+}
+
+.font-body {
+  font-family: var(--font-body), sans-serif;
+}
+
+
+/* =========================================================
+   TEXT COLORS
+========================================================= */
+
+.text-primary {
+  color: var(--color-white);
+}
+
+.text-muted {
+  color: var(--color-white-muted);
+}
+
+.text-subtle {
+  color: var(--color-white-subtle);
+}
+
+.text-faint {
+  color: var(--color-white-faint);
+}
+
+.text-violet {
+  color: var(--color-violet-muted);
+}
+
+.text-violet-dark {
+  color: var(--color-violet-dark);
+}
+
+
+/* =========================================================
+   SECTION SYSTEM
+========================================================= */
+
+.section {
+  position: relative;
+  width: 100%;
+  background: var(--color-black);
+}
+
+
+/* Standard large section spacing */
+
+.section-padding {
+  padding-top: var(--space-4xl);
+  padding-bottom: var(--space-4xl);
+}
+
+
+/* Smaller section */
+
+.section-padding-sm {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+}
+
+
+/* Large / cinematic section */
+
+.section-padding-lg {
+  padding-top: var(--space-5xl);
+  padding-bottom: var(--space-5xl);
+}
+
+
+/* =========================================================
+   CONTAINER SYSTEM
+========================================================= */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+
+/* =========================================================
+   SURFACES
+========================================================= */
+
+.surface {
+  background: var(--color-surface);
+}
+
+.surface-soft {
+  background: var(--color-surface-soft);
+}
+
+.surface-violet {
+  background: var(--color-surface-violet);
+}
+
+
+/* =========================================================
+   BORDERS
+========================================================= */
+
+.border-system {
+  border-color: var(--color-border);
+}
+
+.border-subtle {
+  border-color: var(--color-border-subtle);
+}
+
+.border-strong {
+  border-color: var(--color-border-strong);
+}
+
+
+/* =========================================================
+   VIOLET ATMOSPHERE
+========================================================= */
+
+.violet-glow {
+  background: var(--color-glow);
+  filter: blur(140px);
+}
+
+.violet-glow-soft {
+  background: var(--color-glow-soft);
+  filter: blur(160px);
+}
+
+
+/* =========================================================
+   DIVIDERS
+========================================================= */
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.divider-subtle {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border-subtle);
+}
+
+
+/* =========================================================
+   BUTTON FOUNDATION
+========================================================= */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+  padding-inline: 24px;
+
+  border: 1px solid var(--color-border);
+
+  background: transparent;
+  color: var(--color-white);
+
+  font-family: var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  transition:
+    background-color 400ms ease,
+    border-color 400ms ease,
+    transform 400ms ease;
+}
+
+.button:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-violet-soft);
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   NOISE
+========================================================= */
+
+.noise {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.08;
+
+  background-image:
+    radial-gradient(
+      rgba(255, 255, 255, 0.7) 0.5px,
+      transparent 0.5px
+    );
+
+  background-size: 24px 24px;
+}
+
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+  background: rgba(84, 54, 95, 0.5);
+  color: var(--color-white);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-violet-dark);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-violet);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (min-width: 768px) {
+  :root {
+    --container-padding: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --container-padding: 56px;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --container-padding: 64px;
+  }
 }

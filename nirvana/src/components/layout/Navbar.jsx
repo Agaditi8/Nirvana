@@ -14,45 +14,73 @@ export default function Navbar() {
           HAMBURGER / CLOSE BUTTON
       ==================================================== */}
 
-      <header className="fixed right-0 top-0 z-[100] p-8">
+      <header
+        className="
+          fixed
+          right-0
+          top-0
+          z-[100]
+          p-3
+          sm:p-5
+          md:p-8
+        "
+      >
         <motion.button
-          /* Hover only OPENS the menu */
+          /* Desktop hover opens the menu */
           onMouseEnter={() => {
-            if (!open) {
+            if (
+              typeof window !== "undefined" &&
+              window.innerWidth >= 768 &&
+              !open
+            ) {
               setOpen(true);
             }
           }}
 
-          /* Click only CLOSES it once open */
+          /* Mobile + desktop click toggles */
           onClick={() => {
-            if (open) {
-              setOpen(false);
-            }
+            setOpen((prev) => !prev);
           }}
+
           whileHover={{
             scale: 1.08,
           }}
+
           whileTap={{
             scale: 0.92,
           }}
+
           className="
             flex
-            h-12
-            w-12
+            h-9
+            w-9
             items-center
             justify-center
-            text-white
+            text-primary
+            transition-colors
+            duration-300
+            hover:text-[var(--color-violet-muted)]
+
+            sm:h-10
+            sm:w-10
+
+            md:h-12
+            md:w-12
           "
-          aria-label={open ? "Close menu" : "Open menu"}
+
+          aria-label={
+            open
+              ? "Close menu"
+              : "Open menu"
+          }
         >
           <AnimatePresence
             mode="wait"
             initial={false}
           >
             {open ? (
-              /* ============================================
-                  CLOSE ICON
-              ============================================ */
+
+              /* CLOSE */
 
               <motion.div
                 key="close"
@@ -77,14 +105,21 @@ export default function Navbar() {
                 }}
               >
                 <X
-                  size={30}
-                  strokeWidth={1.7}
+                  size={24}
+                  strokeWidth={1.5}
+                  className="
+                    sm:h-[26px]
+                    sm:w-[26px]
+
+                    md:h-[30px]
+                    md:w-[30px]
+                  "
                 />
               </motion.div>
+
             ) : (
-              /* ============================================
-                  HAMBURGER ICON
-              ============================================ */
+
+              /* MENU */
 
               <motion.div
                 key="menu"
@@ -109,14 +144,23 @@ export default function Navbar() {
                 }}
               >
                 <Menu
-                  size={30}
-                  strokeWidth={1.7}
+                  size={24}
+                  strokeWidth={1.5}
+                  className="
+                    sm:h-[26px]
+                    sm:w-[26px]
+
+                    md:h-[30px]
+                    md:w-[30px]
+                  "
                 />
               </motion.div>
+
             )}
           </AnimatePresence>
         </motion.button>
       </header>
+
 
       {/* ====================================================
           MENU OVERLAY
@@ -124,7 +168,10 @@ export default function Navbar() {
 
       <AnimatePresence>
         {open && (
-          <MenuOverlay key="menu-overlay" />
+          <MenuOverlay
+            key="menu-overlay"
+            onClose={() => setOpen(false)}
+          />
         )}
       </AnimatePresence>
     </>
