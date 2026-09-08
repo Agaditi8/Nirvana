@@ -10,11 +10,9 @@ export default function Home() {
 
       <HeroPage />
       <MarqueeText/>
-      
-      <FeatureOfTheMonth/>
-      
-      <Game/>
       <Events/>
+      <FeatureOfTheMonth/>
+      <Game/>
       
 
       

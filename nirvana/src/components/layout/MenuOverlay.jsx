@@ -19,25 +19,25 @@ const menu = [
     href: "/about",
     number: "01",
   },
-  {
-    name: "EVENTS",
-    href: "/events",
-    number: "02",
-  },
+  // {
+  //   name: "EVENTS",
+  //   href: "/events",
+  //   number: "02",
+  // },
   {
     name: "GALLERY",
     href: "/gallery",
-    number: "03",
+    number: "02",
   },
   {
     name: "TEAM",
     href: "/team",
-    number: "04",
+    number: "03",
   },
   {
     name: "CONTACT",
     href: "/contact",
-    number: "05",
+    number: "04",
   },
 ];
 
