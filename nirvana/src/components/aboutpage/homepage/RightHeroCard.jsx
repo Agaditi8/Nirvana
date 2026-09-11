@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+
 export default function RightHeroCard() {
   return (
     <motion.div
@@ -33,6 +35,7 @@ export default function RightHeroCard() {
         "
       />
 
+
       {/* ==================================================
           SUBTLE TEXTURE
       ================================================== */}
@@ -48,6 +51,7 @@ export default function RightHeroCard() {
           [background-size:31px_31px]
         "
       />
+
 
       {/* ==================================================
           TOP BAR
@@ -92,15 +96,16 @@ export default function RightHeroCard() {
           />
 
           <span className="text-micro text-subtle">
-            Upcoming Event
+            Happening Now
           </span>
 
         </div>
 
       </div>
 
+
       {/* ==================================================
-          EVENT ATMOSPHERE
+          EVENT POSTER ATMOSPHERE
       ================================================== */}
 
       <div
@@ -135,6 +140,7 @@ export default function RightHeroCard() {
 
       </div>
 
+
       {/* ==================================================
           BOTTOM EVENT INFORMATION
       ================================================== */}
@@ -152,7 +158,9 @@ export default function RightHeroCard() {
         "
       >
 
-        {/* DIVIDER */}
+        {/* ==================================================
+            DIVIDER
+        ================================================== */}
 
         <div
           className="
@@ -163,7 +171,10 @@ export default function RightHeroCard() {
           "
         />
 
-        {/* EVENT META */}
+
+        {/* ==================================================
+            EVENT META
+        ================================================== */}
 
         <div
           className="
@@ -175,17 +186,21 @@ export default function RightHeroCard() {
             sm:mb-3
           "
         >
+
           <span className="text-micro text-subtle">
-            Upcoming Event / 01
+            Current Event / 01
           </span>
 
           <span className="text-micro text-subtle">
-            16 SEP
+            12 — 18 AUG
           </span>
 
         </div>
 
-        {/* EVENT TITLE */}
+
+        {/* ==================================================
+            EVENT TITLE
+        ================================================== */}
 
         <h2
           className="
@@ -197,15 +212,18 @@ export default function RightHeroCard() {
             sm:text-h2
           "
         >
-          NIRVANA
+          UI/UX
           <br />
 
           <span className="text-muted">
-            Orientation
+            MentorShip
           </span>
         </h2>
 
-        {/* DESCRIPTION */}
+
+        {/* ==================================================
+            DESCRIPTION
+        ================================================== */}
 
         <p
           className="
@@ -246,16 +264,26 @@ export default function RightHeroCard() {
             duration: 0.45,
           }}
           className="
-    mt-3
-    flex
-    flex-col
-    gap-1
-    text-[10px]
-    text-subtle
+            group/join
+            mt-3
+            flex
+            min-h-[52px]
+            w-full
+            items-center
+            justify-between
+            border
+            border-[var(--color-border)]
+            px-3
+            py-2.5
+            transition-colors
+            duration-500
+            hover:border-[var(--color-violet-muted)]
 
-    sm:mt-4
-    sm:text-body-sm
-  "
+            sm:mt-5
+            sm:min-h-0
+            sm:px-4
+            sm:py-3
+          "
         >
 
           {/* ==================================================

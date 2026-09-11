@@ -7,13 +7,77 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-
-import events from "@/data/Events/events";
+import {
+  ArrowLeft,
+  ArrowRight,
+} from "lucide-react";
 
 /* ============================================================
-   CONSTANTS
+   EVENTS DATA
 ============================================================ */
+
+const events = [
+  {
+    number: "01",
+    title: "Vision Board",
+    subtitle: "Designing the year before living it.",
+    year: "2026",
+    category: "Creative Workshop",
+    date: "January 18, 2026",
+    image:
+      "https://picsum.photos/seed/nirvana-event-01/1200/1500",
+    description:
+      "An immersive vision board experience where ideas, aspirations, typography, imagery and personal stories came together to create a visual map for the year ahead.",
+  },
+  {
+    number: "02",
+    title: "Design Jam",
+    subtitle: "Ideas moving faster than perfection.",
+    year: "2026",
+    category: "Design Sprint",
+    date: "February 12, 2026",
+    image:
+      "https://picsum.photos/seed/nirvana-event-02/1200/1500",
+    description:
+      "A fast-paced collaborative design session built around experimentation. Teams explored unconventional ideas, challenged familiar patterns and transformed rough concepts into visual experiences.",
+  },
+  {
+    number: "03",
+    title: "Creative Chaos",
+    subtitle: "Where unfinished ideas find direction.",
+    year: "2025",
+    category: "Creative Session",
+    date: "October 24, 2025",
+    image:
+      "https://picsum.photos/seed/nirvana-event-03/1200/1500",
+    description:
+      "A celebration of imperfect ideas, strange experiments and unexpected outcomes. Creative Chaos gave designers the freedom to explore without worrying about getting everything right.",
+  },
+  {
+    number: "04",
+    title: "Poster Making",
+    subtitle: "One canvas. Infinite interpretations.",
+    year: "2025",
+    category: "Competition",
+    date: "September 09, 2025",
+    image:
+      "https://picsum.photos/seed/nirvana-event-04/1200/1500",
+    description:
+      "A visual storytelling competition exploring how typography, composition, illustration and colour can communicate powerful ideas within a single frame.",
+  },
+  {
+    number: "05",
+    title: "Design Week",
+    subtitle: "Seven days dedicated to making.",
+    year: "2025",
+    category: "Design Festival",
+    date: "August 14, 2025",
+    image:
+      "https://picsum.photos/seed/nirvana-event-05/1200/1500",
+    description:
+      "A week-long celebration of visual culture, experimentation and collaborative design featuring challenges, workshops, conversations and creative showcases.",
+  },
+];
 
 const ease = [0.16, 1, 0.3, 1];
 
@@ -37,6 +101,7 @@ const textVariants = {
   },
 };
 
+
 /* ============================================================
    EVENTS
 ============================================================ */
@@ -48,6 +113,7 @@ export default function Events() {
   const [direction, setDirection] = useState(1);
 
   const event = events[activeEvent];
+
 
   /* ==========================================================
      PARALLAX
@@ -61,7 +127,7 @@ export default function Events() {
   const imageY = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [20, 0, -20]
+    [60, 0, -60]
   );
 
   const contentY = useTransform(
@@ -76,6 +142,7 @@ export default function Events() {
     [-30, 0, 25]
   );
 
+
   /* ==========================================================
      NAVIGATION
   ========================================================== */
@@ -84,17 +151,23 @@ export default function Events() {
     setDirection(1);
 
     setActiveEvent((prev) =>
-      prev === events.length - 1 ? 0 : prev + 1
+      prev === events.length - 1
+        ? 0
+        : prev + 1
     );
   };
+
 
   const previousEvent = () => {
     setDirection(-1);
 
     setActiveEvent((prev) =>
-      prev === 0 ? events.length - 1 : prev - 1
+      prev === 0
+        ? events.length - 1
+        : prev - 1
     );
   };
+
 
   return (
     <section
@@ -108,6 +181,7 @@ export default function Events() {
         text-primary
       "
     >
+
       {/* ======================================================
           BACKGROUND
       ====================================================== */}
@@ -137,6 +211,7 @@ export default function Events() {
         "
       />
 
+
       {/* ======================================================
           DESKTOP
       ====================================================== */}
@@ -152,6 +227,7 @@ export default function Events() {
           lg:grid
         "
       >
+
         {/* ==================================================
             DESKTOP IMAGE
         ================================================== */}
@@ -160,15 +236,12 @@ export default function Events() {
           className="
             relative
             min-h-screen
+            overflow-hidden
             border-r
             border-[var(--color-border)]
-            bg-[#09090b]
-            flex
-            items-center
-            justify-center
-            overflow-hidden
           "
         >
+
           <DesktopImage
             event={event}
             direction={direction}
@@ -178,7 +251,9 @@ export default function Events() {
           <ImageLabel />
 
           <DesktopEventNumber event={event} />
+
         </div>
+
 
         {/* ==================================================
             DESKTOP CONTENT
@@ -195,10 +270,12 @@ export default function Events() {
           setDirection={setDirection}
           setActiveEvent={setActiveEvent}
         />
+
       </div>
 
+
       {/* ======================================================
-          MOBILE
+          MOBILE — SINGLE SCREEN EVENT
       ====================================================== */}
 
       <div
@@ -213,6 +290,7 @@ export default function Events() {
           lg:hidden
         "
       >
+
         {/* ==================================================
             MOBILE TOP BAR
         ================================================== */}
@@ -226,7 +304,9 @@ export default function Events() {
             pb-3
           "
         >
+
           <div className="flex items-center gap-2">
+
             <span
               className="
                 h-px
@@ -238,48 +318,50 @@ export default function Events() {
             <span className="text-micro text-subtle">
               EVENT ARCHIVE
             </span>
+
           </div>
 
           <span className="text-micro text-subtle">
-            {event.number} /{" "}
-            {String(events.length).padStart(2, "0")}
+            {event.number} / 05
           </span>
+
         </div>
+
 
         {/* ==================================================
             MOBILE IMAGE
-
-            4:5 ratio
-            NO CROPPING
         ================================================== */}
 
         <div
           className="
             relative
-            w-full
-            aspect-[4/5]
+            h-[38svh]
+            min-h-[220px]
+            max-h-[360px]
             shrink-0
-            bg-[#09090b]
-            flex
-            items-center
-            justify-center
             overflow-hidden
+            bg-[#09090b]
           "
         >
+
           <AnimatePresence mode="wait">
+
             <motion.div
               key={event.image}
               initial={{
                 opacity: 0,
                 x: direction > 0 ? 45 : -45,
+                scale: 1.04,
               }}
               animate={{
                 opacity: 1,
                 x: 0,
+                scale: 1,
               }}
               exit={{
                 opacity: 0,
                 x: direction > 0 ? -35 : 35,
+                scale: 0.98,
               }}
               transition={{
                 duration: 0.6,
@@ -288,11 +370,9 @@ export default function Events() {
               className="
                 absolute
                 inset-0
-                flex
-                items-center
-                justify-center
               "
             >
+
               <motion.img
                 style={{
                   y: imageY,
@@ -300,14 +380,18 @@ export default function Events() {
                 src={event.image}
                 alt={event.title}
                 className="
-                  block
-                  h-full
+                  absolute
+                  -top-[8%]
+                  h-[116%]
                   w-full
-                  object-contain
+                  object-cover
                 "
               />
+
             </motion.div>
+
           </AnimatePresence>
+
 
           {/* Image overlay */}
 
@@ -323,9 +407,11 @@ export default function Events() {
             "
           />
 
+
           {/* Number */}
 
           <AnimatePresence mode="wait">
+
             <motion.span
               key={event.number}
               initial={{
@@ -352,8 +438,11 @@ export default function Events() {
             >
               {event.number}
             </motion.span>
+
           </AnimatePresence>
+
         </div>
+
 
         {/* ==================================================
             MOBILE CONTENT
@@ -372,7 +461,9 @@ export default function Events() {
             pt-4
           "
         >
+
           <AnimatePresence mode="wait">
+
             <motion.div
               key={event.number}
               initial="initial"
@@ -389,6 +480,7 @@ export default function Events() {
                 flex-col
               "
             >
+
               {/* Meta */}
 
               <div
@@ -398,6 +490,7 @@ export default function Events() {
                   justify-between
                 "
               >
+
                 <span className="text-micro text-[var(--color-violet-muted)]">
                   {event.category}
                 </span>
@@ -405,11 +498,14 @@ export default function Events() {
                 <span className="text-micro text-subtle">
                   {event.year}
                 </span>
+
               </div>
+
 
               {/* Title */}
 
               <div className="mt-3">
+
                 <h2
                   className="
                     text-[clamp(2.8rem,12vw,5rem)]
@@ -432,7 +528,9 @@ export default function Events() {
                 >
                   {event.subtitle}
                 </p>
+
               </div>
+
 
               {/* Date + Description */}
 
@@ -447,7 +545,9 @@ export default function Events() {
                   pt-3
                 "
               >
+
                 <div>
+
                   <p className="text-micro text-subtle">
                     DATE
                   </p>
@@ -462,7 +562,9 @@ export default function Events() {
                   >
                     {event.date}
                   </p>
+
                 </div>
+
 
                 <p
                   className="
@@ -474,9 +576,13 @@ export default function Events() {
                 >
                   {event.description}
                 </p>
+
               </div>
+
             </motion.div>
+
           </AnimatePresence>
+
 
           {/* ==================================================
               MOBILE NAVIGATION
@@ -490,6 +596,7 @@ export default function Events() {
               border-[var(--color-border)]
             "
           >
+
             {/* Progress */}
 
             <div
@@ -500,6 +607,7 @@ export default function Events() {
                 py-2
               "
             >
+
               <span className="text-micro text-subtle">
                 {String(activeEvent + 1).padStart(2, "0")}
               </span>
@@ -513,6 +621,7 @@ export default function Events() {
                   bg-[var(--color-border)]
                 "
               >
+
                 <motion.div
                   animate={{
                     width: `${
@@ -533,12 +642,15 @@ export default function Events() {
                     bg-[var(--color-violet-muted)]
                   "
                 />
+
               </div>
 
               <span className="text-micro text-subtle">
                 {String(events.length).padStart(2, "0")}
               </span>
+
             </div>
+
 
             {/* Buttons */}
 
@@ -550,6 +662,7 @@ export default function Events() {
                 border-[var(--color-border)]
               "
             >
+
               <button
                 onClick={previousEvent}
                 aria-label="Previous event"
@@ -569,6 +682,7 @@ export default function Events() {
                   hover:text-primary
                 "
               >
+
                 <ArrowLeft
                   size={14}
                   strokeWidth={1.2}
@@ -582,7 +696,9 @@ export default function Events() {
                 <span className="text-micro">
                   Previous
                 </span>
+
               </button>
+
 
               <button
                 onClick={nextEvent}
@@ -601,6 +717,7 @@ export default function Events() {
                   hover:bg-[var(--color-violet-muted)]
                 "
               >
+
                 <span className="text-micro">
                   Next
                 </span>
@@ -614,15 +731,19 @@ export default function Events() {
                     group-hover:translate-x-1
                   "
                 />
+
               </button>
+
             </div>
+
           </div>
+
         </motion.div>
+
       </div>
 
-      {/* ======================================================
-          DECORATIVE DESKTOP TEXT
-      ====================================================== */}
+
+      {/* Decorative desktop text */}
 
       <motion.p
         style={{
@@ -646,9 +767,11 @@ export default function Events() {
       >
         NIRVANA
       </motion.p>
+
     </section>
   );
 }
+
 
 /* ============================================================
    DESKTOP IMAGE
@@ -661,12 +784,14 @@ function DesktopImage({
 }) {
   return (
     <>
+
       <AnimatePresence mode="wait">
+
         <motion.div
           key={event.image}
           initial={{
             opacity: 0,
-            scale: 0.96,
+            scale: 1.08,
             x: direction > 0 ? 70 : -70,
           }}
           animate={{
@@ -683,14 +808,9 @@ function DesktopImage({
             duration: 0.85,
             ease,
           }}
-          className="
-            absolute
-            inset-0
-            flex
-            items-center
-            justify-center
-          "
+          className="absolute inset-0"
         >
+
           <motion.img
             style={{
               y: imageY,
@@ -698,18 +818,19 @@ function DesktopImage({
             src={event.image}
             alt={event.title}
             className="
-              block
-              h-auto
-              w-auto
-              max-h-full
-              max-w-full
-              object-contain
+              absolute
+              -top-[8%]
+              left-0
+              h-[116%]
+              w-full
+              object-cover
             "
           />
+
         </motion.div>
+
       </AnimatePresence>
 
-      {/* Bottom gradient */}
 
       <div
         className="
@@ -723,8 +844,6 @@ function DesktopImage({
         "
       />
 
-      {/* Side gradient */}
-
       <div
         className="
           pointer-events-none
@@ -736,9 +855,11 @@ function DesktopImage({
           to-black/25
         "
       />
+
     </>
   );
 }
+
 
 /* ============================================================
    IMAGE LABEL
@@ -771,6 +892,7 @@ function ImageLabel() {
         gap-3
       "
     >
+
       <div
         className="
           h-px
@@ -782,9 +904,11 @@ function ImageLabel() {
       <p className="text-micro text-white/65">
         Event Archive
       </p>
+
     </motion.div>
   );
 }
+
 
 /* ============================================================
    DESKTOP EVENT NUMBER
@@ -793,6 +917,7 @@ function ImageLabel() {
 function DesktopEventNumber({ event }) {
   return (
     <AnimatePresence mode="wait">
+
       <motion.p
         key={event.number}
         initial={{
@@ -824,9 +949,11 @@ function DesktopEventNumber({ event }) {
       >
         {event.number}
       </motion.p>
+
     </AnimatePresence>
   );
 }
+
 
 /* ============================================================
    DESKTOP CONTENT
@@ -855,6 +982,7 @@ function DesktopContent({
         bg-[var(--color-black)]
       "
     >
+
       {/* TOP META */}
 
       <div
@@ -869,6 +997,7 @@ function DesktopContent({
           lg:px-12
         "
       >
+
         <p className="text-micro text-subtle">
           {event.category}
         </p>
@@ -876,7 +1005,9 @@ function DesktopContent({
         <p className="text-micro text-subtle">
           {event.year}
         </p>
+
       </div>
+
 
       {/* CONTENT */}
 
@@ -892,14 +1023,15 @@ function DesktopContent({
           xl:px-16
         "
       >
+
         <AnimatePresence mode="wait">
+
           <motion.div
             key={event.number}
             initial="initial"
             animate="animate"
             exit="exit"
           >
-            {/* Number + line */}
 
             <motion.div
               variants={textVariants}
@@ -914,6 +1046,7 @@ function DesktopContent({
                 gap-4
               "
             >
+
               <span className="text-micro text-[var(--color-violet-muted)]">
                 {event.number}
               </span>
@@ -925,9 +1058,9 @@ function DesktopContent({
                   bg-[var(--color-border-strong)]
                 "
               />
+
             </motion.div>
 
-            {/* Title */}
 
             <motion.h2
               variants={textVariants}
@@ -945,7 +1078,6 @@ function DesktopContent({
               {event.title}
             </motion.h2>
 
-            {/* Subtitle */}
 
             <motion.p
               variants={textVariants}
@@ -964,7 +1096,6 @@ function DesktopContent({
               {event.subtitle}
             </motion.p>
 
-            {/* Date + Description */}
 
             <motion.div
               variants={textVariants}
@@ -984,7 +1115,9 @@ function DesktopContent({
                 pt-8
               "
             >
+
               <div>
+
                 <p className="text-micro text-subtle">
                   Date
                 </p>
@@ -992,19 +1125,23 @@ function DesktopContent({
                 <p className="text-body-sm mt-2 text-muted">
                   {event.date}
                 </p>
+
               </div>
 
               <p className="text-body-sm max-w-md leading-7 text-muted">
                 {event.description}
               </p>
+
             </motion.div>
+
           </motion.div>
+
         </AnimatePresence>
+
       </div>
 
-      {/* ==================================================
-          DESKTOP NAVIGATION
-      ================================================== */}
+
+      {/* DESKTOP NAVIGATION */}
 
       <div
         className="
@@ -1014,6 +1151,7 @@ function DesktopContent({
           border-[var(--color-border)]
         "
       >
+
         <div
           className="
             flex
@@ -1023,6 +1161,7 @@ function DesktopContent({
             lg:px-12
           "
         >
+
           <span className="text-micro text-subtle">
             {String(activeEvent + 1).padStart(2, "0")}
           </span>
@@ -1037,6 +1176,7 @@ function DesktopContent({
               bg-[var(--color-border)]
             "
           >
+
             <motion.div
               animate={{
                 width: `${
@@ -1057,14 +1197,15 @@ function DesktopContent({
                 bg-[var(--color-violet-muted)]
               "
             />
+
           </div>
 
           <span className="text-micro text-subtle">
             {String(events.length).padStart(2, "0")}
           </span>
+
         </div>
 
-        {/* Previous */}
 
         <button
           onClick={previousEvent}
@@ -1086,6 +1227,7 @@ function DesktopContent({
             hover:text-primary
           "
         >
+
           <ArrowLeft
             size={17}
             strokeWidth={1.2}
@@ -1099,9 +1241,9 @@ function DesktopContent({
           <span className="text-micro">
             Previous
           </span>
+
         </button>
 
-        {/* Next */}
 
         <button
           onClick={nextEvent}
@@ -1124,6 +1266,7 @@ function DesktopContent({
             hover:text-white
           "
         >
+
           <span className="text-micro">
             Next
           </span>
@@ -1137,8 +1280,11 @@ function DesktopContent({
               group-hover:translate-x-1
             "
           />
+
         </button>
+
       </div>
+
 
       {/* Decorative text */}
 
@@ -1162,6 +1308,7 @@ function DesktopContent({
       >
         NIRVANA
       </motion.p>
+
     </motion.div>
   );
 }

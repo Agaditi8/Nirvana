@@ -1,18 +1,18 @@
 export const facultyTeam = [
   {
     id: 1,
-    name: "FACULTY NAME 01",
+    name: "A k Mahopatra ",
     designation: "FACULTY ADVISOR",
     department: "DEPARTMENT / BRANCH",
-    image: "https://picsum.photos/seed/nirvana-faculty-01/1000/1200",
-    linkedin: "https://www.linkedin.com/",
+    image: "/images/team/faculty/MahopatraSir.png",
+    linkedin: "https://www.linkedin.com/in/amar-kumar-mohapatra-11a3b530/",
   },
   {
     id: 2,
-    name: "FACULTY NAME 02",
+    name: "Dr. Shweta Jindal",
     designation: "FACULTY ADVISOR",
     department: "DEPARTMENT / BRANCH",
-    image: "https://picsum.photos/seed/nirvana-faculty-02/1000/1200",
-    linkedin: "https://www.linkedin.com/",
+    image: "/images/team/faculty/ShwetaJindal.png",
+    linkedin: "https://www.linkedin.com/in/dr-shweta-jindal-65889121/",
   },
 ];

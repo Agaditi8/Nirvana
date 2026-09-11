@@ -42,6 +42,7 @@ export default function ThirdSection() {
         "
       />
 
+
       {/* ==================================================
           MAIN FRAME
           NO OUTER BOX / FULL WIDTH
@@ -131,6 +132,7 @@ export default function ThirdSection() {
           </motion.h2>
         </div>
 
+
         {/* ==================================================
             MOBILE
         ================================================== */}
@@ -167,7 +169,6 @@ export default function ThirdSection() {
             "
           >
             <div>
-
               <p className="text-micro mb-2 text-subtle">
                 {featureofthemonthData.issue.number}
               </p>
@@ -193,13 +194,13 @@ export default function ThirdSection() {
               >
                 {featureofthemonthData.issue.college}
               </p>
-
             </div>
 
             <span className="text-micro text-[var(--color-violet-muted)]">
               FEATURE
             </span>
           </motion.div>
+
 
           {/* IMAGE */}
 
@@ -286,9 +287,9 @@ export default function ThirdSection() {
               >
                 {featureofthemonthData.featuredImage.label}
               </div>
-
             </motion.div>
           </div>
+
 
           {/* CREATOR + DESCRIPTION */}
 
@@ -300,7 +301,6 @@ export default function ThirdSection() {
               border-[var(--color-border)]
             "
           >
-
             <motion.div
               initial={{
                 opacity: 0,
@@ -323,7 +323,6 @@ export default function ThirdSection() {
                 p-4
               "
             >
-
               <p className="text-micro mb-2 text-subtle">
                 {featureofthemonthData.designer.label}
               </p>
@@ -338,6 +337,7 @@ export default function ThirdSection() {
               >
                 {featureofthemonthData.designer.name.split(" ")[0]}
                 <br />
+
                 {featureofthemonthData.designer.name
                   .split(" ")
                   .slice(1)
@@ -347,8 +347,8 @@ export default function ThirdSection() {
               <p className="mt-2 text-[10px] leading-4 text-muted">
                 {featureofthemonthData.designer.department}
               </p>
-
             </motion.div>
+
 
             <motion.div
               initial={{
@@ -379,14 +379,15 @@ export default function ThirdSection() {
                 {featureofthemonthData.description}
               </p>
             </motion.div>
-
           </div>
+
 
           {/* MOBILE BUTTONS */}
 
           <FeatureButtons />
 
         </div>
+
 
         {/* ==================================================
             DESKTOP
@@ -414,7 +415,6 @@ export default function ThirdSection() {
               border-[var(--color-border)]
             "
           >
-
             <motion.div
               initial={{
                 opacity: 0,
@@ -441,7 +441,6 @@ export default function ThirdSection() {
                 right-5
               "
             >
-
               <p className="text-micro mb-5 text-subtle">
                 {featureofthemonthData.issue.number}
               </p>
@@ -455,12 +454,12 @@ export default function ThirdSection() {
               >
                 {featureofthemonthData.issue.organization}
                 <br />
+
                 {featureofthemonthData.issue.college}
               </p>
-
             </motion.div>
-
           </div>
+
 
           {/* ==================================================
               CENTER IMAGE
@@ -476,7 +475,6 @@ export default function ThirdSection() {
               p-5
             "
           >
-
             <motion.div
               initial={{
                 opacity: 0,
@@ -512,7 +510,6 @@ export default function ThirdSection() {
                 bg-[var(--color-surface-soft)]
               "
             >
-
               <motion.img
                 src={featureofthemonthData.featuredImage.src}
                 alt={featureofthemonthData.featuredImage.alt}
@@ -563,10 +560,9 @@ export default function ThirdSection() {
               >
                 {featureofthemonthData.featuredImage.label}
               </div>
-
             </motion.div>
-
           </div>
+
 
           {/* ==================================================
               RIGHT
@@ -610,7 +606,6 @@ export default function ThirdSection() {
                 p-5
               "
             >
-
               <p className="text-micro mb-3 text-subtle">
                 {featureofthemonthData.designer.label}
               </p>
@@ -624,6 +619,7 @@ export default function ThirdSection() {
               >
                 {featureofthemonthData.designer.name.split(" ")[0]}
                 <br />
+
                 {featureofthemonthData.designer.name
                   .split(" ")
                   .slice(1)
@@ -633,8 +629,8 @@ export default function ThirdSection() {
               <p className="text-caption mt-3 text-muted">
                 {featureofthemonthData.designer.department}
               </p>
-
             </motion.div>
+
 
             {/* DESCRIPTION */}
 
@@ -651,7 +647,6 @@ export default function ThirdSection() {
               transition={{
                 duration: 1,
                 delay: 0.5,
-                ease,
               }}
               className="
                 flex
@@ -661,7 +656,6 @@ export default function ThirdSection() {
                 p-5
               "
             >
-
               <p
                 className="
                   text-body-sm
@@ -672,19 +666,16 @@ export default function ThirdSection() {
               >
                 {featureofthemonthData.description}
               </p>
-
             </motion.div>
+
 
             {/* BUTTONS */}
 
             <FeatureButtons />
 
           </div>
-
         </div>
-
       </motion.div>
-
     </section>
   );
 }
@@ -692,7 +683,7 @@ export default function ThirdSection() {
 
 /* ============================================================
    BUTTONS
-   ============================================================ */
+============================================================ */
 
 function FeatureButtons() {
   return (
@@ -723,7 +714,6 @@ function FeatureButtons() {
           sm:py-3.5
         "
       >
-
         <span
           className="
             text-body
@@ -750,6 +740,105 @@ function FeatureButtons() {
             group-hover:translate-x-1
             group-hover:-translate-y-1
             group-hover:rotate-45
+          "
+        />
+      </a>
+
+
+      {/* REGISTER */}
+
+      <a
+        href={
+          featureofthemonthData.actions
+            .register.href
+        }
+        className="
+          group
+          relative
+          flex
+          w-full
+          items-center
+          justify-between
+          overflow-hidden
+          border-t
+          border-[var(--color-border)]
+          bg-[var(--color-violet-soft)]
+          px-4
+          py-3
+          text-primary
+          transition-all
+          duration-500
+          hover:bg-[var(--color-violet-muted)]
+          sm:px-5
+          sm:py-4
+        "
+      >
+        <div className="relative z-10">
+
+          <span
+            className="
+              text-micro
+              block
+              text-subtle
+            "
+          >
+            {
+              featureofthemonthData.actions
+                .register.eyebrow
+            }
+          </span>
+
+          <span
+            className="
+              text-body
+              mt-1
+              block
+              text-primary
+            "
+          >
+            {
+              featureofthemonthData.actions
+                .register.label
+            }
+          </span>
+
+        </div>
+
+
+        <motion.div
+          className="
+            relative
+            z-10
+            flex
+            shrink-0
+            items-center
+            justify-center
+            text-[var(--color-violet-muted)]
+          "
+          whileHover={{
+            x: 4,
+            y: -4,
+          }}
+          transition={{
+            duration: 0.4,
+            ease,
+          }}
+        >
+          <ArrowUpRight
+            size={19}
+            strokeWidth={1.2}
+          />
+        </motion.div>
+
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            opacity-[0.08]
+            [background-image:radial-gradient(rgba(200,190,220,0.8)_0.5px,transparent_0.5px)]
+            [background-size:15px_15px]
           "
         />
 
