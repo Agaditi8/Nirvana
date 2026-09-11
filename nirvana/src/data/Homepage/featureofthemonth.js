@@ -23,11 +23,6 @@ export const featureofthemonthData = {
     "Celebrating standout work from the creative community at Nirvana.",
 
   actions: {
-    seeAllFeatures: {
-      label: "See all features",
-      href: "#",
-    },
-
     register: {
       eyebrow: "Applications open",
       label: "REGISTER NOW",

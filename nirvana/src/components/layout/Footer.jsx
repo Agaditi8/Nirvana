@@ -324,7 +324,9 @@ export default function Footer() {
         ==================================================== */}
 
         <motion.a
-          href="#"
+          href="https://chat.whatsapp.com/ImoVWQe1jslG5O72ubUnq2"
+          target="_blank"
+          rel="noopener noreferrer"
           initial={{
             opacity: 0,
             scale: 0.8,
@@ -478,7 +480,9 @@ export default function Footer() {
           {/* Instagram */}
 
           <a
-            href="#"
+            href="https://www.instagram.com/designclubigdtuw/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="
               group
               flex
@@ -511,7 +515,9 @@ export default function Footer() {
           {/* LinkedIn */}
 
           <a
-            href="#"
+            href="https://www.linkedin.com/in/nirvana-design-club-of-igdtuw-6590203a8/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="
               group
               flex
