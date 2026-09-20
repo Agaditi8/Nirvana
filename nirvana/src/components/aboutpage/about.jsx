@@ -8,8 +8,8 @@ import {
   useMotionValue,
   useSpring,
   useMotionTemplate,
+  AnimatePresence,
 } from "framer-motion";
-
 
 const SMOOTH = [0.16, 1, 0.3, 1];
 
@@ -17,7 +17,7 @@ const SMOOTH = [0.16, 1, 0.3, 1];
    REVEAL LINE
 ============================================================ */
 
-function RevealLine({ children, delay = 0, className = "" }) {
+export function RevealLine({ children, delay = 0, className = "" }) {
   const ref = useRef(null);
   const [shown, setShown] = useState(false);
 
@@ -83,7 +83,7 @@ function RevealLine({ children, delay = 0, className = "" }) {
    CHARACTER REVEAL
 ============================================================ */
 
-function CharReveal({ text, delay = 0 }) {
+export function CharReveal({ text, delay = 0 }) {
   const chars = useMemo(() => text.split(""), [text]);
 
   return (
@@ -112,7 +112,7 @@ function CharReveal({ text, delay = 0 }) {
    MAGNETIC
 ============================================================ */
 
-function Magnetic({
+export function Magnetic({
   children,
   strength = 0.35,
   className = "",
@@ -171,7 +171,7 @@ function Magnetic({
    CUSTOM CURSOR
 ============================================================ */
 
-function CustomCursor() {
+export function CustomCursor() {
   const cursorRef = useRef(null);
   const dotRef = useRef(null);
 
@@ -262,7 +262,7 @@ function CustomCursor() {
    HERO
 ============================================================ */
 
-function Hero() {
+export function Hero() {
   const ref = useRef(null);
 
   const [mouse, setMouse] = useState({
@@ -450,10 +450,7 @@ function Hero() {
           </h1>
 
           <h2 className="mt-1 font-['Space_Grotesk',sans-serif] text-[clamp(1.5rem,4vw,3.25rem)] font-normal uppercase leading-none tracking-[-0.02em] pb-[0.05em] text-transparent [-webkit-text-stroke:1px_rgba(245,245,247,0.62)] max-lg:text-[clamp(1.25rem,7vw,2.5rem)] max-sm:text-[clamp(1rem,8vw,2rem)] max-sm:[-webkit-text-stroke:1px_rgba(245,245,247,0.5)]">
-            <CharReveal
-              text="DESIGN SOCIETY"
-              delay={0.85}
-            />
+            
           </h2>
         </div>
 
@@ -619,7 +616,7 @@ function Hero() {
    MARQUEE
 ============================================================ */
 
-function Marquee() {
+export function Marquee() {
   const items = [
     "CURIOSITY",
     "EXPERIMENTATION",
@@ -664,7 +661,7 @@ function Marquee() {
    PHILOSOPHY
 ============================================================ */
 
-function Philosophy() {
+export function Philosophy() {
   const items = [
     {
       n: "01",
@@ -721,18 +718,18 @@ function Philosophy() {
               02 — OUR PHILOSOPHY
             </motion.span>
 
-            <h2 className="mb-6 font-['Space_Grotesk',sans-serif] text-[clamp(2.5rem,7vw,6rem)] font-medium uppercase leading-none tracking-[-0.04em]">
+            
+            <h2 className="mb-6 font-['Clash_Display',sans-serif] text-[clamp(2.5rem,7vw,6rem)] font-medium uppercase leading-none tracking-[-0.04em]">
               <RevealLine>
                 WE BELIEVE
               </RevealLine>
 
               <RevealLine delay={0.1}>
-                <span className="text-transparent [-webkit-text-stroke:1px_rgba(245,245,247,0.62)] max-sm:[-webkit-text-stroke:1px_rgba(245,245,247,0.5)]">
+                <span className="mb-6 font-['Clash_Display',sans-serif] text-[clamp(2rem,8vw,6rem)] font-medium uppercase leading-none tracking-[-0.04em] ">
                   IN MAKING.
                 </span>
               </RevealLine>
             </h2>
-
             <motion.p
               className="mb-6 max-w-[44ch] text-[clamp(0.9rem,1.05vw,1rem)] leading-[1.65] text-[#96969f]"
               initial={{
@@ -845,7 +842,7 @@ function Philosophy() {
    FEATURE GRID
 ============================================================ */
 
-const FEATURES = [
+export const FEATURES = [
   {
     id: "01",
     title: "UI / UX",
@@ -914,7 +911,7 @@ const FEATURES = [
   },
 ];
 
-function FeatureCard({ f, i }) {
+export function FeatureCard({ f, i }) {
   const cardRef = useRef(null);
 
   const mx = useMotionValue(0);
@@ -980,7 +977,13 @@ function FeatureCard({ f, i }) {
     <motion.a
       ref={cardRef}
       href="#work"
-      className={`group relative flex flex-col overflow-hidden bg-[#070709] text-[#f5f5f7] no-underline transition-colors duration-400 hover:bg-[#111116] [transform-style:preserve-3d] [will-change:transform] max-lg:col-span-6 max-sm:col-span-1 ${f.size === "large" ? "col-span-8 max-lg:col-span-12" : f.size === "medium" ? "col-span-6" : "col-span-4"} ${f.tone === "purple" ? "" : ""}`}
+      className={`group relative flex flex-col overflow-hidden bg-[#070709] text-[#f5f5f7] no-underline transition-colors duration-400 hover:bg-[#111116] [transform-style:preserve-3d] [will-change:transform] max-lg:col-span-6 max-sm:col-span-1 ${
+        f.size === "large"
+          ? "col-span-8 max-lg:col-span-12"
+          : f.size === "medium"
+          ? "col-span-6"
+          : "col-span-4"
+      }`}
       initial={{
         opacity: 0,
         y: 60,
@@ -1007,7 +1010,11 @@ function FeatureCard({ f, i }) {
       }}
       data-cursor="VIEW"
     >
-      <div className={`relative overflow-hidden isolate bg-[#111116] ${f.size === "large" ? "aspect-[16/9]" : f.size === "small" ? "aspect-[4/3] max-sm:aspect-[16/10]" : "aspect-[16/10]"}`}>
+      <div
+        className={`relative overflow-hidden isolate bg-[#111116] ${
+          f.size === "large" ? "aspect-[16/9]" : "aspect-[16/10]"
+        }`}
+      >
         <div
           className={`pointer-events-none absolute inset-[-15%] z-[1] opacity-75 mix-blend-screen ${
             f.tone === "purple"
@@ -1096,307 +1103,37 @@ function FeatureCard({ f, i }) {
   );
 }
 
-function FeatureGrid() {
-  return (
-    <section className="relative border-t border-[rgba(255,255,255,0.07)] bg-[#0c0c10] py-[clamp(4rem,10vh,7rem)]">
-      <div className="mx-auto w-full max-w-[1440px] px-[clamp(1.25rem,4vw,4rem)]">
-        <div className="mb-[clamp(2rem,4vh,3rem)] max-w-[900px]">
-          <motion.span
-            className="mb-4 inline-block font-[DM_Mono,monospace] text-[0.6rem] uppercase tracking-[0.22em] text-[#96969f]"
-            initial={{
-              opacity: 0,
-              x: -20,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.6,
-            }}
-          >
-            03 — WHAT WE DO
-          </motion.span>
-
-          <h2 className="mb-5 font-['Space_Grotesk',sans-serif] text-[clamp(2.25rem,6vw,5rem)] font-medium uppercase leading-none tracking-[-0.04em]">
-            <RevealLine>
-              WHAT WE
-            </RevealLine>
-
-            <RevealLine delay={0.1}>
-              <span className="text-transparent [-webkit-text-stroke:1px_rgba(245,245,247,0.62)] max-sm:[-webkit-text-stroke:1px_rgba(245,245,247,0.5)]">
-                CAN CREATE
-              </span>
-            </RevealLine>
-          </h2>
-
-          <motion.p
-            className="max-w-[52ch] text-[clamp(0.9rem,1.05vw,1rem)] leading-[1.6] text-[#96969f]"
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.3,
-            }}
-          >
-            From visual identities to digital experiences
-            — different ways to turn ideas into something
-            people can see, feel and remember.
-          </motion.p>
-        </div>
-
-        <div className="grid grid-cols-12 gap-px border border-[rgba(255,255,255,0.07)] bg-[rgba(255,255,255,0.07)] max-sm:grid-cols-1">
-          {FEATURES.map((feature, index) => (
-            <FeatureCard
-              key={feature.id}
-              f={feature}
-              i={index}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================================================
-   SELECTED WORK
-============================================================ */
-
-const PROJECTS = [
-  {
-    id: "01",
-    title: "VISUAL LANGUAGE",
-    category: "BRANDING",
-    year: "2026",
-    size: "wide",
-    tone: "blue",
-    image: "/images/work-1.png",
-  },
-  {
-    id: "02",
-    title: "SIGNAL SYSTEM",
-    category: "UI / UX",
-    year: "2026",
-    size: "tall",
-    tone: "purple",
-    image: "/images/work-2.png",
-  },
-  {
-    id: "03",
-    title: "DRIFT",
-    category: "MOTION",
-    year: "2025",
-    size: "square",
-    tone: "pink",
-    image: "/images/work-3.png",
-  },
-  {
-    id: "04",
-    title: "ORBIT",
-    category: "CREATIVE TECH",
-    year: "2025",
-    size: "wide",
-    tone: "blue",
-    image: "/images/work-4.png",
-  },
-  {
-    id: "05",
-    title: "MOSS",
-    category: "GRAPHIC",
-    year: "2025",
-    size: "tall",
-    tone: "purple",
-    image: "/images/work-5.png",
-  },
-  {
-    id: "06",
-    title: "WAVE",
-    category: "IDENTITY",
-    year: "2024",
-    size: "square",
-    tone: "pink",
-    image: "/images/work-6.png",
-  },
-  {
-    id: "07",
-    title: "CHROMA",
-    category: "UI / UX",
-    year: "2024",
-    size: "wide",
-    tone: "blue",
-    image: "/images/work-7.png",
-  },
-  {
-    id: "08",
-    title: "ECHO",
-    category: "CREATIVE TECH",
-    year: "2024",
-    size: "tall",
-    tone: "purple",
-    image: "/images/work-8.png",
-  },
-];
-
-function WorkTile({ project, index }) {
-  const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const y = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [40, -40]
-  );
-
-  return (
-    <motion.a
-      ref={ref}
-      href="#"
-      className={`group relative block overflow-hidden isolate border border-[rgba(255,255,255,0.07)] bg-[#111116] text-[#f5f5f7] no-underline transition-[border-color,transform] duration-500 hover:border-[rgba(255,255,255,0.14)] ${project.size === "wide" ? "col-span-7 row-span-2 max-lg:col-span-6 max-lg:row-span-2 max-sm:col-span-1 max-sm:row-auto max-sm:aspect-[4/3]" : project.size === "tall" ? "col-span-5 row-span-3 max-lg:col-span-3 max-lg:row-span-3 max-sm:col-span-1 max-sm:row-auto max-sm:aspect-[4/3]" : "col-span-5 row-span-2 max-lg:col-span-3 max-lg:row-span-2 max-sm:col-span-1 max-sm:row-auto max-sm:aspect-[4/3]"}`}
-      initial={{
-        opacity: 0,
-        y: 60,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      viewport={{
-        once: true,
-        margin: "-60px",
-      }}
-      transition={{
-        duration: 0.9,
-        delay: (index % 3) * 0.08,
-        ease: SMOOTH,
-      }}
-      data-cursor="VIEW"
-    >
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className={`pointer-events-none absolute inset-[-15%] z-[1] opacity-75 mix-blend-screen transition-opacity duration-600 group-hover:opacity-100 ${
-            project.tone === "blue"
-              ? "bg-[radial-gradient(circle_at_30%_40%,rgba(79,140,255,0.4),transparent_60%)]"
-              : project.tone === "purple"
-              ? "bg-[radial-gradient(circle_at_65%_50%,rgba(139,92,246,0.45),transparent_60%)]"
-              : "bg-[radial-gradient(circle_at_40%_55%,rgba(236,72,153,0.4),transparent_60%)]"
-          }`}
-        />
-
-        <motion.img
-          src={project.image}
-          alt={project.title}
-          className="absolute inset-[-8%] z-0 h-[116%] w-[116%] object-cover saturate-[0.85] brightness-[0.85] transition-[filter] duration-600 [will-change:transform] group-hover:saturate-[1.05] group-hover:brightness-100"
-          loading="lazy"
-          style={{ y }}
-        />
-
-        <div className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(to_top,rgba(7,7,9,0.85)_0%,rgba(7,7,9,0.35)_30%,transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-        <div className="pointer-events-none absolute bottom-5 left-5 right-5 z-[3] flex translate-y-3 flex-col gap-1 opacity-0 transition-[opacity,transform] duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-          <span className="font-[DM_Mono,monospace] text-[0.6rem] tracking-[0.2em] text-[#8b5cf6]">
-            {project.id}
-          </span>
-
-          <span className="font-['Space_Grotesk',sans-serif] text-[clamp(1.1rem,1.6vw,1.5rem)] font-medium uppercase tracking-[-0.02em] text-[#f5f5f7]">
-            {project.title}
-          </span>
-
-          <span className="font-[DM_Mono,monospace] text-[0.55rem] uppercase tracking-[0.2em] text-[#96969f]">
-            {project.category} — {project.year}
-          </span>
-        </div>
-      </div>
-    </motion.a>
-  );
-}
-
-function SelectedWork() {
+export function ProjectsGrid() {
   return (
     <section
       className="relative border-t border-[rgba(255,255,255,0.07)] bg-[#070709] py-[clamp(4rem,10vh,7rem)]"
       id="work"
     >
       <div className="mx-auto w-full max-w-[1440px] px-[clamp(1.25rem,4vw,4rem)]">
-        <div className="mb-[clamp(2.5rem,5vh,4rem)] max-w-[900px]">
+        <div className="mb-12 flex flex-col gap-4">
           <motion.span
-            className="mb-4 inline-block font-[DM_Mono,monospace] text-[0.6rem] uppercase tracking-[0.22em] text-[#96969f]"
-            initial={{
-              opacity: 0,
-              x: -20,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.6,
-            }}
+            className="font-[DM_Mono,monospace] text-[0.6rem] uppercase tracking-[0.22em] text-[#96969f]"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            04 — SELECTED WORK
+            03 — WORK & EXPERIMENTATION
           </motion.span>
 
-          <h2 className="mb-5 font-['Space_Grotesk',sans-serif] text-[clamp(2.25rem,6.5vw,6rem)] font-medium uppercase leading-none tracking-[-0.04em]">
-            <RevealLine>
-              WORK FROM
-            </RevealLine>
-
+          <h2 className="font-['Clash_Display',sans-serif] text-[clamp(2.5rem,7vw,6rem)] font-medium uppercase leading-none tracking-[-0.04em]">
+            <RevealLine>FEATURED</RevealLine>
             <RevealLine delay={0.1}>
-              <span className="text-transparent [-webkit-text-stroke:1px_rgba(245,245,247,0.62)] max-sm:[-webkit-text-stroke:1px_rgba(245,245,247,0.5)]">
-                NIRVANA.
+              <span className="text-[clamp(2.5rem,7vw,5.5rem)]">
+                PROJECTS.
               </span>
             </RevealLine>
           </h2>
-
-          <motion.p
-            className="max-w-[52ch] text-[clamp(0.9rem,1.05vw,1rem)] leading-[1.6] text-[#96969f]"
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.3,
-            }}
-          >
-            A collection of ideas, experiments and visual
-            worlds created by the people of Nirvana.
-          </motion.p>
         </div>
 
-        <div className="grid grid-cols-12 auto-rows-[minmax(220px,18vw)] gap-[clamp(0.5rem,1vw,1rem)] max-lg:grid-cols-6 max-lg:auto-rows-[minmax(200px,26vw)] max-sm:grid-cols-1 max-sm:auto-rows-auto max-sm:gap-3">
-          {PROJECTS.map((project, index) => (
-            <WorkTile
-              key={project.id}
-              project={project}
-              index={index}
-            />
+        <div className="grid grid-cols-12 gap-6 max-lg:grid-cols-6 max-sm:grid-cols-1">
+          {FEATURES.map((f, i) => (
+            <FeatureCard key={f.id} f={f} i={i} />
           ))}
         </div>
       </div>
@@ -1404,130 +1141,170 @@ function SelectedWork() {
   );
 }
 
+/* ============================================================
+   SELECTED WORK (Interactive Card Grid with Direct Visuals)
+============================================================ */
 
+const SELECTED_WORKS = [
+  {
+    id: "01",
+    title: "AETHERIA BRAND SYSTEM",
+    category: "Branding",
+    year: "2026",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    id: "02",
+    title: "CHROMA DESIGN SYSTEM",
+    category: "UI / UX",
+    year: "2025",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    id: "03",
+    title: "KINETIC TYPE EXPERIMENTS",
+    category: "Motion",
+    year: "2025",
+    image: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    id: "04",
+    title: "SYNTAX MAGAZINE",
+    category: "Graphic Design",
+    year: "2025",
+    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    id: "05",
+    title: "GENERATIVE SPACES",
+    category: "Creative Tech",
+    year: "2026",
+    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    id: "06",
+    title: " LUMEN IDENTITY",
+    category: "Branding",
+    year: "2025",
+    image: "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?auto=format&fit=crop&w=1200&q=85",
+  },
+];
 
-function CTA() {
+export function SelectedWork() {
+  const [filter, setFilter] = useState("ALL");
+  const categories = ["ALL", "Branding", "UI / UX", "Motion", "Graphic Design", "Creative Tech"];
+
+  const filteredWorks = SELECTED_WORKS.filter(
+    (work) => filter === "ALL" || work.category === filter
+  );
+
   return (
     <section
-      className="relative overflow-hidden border-t border-[rgba(255,255,255,0.07)] bg-[#070709] pb-0 pt-[clamp(4rem,10vh,8rem)]"
-      id="contact"
+      className="relative border-t border-[rgba(255,255,255,0.07)] bg-[#070709] py-[clamp(4rem,10vh,7rem)]"
+      id="selected-work"
     >
       <div className="mx-auto w-full max-w-[1440px] px-[clamp(1.25rem,4vw,4rem)]">
-        <motion.span
-          className="mb-4 inline-block font-[DM_Mono,monospace] text-[0.6rem] uppercase tracking-[0.22em] text-[#96969f]"
-          initial={{
-            opacity: 0,
-            x: -20,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.6,
-          }}
-        >
-          05 — CONTACT
-        </motion.span>
-
-        <h2 className="mb-[clamp(2rem,5vh,3.5rem)] font-['Space_Grotesk',sans-serif] text-[clamp(2.25rem,7vw,7rem)] font-medium uppercase leading-none tracking-[-0.045em]">
-          <RevealLine>
-            HAVE AN IDEA?
-          </RevealLine>
-
-          <RevealLine delay={0.1}>
-            <span className="text-transparent [-webkit-text-stroke:1px_rgba(245,245,247,0.62)] max-sm:[-webkit-text-stroke:1px_rgba(245,245,247,0.5)]">
-              LET&apos;S MAKE IT.
-            </span>
-          </RevealLine>
-        </h2>
-
-        <Magnetic
-          strength={0.4}
-          className="inline-block"
-        >
-          <motion.a
-            href="#site-footer"
-            className="group relative inline-flex items-center gap-5 overflow-hidden border border-[rgba(255,255,255,0.14)] px-9 py-[1.4rem] no-underline text-[#f5f5f7] transition-[border-color] duration-500 hover:border-transparent"
-            data-cursor="OPEN"
-            whileHover={{
-              scale: 1.02,
-            }}
-            whileTap={{
-              scale: 0.98,
-            }}
-            transition={{
-              duration: 0.4,
-              ease: SMOOTH,
-            }}
-          >
-            <span className="pointer-events-none absolute inset-0 z-0 translate-y-[101%] bg-[linear-gradient(100deg,#8b5cf6,#4f8cff,#ec4899)] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
-            <span className="relative z-[1] font-['Space_Grotesk',sans-serif] text-[clamp(1rem,1.6vw,1.25rem)] uppercase tracking-[0.02em]">
-              LET&apos;S CREATE
-            </span>
-
+        <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
             <motion.span
-              className="relative z-[1] text-xl"
-              whileHover={{
-                x: 8,
-              }}
-              transition={{
-                duration: 0.4,
-                ease: SMOOTH,
-              }}
+              className="mb-4 inline-block font-[DM_Mono,monospace] text-[0.6rem] uppercase tracking-[0.22em] text-[#96969f]"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
-              →
+              04 — SELECTED ARCHIVE
             </motion.span>
-          </motion.a>
-        </Magnetic>
+
+            <h2 className="font-['Space_Grotesk',sans-serif] text-[clamp(2.5rem,7vw,6rem)] font-medium uppercase leading-none tracking-[-0.04em]">
+              <RevealLine>SELECTED</RevealLine>
+              <RevealLine delay={0.1}>
+                <span className=" max-sm:[-webkit-text-stroke:1px_rgba(245,245,247,0.5)]">
+                  WORKS.
+                </span>
+              </RevealLine>
+            </h2>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`border px-3 py-1.5 font-[DM_Mono,monospace] text-[0.55rem] uppercase tracking-[0.15em] transition-colors duration-300 ${
+                  filter === cat
+                    ? "border-[#8b5cf6] bg-[#8b5cf6]/10 text-[#f5f5f7]"
+                    : "border-[rgba(255,255,255,0.1)] text-[#96969f] hover:border-[rgba(255,255,255,0.3)] hover:text-[#f5f5f7]"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <AnimatePresence>
+            {filteredWorks.map((work, index) => (
+              <motion.a
+                key={work.id}
+                href="#selected-work"
+                className="group relative flex flex-col gap-4 no-underline"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                data-cursor="VIEW"
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md bg-[#111116]">
+                  <motion.img
+                    src={work.image}
+                    alt={work.title}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:opacity-0" />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <span className="font-[DM_Mono,monospace] text-[0.65rem] text-[#8b5cf6] tracking-[0.15em]">
+                      {work.id}
+                    </span>
+                    <h3 className="font-['Space_Grotesk',sans-serif] text-[clamp(1.1rem,1.8vw,1.5rem)] font-normal uppercase tracking-[-0.02em] text-[#f5f5f7] transition-colors duration-300 group-hover:text-[#8b5cf6]">
+                      {work.title}
+                    </h3>
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <span className="border border-[rgba(255,255,255,0.15)] px-2.5 py-1 font-[DM_Mono,monospace] text-[0.55rem] uppercase tracking-[0.2em] text-[#96969f]">
+                      {work.category}
+                    </span>
+                    <span className="font-[DM_Mono,monospace] text-[0.65rem] text-[#96969f]">
+                      {work.year}
+                    </span>
+                  </div>
+                </div>
+              </motion.a>
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );
 }
 
-/* ============================================================
-   ABOUT PAGE
-============================================================ */
-
-export default function About() {
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = "smooth";
-    document.documentElement.style.webkitFontSmoothing = "antialiased";
-    document.body.style.margin = "0";
-    document.body.style.background = "#070709";
-    document.body.style.color = "#f5f5f7";
-    document.body.style.fontFamily = "Inter, sans-serif";
-    document.body.style.fontWeight = "300";
-    document.body.style.overflowX = "hidden";
-    document.body.style.cursor = window.innerWidth >= 1024 ? "none" : "auto";
-
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap";
-    document.head.appendChild(link);
-
-    return () => {
-      if (link.parentNode) link.parentNode.removeChild(link);
-      document.body.style.cursor = "";
-    };
-  }, []);
-
+// Default page wrapper component
+export default function Page() {
   return (
-    <div className="relative w-full overflow-x-hidden bg-[#070709] text-[#f5f5f7] [font-family:Inter,sans-serif] font-light">
+    <main className="bg-[#070709] min-h-screen text-[#f5f5f7]">
       <CustomCursor />
-
-      <main>
-        <Hero />
-        <Marquee />
-        <Philosophy />
-        <FeatureGrid />
-        <SelectedWork />
-        <CTA />
-      </main>
-    </div>
+      <Hero />
+      <Marquee />
+      <Philosophy />
+      <ProjectsGrid />
+      <SelectedWork />
+    </main>
   );
 }
-
